@@ -31,7 +31,7 @@ const Navbar = () => {
       {/* logo */}
       <Link href="/">
         <Image
-          src="https://i.ibb.co.com/rK6KHcNd/g-rentify.png"
+          src="https://i.ibb.co/rK6KHcNd/g-rentify.png"
           width={500}
           height={500}
           alt="logo"
@@ -158,8 +158,10 @@ const Navbar = () => {
           Support
         </li>
         <li className="flex items-center hover:text-[#3B9DF8] group gap-[5px] cursor-pointer">
-          <CiMail className="text-[1.1rem] group-hover:text-[#3B9DF8] text-gray-600" />
-          Contacts
+          <Link href="/contactus" className="flex  items-center">
+            <CiMail className="text-[1.1rem] group-hover:text-[#3B9DF8] text-gray-600" />
+            <span>Contacts</span>
+          </Link>
         </li>
         <li className="flex items-center hover:text-[#3B9DF8] group gap-[5px] cursor-pointer">
           <TbListDetails className="text-[1.1rem] group-hover:text-[#3B9DF8] text-gray-600" />
