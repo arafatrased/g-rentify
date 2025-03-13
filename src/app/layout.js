@@ -1,16 +1,20 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
+import ContextProvider from "./Context/AppContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+//Poppins Front
+const poppins = Poppins({
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
+  variable: "--font-poppins",
 });
 
 export const metadata = {
@@ -23,11 +27,14 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
+        className={`${geistSans.variable} ${poppins.variable} antialiased overflow-x-hidden`}
       >
-        <Navbar />
-        {children}
-        <Footer></Footer>
+        <ContextProvider>
+          <ToastContainer />
+          <Navbar />
+          {children}
+          <Footer />
+        </ContextProvider>
       </body>
     </html>
   );
