@@ -4,11 +4,12 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import axios from "axios";
 import PhoneInput from "react-phone-input-2";
-import { AppContext } from "../../AppContext";
 import "react-phone-input-2/lib/style.css";
+import { AppContext } from "../Context/AppContext";
 
 export const ContactUsFrom = () => {
   const { apiUrl } = useContext(AppContext);
+  console.log(apiUrl);
 
   // state
   const [errorMessage, setErrorMessage] = useState(null);

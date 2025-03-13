@@ -1,6 +1,5 @@
 import { MdMarkEmailRead, MdCall } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
-import { Helmet } from "react-helmet-async";
 import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
 import { FaFacebookF, FaTelegramPlane } from "react-icons/fa";
 import { ContactUsFrom } from "../components/ContactUsFrom";
@@ -8,22 +7,20 @@ import { ContactUsFrom } from "../components/ContactUsFrom";
 const ContactUS = () => {
   return (
     <>
-      <Helmet>
-        <title>TOJO Global - Contact Us</title>
-      </Helmet>
       <div className="univarsal_div">
         <div className="container">
           <div className="text-center univarsal_text_div" data-aos="fade-down">
             <h1>
               {" "}
-              <span className="headdingGradientText">Get In Touch </span>
+              <span className="headdingGradientText text-black">
+                Get In Touch{" "}
+              </span>
             </h1>
-            {/* <p className="topPeraDesText">{description}</p> */}
           </div>
 
           {/* other text contactus*/}
           <div className="contactus_text_section">
-            <div className="row">
+            <div className="flex">
               <div className="col-sm-12 col-md-6 contactus_text_div">
                 <h2 className="contactus_text_heading">
                   Ready to Turn Your Vision into Reality?
