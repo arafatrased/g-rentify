@@ -27,13 +27,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={`${geistSans.variable} ${poppins.variable} antialiased overflow-x-hidden`}
-      >
-        
+      >   
           <ToastContainer />
           <Navbar />
           {children}
           <Footer />
-        
       </body>
     </html>
   );

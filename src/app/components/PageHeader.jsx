@@ -2,7 +2,7 @@ import React from 'react'
 
 const PageHeader = ({pageTitle, bgImage, bgColor}) => {
   return (
-    <div id='page_header' className='py-20'  style={{
+    <div id='page_header' className='py-8'  style={{
         backgroundImage: !bgColor && bgImage,
         backgroundColor: !bgImage && bgColor,
       }}>

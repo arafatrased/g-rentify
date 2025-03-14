@@ -11,9 +11,8 @@ const ContactUS = () => {
         <div className="container">
           <div className="text-center univarsal_text_div" data-aos="fade-down">
             <h1>
-              {" "}
               <span className="headdingGradientText text-black">
-                Get In Touch{" "}
+                Get In Touch
               </span>
             </h1>
           </div>
