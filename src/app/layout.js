@@ -3,7 +3,6 @@ import "./globals.css";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
-import ContextProvider from "./Context/AppContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,12 +28,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${poppins.variable} antialiased overflow-x-hidden`}
       >
-        <ContextProvider>
+        
           <ToastContainer />
           <Navbar />
           {children}
           <Footer />
-        </ContextProvider>
+        
       </body>
     </html>
   );

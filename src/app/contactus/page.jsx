@@ -2,7 +2,7 @@ import { MdMarkEmailRead, MdCall } from "react-icons/md";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
 import { FaFacebookF, FaTelegramPlane } from "react-icons/fa";
-import { ContactUsFrom } from "../components/ContactUsFrom";
+
 
 const ContactUS = () => {
   return (
@@ -95,7 +95,7 @@ const ContactUS = () => {
                 </div>
               </div>
               <div className="col-sm-12 col-md-6 contactus_input_fild_div">
-                <ContactUsFrom />
+                
               </div>
             </div>
           </div>
