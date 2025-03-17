@@ -6,7 +6,6 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
 import { MdLaptopMac, MdOutlineArrowRightAlt } from "react-icons/md";
-import { BsBuildings, BsCalendar2Date } from "react-icons/bs";
 import { AiOutlineFire } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";

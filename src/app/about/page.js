@@ -7,12 +7,14 @@ import Team from './Team'
 
 const page = () => {
   return (
+
     <div className='bg-white'>
       <PageHeader pageTitle={'About Us'} bgColor={'black'}/>
       <WhoWeAre/>
       <MissionVission/>
       <Counter/>
       <Team/>
+
     </div>
   )
 }
