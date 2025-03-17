@@ -1,0 +1,35 @@
+{
+  "categories": [
+    {
+      "name": "Wireless Printer",
+      "items": 20,
+      "image": "https://i.ibb.co/TqYWqWhF/61dd3m-T2fo-L-AC-SX466.jpg"
+    },
+    {
+      "name": "Earbuds Bose",
+      "items": 21,
+      "image": "https://i.ibb.co/CCps2P0/41-Mk-E3w27-PL-AC-SX466.jpg"
+    },
+
+    {
+      "name": "Smart Phones",
+      "items": 18,
+      "image": "https://i.ibb.co/XZ0NCk5w/51-HL5sz4ke-L-AC-SX466.jpg"
+    },
+    {
+      "name": "Game Controller",
+      "items": 13,
+      "image": "https://i.ibb.co/Mkgv21Ff/51n-QK3-ARsv-L-SX522.jpg"
+    },
+    {
+      "name": "Headphone",
+      "items": 11,
+      "image": "https://i.ibb.co/nsnRgPWr/613c-Pu-Oz5-OL-AC-SX679.jpg"
+    },
+    {
+      "name": "Smart Watch",
+      "items": 12,
+      "image": "https://i.ibb.co/vxRzQyWS/71-Nr-PRCv-FRL-AC-SX466.jpg"
+    }
+  ]
+}
