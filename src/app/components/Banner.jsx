@@ -24,16 +24,13 @@ export default function Banner() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center min-h-[700px]">
               {/* left item */}
               <div className="flex flex-col gap-7">
-                <h1 className="font-bold text-5xl md:text-6xl 2xl:text-8xl">
+                <h1 className="font-bold text-5xl md:text-5xl  2xl:text-8xl">
                   Rent the latest electronics for any occasion.
                 </h1>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Blanditiis accusantium esse officiis modi aliquid neque
-                  voluptatibus asperiores, est ea quae dignissimos, expedita
-                  necessitatibus totam eius architecto nihil aliquam!
+                We offer reliable support, ensuring a hassle-free rental experience with responsive assistance, easy returns, and expert guidance to help you make the most of your rented gadgets
                 </p>
-                <button className="px-6 py-3 bg-orange-500 w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
+                <button className="px-6 py-[10px] bg-[#03b00b] w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
                   Click Me
                 </button>
               </div>
@@ -51,16 +48,13 @@ export default function Banner() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 place-items-center min-h-[700px]">
               {/* left item */}
               <div className="flex flex-col gap-7">
-                <h1 className="font-bold text-5xl md:text-6xl 2xl:text-8xl">
+                <h1 className="font-bold text-5xl md:text-5xl 2xl:text-8xl">
                   Rent the latest electronics for any occasion.
                 </h1>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Blanditiis accusantium esse officiis modi aliquid neque
-                  voluptatibus asperiores, est ea quae dignissimos, expedita
-                  necessitatibus totam eius architecto nihil aliquam!
+                We offer reliable support, ensuring a hassle-free rental experience with responsive assistance, easy returns, and expert guidance to help you make the most of your rented gadgets
                 </p>
-                <button className="px-6 py-3 bg-orange-500 w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
+                <button className="px-6 py-[10px] bg-[#03b00b] w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
                   Click Me
                 </button>
               </div>
