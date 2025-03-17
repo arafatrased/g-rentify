@@ -89,7 +89,7 @@ export default function PopularProduct() {
                 />
               </p>
               <p className="font-medium text-[#03b00b]">$ {item?.price}</p>
-            </div>
+            </div> 
           ))}
         </div>
       </div>
