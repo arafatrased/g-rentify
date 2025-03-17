@@ -6,9 +6,11 @@ import MissionVission from './MissionVission'
 const page = () => {
   return (
     <div className='bg-[#f5f5f5]'>
-      <PageHeader pageTitle={'About Us'} bgColor={'black'}/>
-      <WhoWeAre/>
-      <MissionVission/>
+      <PageHeader pageTitle={'About Us'} bgColor={'black'} />
+      <div className='grid grid-cols-2 md:grid-cols-1'>
+        <WhoWeAre />
+        <MissionVission />
+      </div>
     </div>
   )
 }

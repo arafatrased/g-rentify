@@ -28,10 +28,7 @@ export default function Banner() {
                   Rent the latest electronics for any occasion.
                 </h1>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Blanditiis accusantium esse officiis modi aliquid neque
-                  voluptatibus asperiores, est ea quae dignissimos, expedita
-                  necessitatibus totam eius architecto nihil aliquam!
+                We offer reliable support, ensuring a hassle-free rental experience with responsive assistance, easy returns, and expert guidance to help you make the most of your rented gadgets
                 </p>
                 <button className="px-6 py-3 bg-orange-500 w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
                   Click Me
@@ -55,10 +52,7 @@ export default function Banner() {
                   Rent the latest electronics for any occasion.
                 </h1>
                 <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Blanditiis accusantium esse officiis modi aliquid neque
-                  voluptatibus asperiores, est ea quae dignissimos, expedita
-                  necessitatibus totam eius architecto nihil aliquam!
+                We offer reliable support, ensuring a hassle-free rental experience with responsive assistance, easy returns, and expert guidance to help you make the most of your rented gadgets
                 </p>
                 <button className="px-6 py-3 bg-orange-500 w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
                   Click Me
