@@ -29,16 +29,16 @@ export default function Footer() {
           <div className="max-w-fit">
             <h3 className="text-2xl font-semibold mb-5">Useful Links</h3>
             <ul className="flex flex-col gap-4 font-medium text-lg">
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>About Renity</Link>
               </li>
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>How It Works</Link>
               </li>
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>Latest News</Link>
               </li>
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>Terms & Conditions</Link>
               </li>
             </ul>
@@ -47,16 +47,16 @@ export default function Footer() {
           <div className="max-w-fit">
             <h3 className="text-2xl font-semibold mb-5">Explore Renity</h3>
             <ul className="flex flex-col gap-4 font-medium text-lg">
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>Read FAQ’s</Link>
               </li>
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>Recent Rentals</Link>
               </li>
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>Latest Equipments</Link>
               </li>
-              <li className="list-disc ml-4 hover:text-[#ED3C35] transition-all">
+              <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>Browse Tools</Link>
               </li>
             </ul>
@@ -98,22 +98,22 @@ export default function Footer() {
             Terms & Conditions
           </p>
           <ul className="flex gap-5">
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#ED3C35] transition-all">
+            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
               <a href="">
                 <FaFacebookF />
               </a>
             </li>
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#ED3C35] transition-all">
+            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
               <a href="">
                 <FaTwitter />
               </a>
             </li>
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#ED3C35] transition-all">
+            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
               <a href="">
                 <FaGoogle />
               </a>
             </li>
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#ED3C35] transition-all">
+            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
               <a href="">
                 <IoShareSocial />
               </a>
