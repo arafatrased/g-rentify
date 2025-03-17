@@ -6,8 +6,8 @@ import whoWeAreGadgetImg from '../../images/about-us/who-we-are-gadgets.jpg'
 const WhoWeAre = () => {
   return (
     <div id='who_we_are' className='my-20'>
-      <div className="container mx-auto flex items-center gap-20">
-        <div className='w-6/12 overflow-hidden'>
+      <div className="container mx-auto flex items-center lg:gap-20 gap-10 flex-col lg:flex-row">
+        <div className='lg:w-6/12 overflow-hidden'>
           <Image className='w-full rounded-lg' src={whoWeAreGadgetImg} alt='who we are' />
         </div>
         <div className='flex-1'>

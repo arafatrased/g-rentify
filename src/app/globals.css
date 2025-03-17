@@ -26,6 +26,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+/** container padding on mobile device **/
+@media(max-width: 768px){
+  .container{
+    padding: 0 15px!important;
+  }
+}
+
 /* ========================================================================= */
 /* conatct us Section */
 .univarsal_div {
