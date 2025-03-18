@@ -63,7 +63,7 @@ export default function PopularProduct() {
         <div className="w-full h-0.5 bg-gray-200 my-[13px]"></div>
         <div className="max-w-64 h-0.5 bg-[#03b00b] -mt-[15px] mb-10"></div>
         {/* main content here */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-6 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-6 md:gap-5 gap-10">
           {data.map((item, idx) => (
             <div key={idx}>
               <div className="w-full border border-gray-200 rounded mb-2 p-2">

@@ -39,7 +39,7 @@ export default function Banner() {
                 <Image
                   src={img1}
                   alt="Banner Image"
-                  className="max-w-[650px]"
+                  className="max-w-[400px] md:max-w-[650px]"
                 />
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function Banner() {
                 <Image
                   src={img2}
                   alt="Banner Image"
-                  className="max-w-[650px]"
+                  className="max-w-[400px] md:max-w-[650px]"
                 />
               </div>
             </div>
