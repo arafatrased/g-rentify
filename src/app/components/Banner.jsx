@@ -8,6 +8,7 @@ import { Pagination } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import Button from "./Button";
 
 export default function Banner() {
   return (
@@ -28,11 +29,12 @@ export default function Banner() {
                   Rent the latest electronics for any occasion.
                 </h1>
                 <p>
-                We offer reliable support, ensuring a hassle-free rental experience with responsive assistance, easy returns, and expert guidance to help you make the most of your rented gadgets
+                  We offer reliable support, ensuring a hassle-free rental
+                  experience with responsive assistance, easy returns, and
+                  expert guidance to help you make the most of your rented
+                  gadgets
                 </p>
-                <button className="px-6 py-[10px] bg-[#03b00b] w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
-                  Click Me
-                </button>
+                <Button buttonText={"click me"} />
               </div>
               {/* right item */}
               <div>
@@ -52,11 +54,12 @@ export default function Banner() {
                   Rent the latest electronics for any occasion.
                 </h1>
                 <p>
-                We offer reliable support, ensuring a hassle-free rental experience with responsive assistance, easy returns, and expert guidance to help you make the most of your rented gadgets
+                  We offer reliable support, ensuring a hassle-free rental
+                  experience with responsive assistance, easy returns, and
+                  expert guidance to help you make the most of your rented
+                  gadgets
                 </p>
-                <button className="px-6 py-[10px] bg-[#03b00b] w-fit text-white border-none outline-none text-secondary text-[1rem] rounded active:scale-[0.9] transition-all duration-300 cursor-pointer">
-                  Click Me
-                </button>
+                <Button buttonText={"click me"} />
               </div>
               {/* right item */}
               <div>

@@ -1,0 +1,5 @@
+Text: #17080c - rgb(23, 8, 12) - hsl(344, 48%, 6%)
+    Background: #fcf8f8 - rgb(252, 248, 248) - hsl(0, 40%, 98%)
+    Primary: #caccce - rgb(202, 204, 206) - hsl(210, 4%, 80%)
+    Secondary: #fdf3bf - rgb(253, 243, 191) - hsl(50, 94%, 87%)
+    Accent: #03b00b - rgb(3, 176, 11) - hsl(123, 97%, 35%)
