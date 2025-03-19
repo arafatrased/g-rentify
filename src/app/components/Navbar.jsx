@@ -17,7 +17,7 @@ const Navbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <nav className="flex items-center justify-between w-full relative px-6 py-4">
+    <nav className="flex items-center justify-between w-full relative px-6 py-4 border-b">
       {/* Logo */}
       <Link href="/">
         <img
