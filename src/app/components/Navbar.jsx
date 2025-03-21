@@ -102,7 +102,7 @@ const Navbar = () => {
         </li>
       </ul>
 
-      {/* Account Menu */}
+      {/* Account Menu for navbar */}
       <div className="relative flex gap-4 items-center">
         {status === "authenticated" ? (
           <div>
