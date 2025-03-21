@@ -31,9 +31,8 @@ const Navbar = () => {
       <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
         {/* Product Mega Menu */}
         <li
-          className={`${
-            isProductHover ? "text-[#3B9DF8]" : "dark:text-[#abc2d3] text-gray-600"
-          } flex items-center gap-[5px] cursor-pointer relative`}
+          className={`${isProductHover ? "text-[#3B9DF8]" : "dark:text-[#abc2d3] text-gray-600"
+            } flex items-center gap-[5px] cursor-pointer relative`}
           onMouseEnter={() => setIsProductHover(true)}
           onMouseLeave={() => setIsProductHover(false)}
         >
@@ -101,11 +100,14 @@ const Navbar = () => {
       </ul>
 
       {/* Account Menu */}
-      <div className="relative">
-        <button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2">
+      <div className="relative flex gap-4 items-center">
+        <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/registrar">Sing up</Link></button>
+        <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/login">Log In</Link></button>
+        <button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2 cursor-pointer">
           <FiUser className="text-[1.5rem]" />
           <IoIosArrowDown className={`transition-all duration-300 ${accountMenuOpen ? "rotate-180" : ""}`} />
         </button>
+
         {accountMenuOpen && (
           <div className="bg-white rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
             <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
@@ -127,7 +129,7 @@ const Navbar = () => {
       </button>
 
       {mobileSidebarOpen && (
-        <div className="fixed top-0 left-0 w-[250px] h-full bg-white shadow-lg p-5 transition-all duration-300">
+        <div className="fixed top-0 left-0 w-[250px] z-[50] h-full bg-white shadow-lg p-5 transition-all duration-300">
           <button onClick={() => setMobileSidebarOpen(false)} className="absolute top-2 right-2 text-gray-600">
             ✖
           </button>
