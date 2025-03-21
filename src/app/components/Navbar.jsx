@@ -107,7 +107,7 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div>
             <p className="text-gray-600 text-[0.9rem]">Welcome, {userSession.user.name}</p>
-            <button onClick={() => signOut()} className="cursor-pointer hover:text-[#3B9DF8]">Log Out</button>
+            
           </div>
         ) : (
           <div className="flex gap-2">
@@ -116,22 +116,22 @@ const Navbar = () => {
           </div>
         )}
 
-        <button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2 cursor-pointer">
+        {status === "authenticated" && (<button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2 cursor-pointer">
           <FiUser className="text-[1.5rem]" />
           <IoIosArrowDown className={`transition-all duration-300 ${accountMenuOpen ? "rotate-180" : ""}`} />
-        </button>
+        </button>)}
 
         {accountMenuOpen && (
-          <div className="bg-white rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
+          <div className="bg-white z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
             <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
               <FiUser /> View Profile
             </p>
             <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
               <IoSettingsOutline /> Settings
             </p>
-            <p className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer">
-              <TbLogout2 /> Logout
-            </p>
+            <button onClick={() => signOut()} className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer">
+              <TbLogout2 />Logout
+            </button>
           </div>
         )}
       </div>
