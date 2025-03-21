@@ -10,8 +10,11 @@ import { AiOutlineFire } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const session = useSession();
+  const { data: userSession, status } = session;
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -101,8 +104,18 @@ const Navbar = () => {
 
       {/* Account Menu */}
       <div className="relative flex gap-4 items-center">
-        <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/registrar">Sing up</Link></button>
-        <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/login">Log In</Link></button>
+        {status === "authenticated" ? (
+          <div>
+            <p className="text-gray-600 text-[0.9rem]">Welcome, {userSession.user.name}</p>
+            <button onClick={signOut()} className="cursor-pointer hover:text-[#3B9DF8]">Log Out</button>
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/registrar">Sing up</Link></button>
+            <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/login">Log In</Link></button>
+          </div>
+        )}
+
         <button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2 cursor-pointer">
           <FiUser className="text-[1.5rem]" />
           <IoIosArrowDown className={`transition-all duration-300 ${accountMenuOpen ? "rotate-180" : ""}`} />

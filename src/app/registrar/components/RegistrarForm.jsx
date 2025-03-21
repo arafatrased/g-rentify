@@ -3,8 +3,11 @@ import { RiAccountCircleLine, RiLockPasswordLine } from "react-icons/ri";
 import { MdOutlineMail } from "react-icons/md";
 import Button from '@/app/components/Button';
 import { registrarUser } from './../../actions/auth/registrarUser';
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const RegistrarForm = () => {
+    const router = useRouter()
 
     const handleRegistrar = async (e) => {
         e.preventDefault();
@@ -19,7 +22,13 @@ const RegistrarForm = () => {
         }
         console.log(payload);
         const registrarSingleUser = await registrarUser(payload);
-        console.log(registrarSingleUser);
+        if(registrarSingleUser.insertedId){
+            toast.success("User registered successfully");
+            router.push("/login");
+        }else{
+            toast.error("User registration failed");    
+        }
+        form.reset();
     }
     return (
         <div className='w-full mx-auto place-content-center'>

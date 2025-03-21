@@ -13,9 +13,8 @@ export const registrarUser = async (payload) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         payload.password = hashedPassword;
         const result = await dbConnect("users").insertOne(payload);
-        const { acknowledged } = result;
-        return { success: acknowledged };
+        result.insertedId = result.insertedId.toString();
+        return result;
     }
-
     return { success: false};
 }
