@@ -107,7 +107,7 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div>
             <p className="text-gray-600 text-[0.9rem]">Welcome, {userSession.user.name}</p>
-            <button onClick={signOut()} className="cursor-pointer hover:text-[#3B9DF8]">Log Out</button>
+            <button onClick={() => signOut()} className="cursor-pointer hover:text-[#3B9DF8]">Log Out</button>
           </div>
         ) : (
           <div className="flex gap-2">
