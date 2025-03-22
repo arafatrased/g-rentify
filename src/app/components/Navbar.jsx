@@ -10,14 +10,17 @@ import { AiOutlineFire } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
+import { signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  const session = useSession();
+  const { data: userSession, status } = session;
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <nav className="flex items-center justify-between w-full relative px-6 py-4">
+    <nav className="flex items-center justify-between w-full relative px-6 py-4 border-b">
       {/* Logo */}
       <Link href="/">
         <img
@@ -31,9 +34,8 @@ const Navbar = () => {
       <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
         {/* Product Mega Menu */}
         <li
-          className={`${
-            isProductHover ? "text-[#3B9DF8]" : "dark:text-[#abc2d3] text-gray-600"
-          } flex items-center gap-[5px] cursor-pointer relative`}
+          className={`${isProductHover ? "text-[#3B9DF8]" : "dark:text-[#abc2d3] text-gray-600"
+            } flex items-center gap-[5px] cursor-pointer relative`}
           onMouseEnter={() => setIsProductHover(true)}
           onMouseLeave={() => setIsProductHover(false)}
         >
@@ -100,23 +102,36 @@ const Navbar = () => {
         </li>
       </ul>
 
-      {/* Account Menu */}
-      <div className="relative">
-        <button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2">
+      {/* Account Menu for navbar */}
+      <div className="relative flex gap-4 items-center">
+        {status === "authenticated" ? (
+          <div>
+            <p className="text-gray-600 text-[0.9rem]">Welcome, {userSession.user.name}</p>
+            
+          </div>
+        ) : (
+          <div className="flex gap-2">
+            <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/registrar">Sing up</Link></button>
+            <button className="cursor-pointer hover:text-[#3B9DF8]"><Link href="/login">Log In</Link></button>
+          </div>
+        )}
+
+        {status === "authenticated" && (<button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2 cursor-pointer">
           <FiUser className="text-[1.5rem]" />
           <IoIosArrowDown className={`transition-all duration-300 ${accountMenuOpen ? "rotate-180" : ""}`} />
-        </button>
+        </button>)}
+
         {accountMenuOpen && (
-          <div className="bg-white rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
+          <div className="bg-white z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
             <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
               <FiUser /> View Profile
             </p>
             <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
               <IoSettingsOutline /> Settings
             </p>
-            <p className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer">
-              <TbLogout2 /> Logout
-            </p>
+            <button onClick={() => signOut()} className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer">
+              <TbLogout2 />Logout
+            </button>
           </div>
         )}
       </div>
@@ -127,7 +142,7 @@ const Navbar = () => {
       </button>
 
       {mobileSidebarOpen && (
-        <div className="fixed top-0 left-0 w-[250px] h-full bg-white shadow-lg p-5 transition-all duration-300">
+        <div className="fixed top-0 left-0 w-[250px] z-[50] h-full bg-white shadow-lg p-5 transition-all duration-300">
           <button onClick={() => setMobileSidebarOpen(false)} className="absolute top-2 right-2 text-gray-600">
             ✖
           </button>

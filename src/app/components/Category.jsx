@@ -4,7 +4,14 @@ import React, { useState, useEffect } from "react";
 
 const Category = () => {
   const [categories, setCategories] = useState([]);
-
+  const Rating = ({ rating }) => {
+    const [currentRating, setCurrentRating] = useState(rating);
+  
+    useEffect(() => {
+      setCurrentRating(rating);
+    }, [rating]); // Runs when rating changes
+  };
+  // Removed getDerivedStateFromProps as it is not applicable in functional components
   useEffect(() => {
     const fetchData = async () => {
       try {
