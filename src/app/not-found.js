@@ -15,7 +15,6 @@ const NotFound = () => {
       <button
         type="button"
         onClick={() => router.push("/", { scroll: false })}
-        // onClick={() => router.push("/")}
         className="mt-6 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-all"
       >
         Go Back Home
