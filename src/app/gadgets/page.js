@@ -108,7 +108,7 @@ export default function GadgetPage() {
               </form>
             </div>
             {/* featured 4 item */}
-            <div className="grid grid-cols-2 gap-5">
+            {/* <div className="grid grid-cols-2 gap-5">
               <div className="border border-green-500 w-full h-28">
                 featured product item
               </div>
@@ -121,7 +121,7 @@ export default function GadgetPage() {
               <div className="border border-green-500 w-full h-28">
                 featured product item
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* all Gadgets */}
@@ -131,7 +131,7 @@ export default function GadgetPage() {
               <h3 className="text-xl font-semibold">Filters Rental</h3>
               <div className="flex gap-2 items-center">
                 <p className="text-[#17080c] font-medium">Sort by: </p>
-                <select className="w-28 border">
+                <select className="w-40 border-gray-200 p-2 border">
                   <option value="">One</option>
                   <option value="">Two</option>
                 </select>
