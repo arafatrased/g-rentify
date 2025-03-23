@@ -6,7 +6,7 @@ import RegistrarForm from "./components/RegistrarForm";
 const Registration = () => {
 
     return (
-        <div className="p-8 mb-4 w-full mx-auto place-content-center">
+        <div className="mb-4 w-full mx-auto">
             
 
             {/* username input with icon */}

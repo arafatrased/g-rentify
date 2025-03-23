@@ -32,6 +32,7 @@ const authOptions = {
             }
           }
         })],
+      
     pages: {
         signIn: "/login",
         // signOut: "/logout",

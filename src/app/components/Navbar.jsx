@@ -107,7 +107,7 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div>
             <p className="text-gray-600 text-[0.9rem]">Welcome, {userSession.user.name}</p>
-            
+
           </div>
         ) : (
           <div className="flex gap-2">
@@ -117,7 +117,7 @@ const Navbar = () => {
         )}
 
         {status === "authenticated" && (<button onClick={() => setAccountMenuOpen(!accountMenuOpen)} className="flex items-center gap-2 cursor-pointer">
-          <FiUser className="text-[1.5rem]" />
+          <FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />
           <IoIosArrowDown className={`transition-all duration-300 ${accountMenuOpen ? "rotate-180" : ""}`} />
         </button>)}
 
