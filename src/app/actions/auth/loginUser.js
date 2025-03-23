@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import dbConnect from "@/lib/dbConnect";
 
 export const loginUser = async (payload) => {

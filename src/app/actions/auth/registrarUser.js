@@ -1,7 +1,7 @@
 'use server'
 
 import dbConnect from "@/lib/dbConnect"
-import bcrypt from "bcrypt"
+import bcrypt from "bcryptjs";
 
 export const registrarUser = async (payload) => {
     const { name, email, password } = payload;
