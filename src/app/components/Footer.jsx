@@ -9,11 +9,6 @@ import { MdAttachEmail, MdPhoneInTalk } from "react-icons/md";
 export default function Footer() {
   return (
     <footer className="pt-14 md:pt-20 pb-10 border-t border-slate-200">
-      {/* footer title */}
-      {/* <h1 className="text-center text-2xl sm:text-4xl lg:text-6xl 2xl:text-[87px] font-extrabold mb-14">
-        Get Support +880 14 0000 0000
-      </h1> */}
-
       {/* wrapper container  */}
       <div className="container mx-auto px-2 mb-10">
         {/* wrapper gird  */}
