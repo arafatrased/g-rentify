@@ -10,13 +10,6 @@ export default function GadgetPage() {
     { label: "Gadgets", path: "/gadgets" },
   ];
 
-  // Filter select item array
-  const options = [
-    { value: "name", label: "Name" },
-    { value: "low to high", label: "Price: low to high" },
-    { value: "high to low", label: "Price: high to low" },
-  ];
-
   const data = [
     {
       image:
@@ -131,9 +124,15 @@ export default function GadgetPage() {
               <h3 className="text-xl font-semibold">Filters Rental</h3>
               <div className="flex gap-2 items-center">
                 <p className="text-[#17080c] font-medium">Sort by: </p>
-                <select className="w-40 border-gray-200 p-2 border">
-                  <option value="">One</option>
-                  <option value="">Two</option>
+                <select
+                  defaultValue="Pick a color"
+                  className="select border p-2 border-gray-200"
+                >
+                  <option disabled={true}>Select Categorys</option>
+                  <option>Default</option>
+                  <option>Name</option>
+                  <option>Price: low to high</option>
+                  <option>Price: high to low</option>
                 </select>
               </div>
             </div>
