@@ -1,59 +1,14 @@
-"use client";
-import { useState } from "react";
 import { MdKeyboardArrowDown } from "react-icons/md";
-import Select from "react-select";
-import ProductCard from "../components/ProductCard";
 import Button from "../components/Button";
+import Link from "next/link";
+import Image from "next/image";
 
-export default function GadgetPage() {
-  // State to store selected filter option
-  const [selectedOption, setSelectedOption] = useState(null);
-
-  // Custom styles
-  const customStyles = {
-    control: (base) => ({
-      ...base,
-      backgroundColor: "white",
-      border: "1px solid #e3e3e3",
-      borderRadius: "4px",
-      padding: "2px",
-      boxShadow: "none",
-      "&:hover": {
-        borderColor: "#aaa",
-      },
-    }),
-    menu: (base) => ({
-      ...base,
-      backgroundColor: "#F5F5F5",
-      borderRadius: "4px",
-      padding: "4px",
-    }),
-    option: (base, { isFocused }) => ({
-      ...base,
-      backgroundColor: isFocused ? "#00b22c47" : "white",
-      color: "#17080c",
-      padding: "5px",
-      cursor: "pointer",
-    }),
-  };
-
+export default async function GadgetPage() {
   // Breadcrumb Items array
   const breadcrumbItems = [
     { label: "Home", path: "/" },
     { label: "Gadgets", path: "/gadgets" },
   ];
-
-  // Filter select item array
-  const options = [
-    { value: "name", label: "Name" },
-    { value: "low to high", label: "Price: low to high" },
-    { value: "high to low", label: "Price: high to low" },
-  ];
-
-  // Handle select change
-  const handleChange = (selected) => {
-    setSelectedOption(selected);
-  };
 
   const data = [
     {
@@ -110,17 +65,17 @@ export default function GadgetPage() {
     <main className="pt-8 pb-14">
       <div className="container mx-auto px-3">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-[5px] mb-5">
+        <div className="flex items-center gap-[5px] mb-6">
           {breadcrumbItems.map((item, index) => (
             <div key={index} className="flex items-center">
-              <a
+              <Link
                 href={item.path}
                 className={`text-[0.9rem] text-text hover:underline ${
                   index === breadcrumbItems.length - 1 && "!text-[#03b00b]"
                 }`}
               >
                 {item.label}
-              </a>
+              </Link>
               {index !== breadcrumbItems.length - 1 && (
                 <MdKeyboardArrowDown className="rotate-[-90deg] text-[0.9rem]" />
               )}
@@ -140,13 +95,13 @@ export default function GadgetPage() {
                   name="name"
                   id="name"
                   placeholder="By Title"
-                  className="border border-[#e3e3e3] rounded outline-none px-3 w-full mt-1 py-2 focus:border-primary transition-colors duration-300 mb-3 bg-white hover:border-[#aaa]"
+                  className="border border-[#e3e3e3] rounded outline-none px-3 w-full mt-1 py-2 focus:border-[#03b00b] transition-colors duration-300 mb-3 bg-white hover:border-[#aaa]"
                 />
                 <Button buttonText={"Search"}></Button>
               </form>
             </div>
             {/* featured 4 item */}
-            <div className="grid grid-cols-2 gap-5">
+            {/* <div className="grid grid-cols-2 gap-5">
               <div className="border border-green-500 w-full h-28">
                 featured product item
               </div>
@@ -159,7 +114,7 @@ export default function GadgetPage() {
               <div className="border border-green-500 w-full h-28">
                 featured product item
               </div>
-            </div>
+            </div> */}
           </div>
 
           {/* all Gadgets */}
@@ -167,22 +122,50 @@ export default function GadgetPage() {
             {/* Product Title bar*/}
             <div className="flex justify-between items-center mb-5">
               <h3 className="text-xl font-semibold">Filters Rental</h3>
-              <div className="flex gap-2 items-center">
-                <p className="text-[#17080c] font-medium">Sort by: </p>
-                <Select
-                  options={options}
-                  styles={customStyles}
-                  className="w-[200px]"
-                  value={selectedOption}
-                  onChange={handleChange}
-                />
+              <div className="flex gap-2 items-center w-60">
+                <p className="text-[#17080c] font-medium w-[80px]">Sort by: </p>
+                <select
+                  defaultValue="Pick a color"
+                  className="select border p-2 border-gray-200 focus:border-[#03b00b] focus:outline-none"
+                >
+                  <option disabled={true}>Select Categorys</option>
+                  <option>Default</option>
+                  <option>Name</option>
+                  <option>Price: low to high</option>
+                  <option>Price: high to low</option>
+                </select>
               </div>
             </div>
 
             {/* Gadgets card */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
               {data.map((item, idx) => (
-                <ProductCard key={idx} item={item}></ProductCard>
+                <div key={idx} className="group">
+                  <div className="w-full border border-gray-200 rounded mb-2 p-2">
+                    <Image
+                      src={item?.image || "/placeholder.jpg"}
+                      width={720}
+                      height={720}
+                      alt={item?.title || "Product Image"}
+                      className="max-w-[150px] lg:max-w-[200px] mx-auto"
+                    />
+                  </div>
+                  <p className="text-gray-500">
+                    {item?.category || "No Category"}
+                  </p>
+                  <h3 className="font-semibold text-[#17080c] hover:text-[#00B22C] duration-300 cursor-pointer">
+                    {item?.title?.substring(0, 62) || "No Title"}
+                  </h3>
+                  <p className="font-medium text-[#03b00b] mb-2">
+                    $ {item?.price || "N/A"}
+                  </p>
+                  <Link
+                    href={`/gadgets/${"productId"}`}
+                    className="opacity-0 -translate-y-5 table group-hover:opacity-100 group-hover:translate-y-0 duration-500"
+                  >
+                    <Button buttonText={"Options"}></Button>
+                  </Link>
+                </div>
               ))}
             </div>
           </div>
