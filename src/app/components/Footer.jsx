@@ -17,7 +17,10 @@ export default function Footer() {
           <div>
             <Image src={logo} alt="footer logo" className="w-52" />
             <p className="text-lg text-justify">
-            We envision a future where everyone can experience cutting-edge technology without financial barriers. By promoting gadget rentals, we aim to reduce e-waste and create a smarter, more sustainable way to access tech.
+              We envision a future where everyone can experience cutting-edge
+              technology without financial barriers. By promoting gadget
+              rentals, we aim to reduce e-waste and create a smarter, more
+              sustainable way to access tech.
             </p>
           </div>
           {/* card 2 */}
@@ -88,10 +91,7 @@ export default function Footer() {
       {/* copy right  */}
       <div className="border-t border-slate-200 pt-10">
         <div className="container mx-auto px-3 flex flex-col md:flex-row  items-center justify-between gap-5">
-          <p>
-            © {new Date().getFullYear()} G-Rentify. All Rights Reserved.
-            Terms & Conditions
-          </p>
+          <p>© 2025 G-Rentify. All Rights Reserved. Terms & Conditions</p>
           <ul className="flex gap-5">
             <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
               <a href="">
