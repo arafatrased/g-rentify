@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function GadgetPage() {
+export default async function GadgetPage() {
   // Breadcrumb Items array
   const breadcrumbItems = [
     { label: "Home", path: "/" },
@@ -95,7 +95,7 @@ export default function GadgetPage() {
                   name="name"
                   id="name"
                   placeholder="By Title"
-                  className="border border-[#e3e3e3] rounded outline-none px-3 w-full mt-1 py-2 focus:border-primary transition-colors duration-300 mb-3 bg-white hover:border-[#aaa]"
+                  className="border border-[#e3e3e3] rounded outline-none px-3 w-full mt-1 py-2 focus:border-[#03b00b] transition-colors duration-300 mb-3 bg-white hover:border-[#aaa]"
                 />
                 <Button buttonText={"Search"}></Button>
               </form>
@@ -122,11 +122,11 @@ export default function GadgetPage() {
             {/* Product Title bar*/}
             <div className="flex justify-between items-center mb-5">
               <h3 className="text-xl font-semibold">Filters Rental</h3>
-              <div className="flex gap-2 items-center">
-                <p className="text-[#17080c] font-medium">Sort by: </p>
+              <div className="flex gap-2 items-center w-60">
+                <p className="text-[#17080c] font-medium w-[80px]">Sort by: </p>
                 <select
                   defaultValue="Pick a color"
-                  className="select border p-2 border-gray-200"
+                  className="select border p-2 border-gray-200 focus:border-[#03b00b] focus:outline-none"
                 >
                   <option disabled={true}>Select Categorys</option>
                   <option>Default</option>
