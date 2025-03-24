@@ -37,7 +37,15 @@ const LoginForm = () => {
         e.target.reset();
 
     }
-    const handleGoogleLogin = async () => {}
+    const handleGoogleLogin = async () => {
+        const result = await signIn("google", {
+            callbackUrl: "/",
+        });
+        if (result.error) {
+            toast.error("Google login failed. Please try again.");
+        }
+        console.log(result);
+    }
 
     return (
         <div className="w-10/12 mx-auto flex justify-center items-center bg-white-100 px-4 py-20 mb-3 dark:bg-gray-900 dark:text-white">

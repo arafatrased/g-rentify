@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const RegistrarForm = () => {
+const RegistrarForm = ({regiTitle, role}) => {
     const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -26,7 +26,8 @@ const RegistrarForm = () => {
         const payload = {
             name,
             email,
-            password
+            password,
+            role: role,
         }
         console.log(payload);
         const registrarSingleUser = await registrarUser(payload);
@@ -45,7 +46,7 @@ const RegistrarForm = () => {
         <div className="w-10/12 mx-auto flex justify-center items-center bg-white-100 px-4 py-20 mb-3 dark:bg-gray-900 dark:text-white">
             <div className="w-full max-w-lg p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
                 <h2 className="text-2xl font-bold text-center dark:text-white text-gray-800 mb-6">
-                    User Registration
+                    {regiTitle}
                 </h2>
                 <form onSubmit={handleRegister} className="space-y-4">
                     {/* Name Field */}
