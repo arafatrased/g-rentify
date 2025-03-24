@@ -1,4 +1,5 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
+// bcryptjs is a library to hash passwords
 import dbConnect from "@/lib/dbConnect";
 
 export const loginUser = async (payload) => {
