@@ -1,10 +1,10 @@
 import { Geist, Poppins } from "next/font/google";
-import "./globals.css";
-import Navbar from "./components/Navbar.jsx";
+import "../globals.css";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
 import { Toaster } from 'react-hot-toast';
 import NextAuthProviders from "@/Providers/NextAuthProviders";
+import Navbar from "./components/Navbar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -19,8 +19,9 @@ const Navbar = () => {
   const [isProductHover, setIsProductHover] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
+
   return (
-    <nav className="flex items-center justify-between w-full relative px-6 py-4 border-b">
+    <nav className="flex items-center sticky top-0 z-40 backdrop-blur-3xl justify-between w-full px-6 py-4 border-b border-gray-300">
       {/* Logo */}
       <Link href="/">
         <img
@@ -109,10 +110,14 @@ const Navbar = () => {
       {/* Account Menu for navbar */}
       <div className="relative flex gap-4 items-center">
         {status === "authenticated" ? (
-          <div>
+          <div className="flex flex-col items-end gap-1">
             <p className="text-gray-600 text-[0.9rem]">
-              Welcome, {userSession.user.name}
+              Welcome, {userSession?.user?.name}
             </p>
+            <p className="text-gray-600 text-[0.9rem]">
+             You are : {userSession?.user?.role}
+            </p>
+            
           </div>
         ) : (
           <div className="flex gap-2">

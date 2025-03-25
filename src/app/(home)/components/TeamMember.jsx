@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import TeamMemberSocialAccounts from './TeamMemberSocialAccounts'
-import placeholderUserImage from '../../images/about-us/team/placeholder-iamge.jpg'
+import placeholderUserImage from '../../../images/about-us/team/placeholder-iamge.jpg'
 
 const TeamMember = ({ teamMember }) => {
   const { name, title, profile, socialMedia } = teamMember
