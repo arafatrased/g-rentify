@@ -1,9 +1,9 @@
 import React from 'react'
 import IconBox from '../components/IconBox'
 
-import mission from '../../images/about-us/mission.png'
-import vission from '../../images/about-us/vission.png'
-import support from '../../images/about-us/support.png'
+import mission from '../../../images/about-us/mission.png'
+import vission from '../../../images/about-us/vission.png'
+import support from '../../../images/about-us/support.png'
 
 const MissionVission = () => {
   return (

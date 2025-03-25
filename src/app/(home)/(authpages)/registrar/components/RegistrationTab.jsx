@@ -3,7 +3,7 @@ import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import RegistrarForm from './RegistrarForm';
-import Button from '@/app/components/Button';
+import Button from '@/app/(home)/components/Button';
 
 const RegistrationTab = () => {
     return (

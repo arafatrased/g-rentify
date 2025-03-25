@@ -1,6 +1,5 @@
-import React from 'react'
 import Image from 'next/image'
-import whoWeAreGadgetImg from '../../images/about-us/who-we-are-gadgets.jpg'
+import whoWeAreGadgetImg from '../../../images/about-us/who-we-are-gadgets.jpg'
 
 const WhoWeAre = () => {
   return (

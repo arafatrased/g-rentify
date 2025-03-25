@@ -6,7 +6,7 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import { registrarUser } from '../../../actions/auth/registrarUser';
+import { registrarUser } from '../../../../actions/auth/registrarUser';
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
