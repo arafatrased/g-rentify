@@ -4,12 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default async function GadgetPage() {
-  // Breadcrumb Items array
-  const breadcrumbItems = [
-    { label: "Home", path: "/" },
-    { label: "Gadgets", path: "/gadgets" },
-  ];
-
   const data = [
     {
       image:
@@ -65,22 +59,15 @@ export default async function GadgetPage() {
     <main className="pt-8 pb-14">
       <div className="container mx-auto px-3">
         {/* Breadcrumb */}
-        <div className="flex items-center gap-[5px] mb-6">
-          {breadcrumbItems.map((item, index) => (
-            <div key={index} className="flex items-center">
-              <Link
-                href={item.path}
-                className={`text-[0.9rem] text-text hover:underline ${
-                  index === breadcrumbItems.length - 1 && "!text-[#03b00b]"
-                }`}
-              >
-                {item.label}
-              </Link>
-              {index !== breadcrumbItems.length - 1 && (
-                <MdKeyboardArrowDown className="rotate-[-90deg] text-[0.9rem]" />
-              )}
-            </div>
-          ))}
+        <div className="breadcrumbs text-sm mb-6">
+          <ul>
+            <li>
+              <Link href={"/"}>Home</Link>
+            </li>
+            <li>
+              <Link className="text-[#03b00b]" href={"/gadgets"}>Gadgets</Link>
+            </li>
+          </ul>
         </div>
 
         {/* Main Content */}
