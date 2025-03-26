@@ -32,6 +32,7 @@ const Navbar = () => {
           src="https://i.ibb.co.com/rK6KHcNd/g-rentify.png"
           alt="logo"
           className="w-[155px]"
+          loading="eager"
         />
       </Link>
 

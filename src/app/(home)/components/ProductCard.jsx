@@ -28,6 +28,7 @@ export default function ProductCard({ item }) {
           height={720}
           alt={item?.title || "Product Image"}
           className="max-w-[150px] lg:max-w-[200px] mx-auto"
+          priority={true}
         />
       </div>
       <p className="text-gray-500">{item?.category || "No Category"}</p>

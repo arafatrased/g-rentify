@@ -8,7 +8,7 @@ const TeamMember = ({ teamMember }) => {
   return (
     <div className='shadow-lg pb-5 rounded-lg group relative overflow-hidden'>
       <div className='overflow-hidden'>
-        <Image className='rounded-lg w-full h-[400px] object-cover group-hover:scale-[1.05] transition-all duration-300' src={profile ? profile : placeholderUserImage} alt='team member' />
+        <Image className='rounded-lg w-full h-[400px] object-cover group-hover:scale-[1.05] transition-all duration-300' src={profile ? profile : placeholderUserImage} alt='team member' priority={true} />
       </div>
       <div className='px-5 py-4'>
         <h3 className='font-bold text-2xl mt-4 mb-1'>{name && name}</h3>

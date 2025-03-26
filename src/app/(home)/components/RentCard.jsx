@@ -13,6 +13,7 @@ const RentCard = () => {
                     src="https://img.freepik.com/free-photo/front-view-smiley-man-holding-laptop_23-2148946208.jpg?size=626&ext=jpg&uid=R134535407&ga=GA1.1.71340048.1688965399&semt=ais"
                     alt="demo/image"
                     className="w-full h-full object-cover"
+                    loading="eager"
                 />
                 <FaQuoteRight
                     className="absolute -top-5 right-[-5%] text-[3rem] text-[#ffffff] bg-[#3B9DF8] p-3 rounded-full" />
