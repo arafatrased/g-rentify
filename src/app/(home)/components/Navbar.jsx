@@ -11,6 +11,7 @@ import { BiSupport } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 const Navbar = () => {
   const session = useSession();
@@ -112,10 +113,10 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div className="flex flex-col items-end gap-1">
             <p className="text-gray-600 text-[0.9rem]">
-              Welcome, {userSession?.user?.name}
+              {userSession?.user?.name}
             </p>
             <p className="text-gray-600 text-[0.9rem]">
-             You are : {userSession?.user?.role}
+             <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
             </p>
             
           </div>
@@ -135,7 +136,7 @@ const Navbar = () => {
             onClick={() => setAccountMenuOpen(!accountMenuOpen)}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />
+            {userSession.user.image ? (<><Image src={userSession.user.image} width={40} height={40} className="rounded-full" alt="user-Image"/></>):(<FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />)}
             <IoIosArrowDown
               className={`transition-all duration-300 ${
                 accountMenuOpen ? "rotate-180" : ""
