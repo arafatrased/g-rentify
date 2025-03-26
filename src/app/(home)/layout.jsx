@@ -7,6 +7,8 @@ import NextAuthProviders from "@/Providers/NextAuthProviders";
 import Navbar from "./components/Navbar";
 
 //Poppins Front
+
+
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
