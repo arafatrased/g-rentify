@@ -1,9 +1,9 @@
 import TestData from "./components/TestData";
 
-export default function Dashboard() {
-  // const result = await fetch(process.env.NEXT_PUBLIC_CLIENT_API_CAMERA, {
-  //   cache: "no-store", // Ensures fresh data on every request
-  // }).then(res => res.json());
+export default async function Dashboard() {
+  const result = await fetch(process.env.NEXT_PUBLIC_CLIENT_API_CAMERA, {
+    cache: "no-store", // Ensures fresh data on every request
+  }).then((res) => res.json());
 
   return (
     <div>
