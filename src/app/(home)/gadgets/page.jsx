@@ -134,6 +134,7 @@ export default async function GadgetPage() {
                       width={720}
                       height={720}
                       alt={item?.title || "Product Image"}
+                      priority={true}
                       className="max-w-[150px] lg:max-w-[200px] mx-auto"
                     />
                   </div>

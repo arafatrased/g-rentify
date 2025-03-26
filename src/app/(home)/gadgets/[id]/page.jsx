@@ -221,6 +221,7 @@ export default function GadgetDetails() {
               height={500}
               alt="img"
               className="mx-auto"
+              priority={true}
             />
             {/* includes section */}
             <h4 className="text-xl font-semibold mt-10 mb-2">Includes</h4>

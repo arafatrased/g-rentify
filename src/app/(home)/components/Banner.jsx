@@ -42,6 +42,7 @@ export default function Banner() {
                   src={img1}
                   alt="Banner Image"
                   className="max-w-[400px] md:max-w-[650px]"
+                  priority={true}
                 />
               </div>
             </div>
@@ -67,6 +68,7 @@ export default function Banner() {
                   src={img2}
                   alt="Banner Image"
                   className="max-w-[400px] md:max-w-[650px]"
+                  priority={true}
                 />
               </div>
             </div>

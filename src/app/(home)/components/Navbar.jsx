@@ -5,12 +5,17 @@ import Link from "next/link";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
-import { MdLaptopMac, MdOutlineArrowRightAlt } from "react-icons/md";
+import {
+  MdDashboard,
+  MdLaptopMac,
+  MdOutlineArrowRightAlt,
+} from "react-icons/md";
 import { AiOutlineFire } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
+import Image from "next/image";
 
 const Navbar = () => {
   const session = useSession();
@@ -18,7 +23,6 @@ const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-
 
   return (
     <nav className="flex items-center sticky top-0 z-40 backdrop-blur-3xl justify-between w-full px-6 py-4 border-b border-gray-300">
@@ -28,13 +32,14 @@ const Navbar = () => {
           src="https://i.ibb.co.com/rK6KHcNd/g-rentify.png"
           alt="logo"
           className="w-[155px]"
+          loading="eager"
         />
       </Link>
 
       {/* Nav Links */}
       <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
         {/* Product Mega Menu */}
-        <Link href={'/gadgets'}>
+        <Link href={"/gadgets"}>
           <li
             className={`${
               isProductHover
@@ -105,6 +110,14 @@ const Navbar = () => {
             About Us
           </Link>
         </li>
+        {
+          status === "authenticated" && (<li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+            <Link href="/dashboard" className="flex items-center">
+              <MdDashboard className="text-[1.1rem]" />
+              Dashboard
+            </Link>
+          </li>)
+        }
       </ul>
 
       {/* Account Menu for navbar */}
@@ -112,12 +125,11 @@ const Navbar = () => {
         {status === "authenticated" ? (
           <div className="flex flex-col items-end gap-1">
             <p className="text-gray-600 text-[0.9rem]">
-              Welcome, {userSession?.user?.name}
+              {userSession?.user?.name}
             </p>
             <p className="text-gray-600 text-[0.9rem]">
-             You are : {userSession?.user?.role}
+             <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
             </p>
-            
           </div>
         ) : (
           <div className="flex gap-2">
@@ -135,7 +147,7 @@ const Navbar = () => {
             onClick={() => setAccountMenuOpen(!accountMenuOpen)}
             className="flex items-center gap-2 cursor-pointer"
           >
-            <FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />
+            {userSession.user.image ? (<><Image src={userSession.user.image} width={40} height={40} className="rounded-full" alt="user-Image"/></>):(<FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />)}
             <IoIosArrowDown
               className={`transition-all duration-300 ${
                 accountMenuOpen ? "rotate-180" : ""
@@ -172,14 +184,14 @@ const Navbar = () => {
       </button>
 
       {mobileSidebarOpen && (
-        <div className="fixed top-0 left-0 w-[250px] z-[50] h-full bg-white shadow-lg p-5 transition-all duration-300">
+        <div className="fixed top-0 left-0 bg-white w-[250px] z-[52] h-full shadow-lg p-5 transition-all duration-300">
           <button
             onClick={() => setMobileSidebarOpen(false)}
             className="absolute top-2 right-2 text-gray-600"
           >
             ✖
           </button>
-          <ul className="flex flex-col space-y-4 mt-6">
+          <ul className="flex bg-white flex-col space-y-4 mt-6">
             <li className="cursor-pointer hover:text-[#03b00b]">Gadgets</li>
             <li className="cursor-pointer hover:text-[#03b00b]">Features</li>
             <li className="cursor-pointer hover:text-[#03b00b]">Support</li>

@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 xl:gap-5 xl:justify-items-center">
           {/* card 1 */}
           <div>
-            <Image src={logo} alt="footer logo" className="w-52" />
+            <Image src={logo} alt="footer logo" className="w-52" priority={true}/>
             <p className="text-lg text-justify">
               We envision a future where everyone can experience cutting-edge
               technology without financial barriers. By promoting gadget
