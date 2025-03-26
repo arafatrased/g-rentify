@@ -5,6 +5,12 @@ body {
   overflow-x: hidden !important;
 }
 
+p,
+li,
+a {
+  font-family: "Roboto", sans-serif;
+}
+
 /* ========================================================================= */
 /* conatct us Section */
 .univarsal_div {

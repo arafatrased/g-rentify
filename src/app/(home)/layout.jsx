@@ -1,25 +1,19 @@
-import { Geist, Poppins } from "next/font/google";
-import "../globals.css";
+import { Poppins } from "next/font/google";
+import "@/app/globals.css";
 import Footer from "./components/Footer";
 import { ToastContainer } from "react-toastify";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 import NextAuthProviders from "@/Providers/NextAuthProviders";
 import Navbar from "./components/Navbar";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
 
 //Poppins Front
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
-  variable: "--font-poppins",
 });
 
 export const metadata = {
-  title: "G-Rentify",
+  title: "Home - G-Rentify",
   description:
     "Rentify is your ultimate destination for renting high-quality gadgets without the hassle of ownership. Whether you need the latest smartphones, laptops, gaming consoles, or cameras, we’ve got you covered. Experience top-tier technology at a fraction of the cost, upgrade whenever you want, and enjoy the freedom to explore without long-term commitments.",
 };
@@ -27,9 +21,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${poppins.variable} antialiased overflow-x-hidden`}
-      >   
+      <body className={`${poppins.className}`}>
         <NextAuthProviders>
           <Toaster />
           <ToastContainer />
