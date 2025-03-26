@@ -109,12 +109,14 @@ const Navbar = () => {
             About Us
           </Link>
         </li>
-        <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
-          <Link href="/dashboard" className="flex items-center">
-            <MdDashboard className="text-[1.1rem]" />
-            Dashboard
-          </Link>
-        </li>
+        {
+          status === "authenticated" && (<li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+            <Link href="/dashboard" className="flex items-center">
+              <MdDashboard className="text-[1.1rem]" />
+              Dashboard
+            </Link>
+          </li>)
+        }
       </ul>
 
       {/* Account Menu for navbar */}
@@ -125,11 +127,7 @@ const Navbar = () => {
               {userSession?.user?.name}
             </p>
             <p className="text-gray-600 text-[0.9rem]">
-<<<<<<< HEAD
              <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
-=======
-              You are : {userSession?.user?.role}
->>>>>>> 5e24cc3dc8379e829f39298f8ae1da3c9c668280
             </p>
           </div>
         ) : (
@@ -185,14 +183,14 @@ const Navbar = () => {
       </button>
 
       {mobileSidebarOpen && (
-        <div className="fixed top-0 left-0 w-[250px] z-[50] h-full bg-white shadow-lg p-5 transition-all duration-300">
+        <div className="fixed top-0 left-0 bg-white w-[250px] z-[52] h-full shadow-lg p-5 transition-all duration-300">
           <button
             onClick={() => setMobileSidebarOpen(false)}
             className="absolute top-2 right-2 text-gray-600"
           >
             ✖
           </button>
-          <ul className="flex flex-col space-y-4 mt-6">
+          <ul className="flex bg-white flex-col space-y-4 mt-6">
             <li className="cursor-pointer hover:text-[#03b00b]">Gadgets</li>
             <li className="cursor-pointer hover:text-[#03b00b]">Features</li>
             <li className="cursor-pointer hover:text-[#03b00b]">Support</li>
