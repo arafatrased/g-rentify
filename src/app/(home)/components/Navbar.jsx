@@ -5,7 +5,11 @@ import Link from "next/link";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
-import { MdLaptopMac, MdOutlineArrowRightAlt } from "react-icons/md";
+import {
+  MdDashboard,
+  MdLaptopMac,
+  MdOutlineArrowRightAlt,
+} from "react-icons/md";
 import { AiOutlineFire } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
@@ -18,7 +22,6 @@ const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-
 
   return (
     <nav className="flex items-center sticky top-0 z-40 backdrop-blur-3xl justify-between w-full px-6 py-4 border-b border-gray-300">
@@ -34,7 +37,7 @@ const Navbar = () => {
       {/* Nav Links */}
       <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
         {/* Product Mega Menu */}
-        <Link href={'/gadgets'}>
+        <Link href={"/gadgets"}>
           <li
             className={`${
               isProductHover
@@ -105,6 +108,12 @@ const Navbar = () => {
             About Us
           </Link>
         </li>
+        <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+          <Link href="/dashboard" className="flex items-center">
+            <MdDashboard className="text-[1.1rem]" />
+            Dashboard
+          </Link>
+        </li>
       </ul>
 
       {/* Account Menu for navbar */}
@@ -115,9 +124,8 @@ const Navbar = () => {
               Welcome, {userSession?.user?.name}
             </p>
             <p className="text-gray-600 text-[0.9rem]">
-             You are : {userSession?.user?.role}
+              You are : {userSession?.user?.role}
             </p>
-            
           </div>
         ) : (
           <div className="flex gap-2">
