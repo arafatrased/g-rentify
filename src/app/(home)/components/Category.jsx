@@ -32,7 +32,6 @@ const Category = () => {
   return (
     <section className="py-14">
       <div className="container mx-auto px-3">
-        {/* Section Title */}
         {/* section title */}
         <h1 className="text-3xl font-semibold">Popular Categorys</h1>
         <div className="w-full h-0.5 bg-gray-200 my-3"></div>
