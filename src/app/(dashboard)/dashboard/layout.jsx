@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import "@/app/globals.css";
 import Sidebar from "./components/Sidebar";
 import DashboardNavbar from "./components/DashboardNavbar";
+import DashboardFooter from "./components/DashboardFooter";
 
 //Poppins Front
 const poppins = Poppins({
@@ -24,6 +25,7 @@ export default function DashboardLayout({ children }) {
           <div className="bg-[#EEF0FB] w-[calc(100%-250px)]">
             <DashboardNavbar />
             {children}
+            <DashboardFooter />
           </div>
         </div>
       </body>
