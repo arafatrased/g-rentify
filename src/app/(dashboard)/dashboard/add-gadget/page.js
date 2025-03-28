@@ -28,11 +28,11 @@ export default function AddGadget() {
 
   const onSubmit = async (data) => {
     if (selectedImages.length === 0)
-      return toast.error("You need to add gadget images!");
+      return toast.error("You need to add gadgets image!");
     if (selectedImages.length > 3)
       return toast.error("You can add maximum three images!");
     if (selectedImages.length === 1)
-      return toast.error("Add maximum two images!");
+      return toast.error("Add minimum two images!");
 
     const API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
