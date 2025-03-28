@@ -19,7 +19,7 @@ export const metadata = {
 
 export default function DashboardLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <body className={`${poppins.className}`}>
         <div className="flex">
           <Sidebar />
