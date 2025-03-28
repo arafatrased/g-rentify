@@ -31,7 +31,7 @@ export default function Sidebar() {
   );
   return (
     <div className="bg-[#03b00b]  w-[250px] min-h-screen">
-      <div className="p-3">
+      <div className="p-3 sticky top-0">
         <h1 className="italic text-center text-2xl font-medium text-white mb-5">
           G-Rentify
         </h1>

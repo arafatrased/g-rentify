@@ -1,16 +1,64 @@
 "use client";
+import Image from "next/image";
+import { useState } from "react";
 import Dropzone from "react-dropzone";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import makeAnimated from "react-select/animated";
+import Select from "react-select";
+
+const animatedComponents = makeAnimated();
+
+const includesOption = [
+  { value: "controller", label: "Controller" },
+  { value: "charger", label: "Charger" },
+  { value: "charging hub", label: "Charging Hub" },
+  { value: "sd card", label: "SD Card" },
+  { value: "battery", label: "Battery" },
+];
 
 export default function AddGadget() {
+  const [selectedImages, setSelectedImages] = useState([]);
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data.title);
+  const onSubmit = async (data) => {
+    if (selectedImages.length === 0)
+      return toast.error("You need to add gadget images!");
+    if (selectedImages.length > 3)
+      return toast.error("You can add maximum three images!");
+    if (selectedImages.length === 1)
+      return toast.error("Add maximum two images!");
+
+    const API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+
+    const imageUrls = await Promise.all(
+      selectedImages.map(async (file) => {
+        const formData = new FormData();
+        formData.append("key", API_KEY);
+        formData.append(
+          "image",
+          await new Promise((res) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => res(reader.result.split(",")[1]);
+          })
+        );
+
+        const res = await fetch("https://api.imgbb.com/1/upload", {
+          method: "POST",
+          body: formData,
+        });
+        return (await res.json()).data.url;
+      })
+    );
+
+    console.log({ ...data, images: imageUrls });
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -18,22 +66,66 @@ export default function AddGadget() {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-12 gap-5">
-          <div className="col-span-3">
-            <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
-              {({ getRootProps, getInputProps }) => (
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <p>
-                    Drag &quot;n&quot; drop some files here, or click to select
-                    files
-                  </p>
+          {/* image select */}
+          <div className="col-span-12 xl:col-span-3">
+            <fieldset className="fieldset">
+              <legend className="fieldset-legend text-sm">
+                Upload Images*
+              </legend>
+              <div className="border border-dashed border-[#ccc] p-5 min-h-48 rounded flex flex-col items-center justify-center text-center">
+                <Dropzone
+                  onDrop={(acceptedFiles) => {
+                    setSelectedImages([...selectedImages, ...acceptedFiles]);
+                  }}
+                  accept={{ "image/*": [] }}
+                  multiple
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <p className="text-[#00000099] text-[15px] font-bold">
+                        Drag &amp; drop your file or{" "}
+                        <span className="cursor-pointer">
+                          <u>Browse</u>
+                        </span>
+                      </p>
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
+
+              {/* Display image previews */}
+              {selectedImages.length > 0 && (
+                <div className="mt-2 grid grid-cols-3 gap-2">
+                  {selectedImages.map((file, index) => (
+                    <div key={index} className="relative">
+                      <Image
+                        src={URL.createObjectURL(file)}
+                        alt="preview"
+                        width={300}
+                        height={300}
+                        className="w-full h-24 object-cover rounded"
+                      />
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 cursor-pointer rounded-[2px]"
+                        onClick={() =>
+                          setSelectedImages(
+                            selectedImages.filter((_, i) => i !== index)
+                          )
+                        }
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  ))}
                 </div>
               )}
-            </Dropzone>
+            </fieldset>
           </div>
-          <div className="col-span-9">
-            <div className="grid grid-cols-2 gap-5">
-              <fieldset className="fieldset">
+          <div className="col-span-12 xl:col-span-9">
+            <div className="md:grid grid-cols-2 gap-5">
+              <fieldset className="fieldset ">
                 <legend className="fieldset-legend text-sm">Title*</legend>
                 <input
                   {...register("title", { required: true })}
@@ -175,6 +267,58 @@ export default function AddGadget() {
                 )}
               </fieldset>
 
+              <fieldset className="fieldset col-span-2">
+                <legend className="fieldset-legend text-sm">Include*</legend>
+
+                {/* Multi-Select Dropdown */}
+                <Controller
+                  name="includes"
+                  control={control}
+                  rules={{ required: "This field is required" }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      components={animatedComponents}
+                      isMulti
+                      options={includesOption}
+                      classNamePrefix="select"
+                      styles={{
+                        control: (baseStyles, { isFocused }) => ({
+                          ...baseStyles,
+                          backgroundColor: "transparent",
+                          borderColor: isFocused ? "#03b00b" : "#ccc",
+                          boxShadow: isFocused ? "0 0 0 0.1px #03b00b" : "none",
+                          borderRadius: "2px",
+                          "&:hover": {
+                            borderColor: isFocused ? "#03b00b" : "#ccc",
+                            boxShadow: isFocused
+                              ? "0 0 0 0.1px #03b00b"
+                              : "none",
+                          },
+                        }),
+                        option: (base, { isFocused, isSelected }) => ({
+                          ...base,
+                          backgroundColor: isSelected
+                            ? "#03b00b"
+                            : isFocused
+                            ? "transparent"
+                            : "transparent",
+                          color: isSelected ? "white" : "inherit",
+                          cursor: "pointer",
+                        }),
+                      }}
+                    />
+                  )}
+                />
+
+                {/* Error Message */}
+                {errors.includes && (
+                  <span className="text-red-500">
+                    {errors.includes.message}
+                  </span>
+                )}
+              </fieldset>
+
               {/* BATTARY INFO */}
 
               <fieldset className="col-span-2 w-full mt-3">
@@ -298,6 +442,7 @@ export default function AddGadget() {
                 )}
               </fieldset>
             </div>
+
             <input
               className="bg-[#03b00b] cursor-pointer text-white py-2 w-28 mt-5"
               type="submit"
