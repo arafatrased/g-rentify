@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }) {
                 style: {
                   background: "#03b00b",
                   color: "#fff",
-                  borderRadius: "4px",
+                  borderRadius: "2px",
                 },
 
                 // Default options for specific types
@@ -42,7 +42,7 @@ export default function DashboardLayout({ children }) {
                   duration: 3000,
                   iconTheme: {
                     primary: "white",
-                    secondary: "black",
+                    secondary: "#03b00b",
                   },
                 },
               }}

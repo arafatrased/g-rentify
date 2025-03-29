@@ -1,16 +1,17 @@
 "use client";
 import Button from "@/app/(home)/components/Button";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function GadgetDetails() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isExpandedSpec, setIsExpandedSpec] = useState(false);
-  const [startDate, setStartDate] = useState(new Date("2014/02/08"));
-  const [endDate, setEndDate] = useState(new Date("2014/02/10"));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
   return (
     <main className="pt-8 pb-14">

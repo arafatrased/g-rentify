@@ -45,15 +45,15 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="w-10/12 mx-auto flex justify-center items-center bg-white-100 px-4 py-20 mb-3 dark:bg-gray-900 dark:text-white">
-      <div className="w-full max-w-lg mx-auto p-6 bg-white dark:bg-gray-800 rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">
+    <div className="w-10/12 mx-auto flex justify-center items-center bg-white-100 px-4 py-20 mb-3">
+      <div className="w-full max-w-lg mx-auto p-6 bg-white  rounded-lg shadow-lg">
+        <h2 className="text-2xl font-bold text-center text-gray-800  mb-6">
           User Login
         </h2>
         <form onSubmit={handleLogin} className="space-y-4">
           {/* Email Field */}
           <div>
-            <label className="block text-gray-700 dark:text-white font-medium mb-2">
+            <label className="block text-gray-700 font-medium mb-2">
               Email
             </label>
             <input
@@ -61,14 +61,14 @@ const LoginForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full dark:border-gray-600 dark:bg-gray-700  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
           </div>
 
           {/* Password Field */}
           <div className="relative">
-            <label className="dark:text-white block text-gray-700 font-medium mb-2">
+            <label className="block text-gray-700 font-medium mb-2">
               Password
             </label>
             <input
@@ -76,7 +76,7 @@ const LoginForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full dark:border-gray-600 dark:bg-gray-700  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
+              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
               required
             />
             <div
@@ -99,7 +99,7 @@ const LoginForm = () => {
         {/* Divider */}
         <div className="flex items-center my-6">
           <div className="flex-grow border-t border-gray-300"></div>
-          <span className="px-3 text-gray-500 dark:text-white">OR</span>
+          <span className="px-3 text-gray-500 ">OR</span>
           <div className="flex-grow border-t border-gray-300"></div>
         </div>
 
@@ -113,12 +113,9 @@ const LoginForm = () => {
         </button>
 
         {/* Register Link */}
-        <p className="text-center text-gray-600 mt-6 dark:text-white">
+        <p className="text-center text-gray-600 mt-6 ">
           Dont have an account?{" "}
-          <Link
-            href="/registrar"
-            className="text-blue-600 dark:text-teal-500 hover:underline"
-          >
+          <Link href="/registrar" className="text-blue-600 hover:underline">
             Register
           </Link>
         </p>

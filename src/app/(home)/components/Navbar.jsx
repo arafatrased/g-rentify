@@ -44,7 +44,7 @@ const Navbar = () => {
             className={`${
               isProductHover
                 ? "text-[#03b00b]"
-                : "dark:text-[#abc2d3] text-gray-600"
+                : " text-gray-600"
             } flex items-center gap-[5px] cursor-pointer relative`}
             onMouseEnter={() => setIsProductHover(true)}
             onMouseLeave={() => setIsProductHover(false)}

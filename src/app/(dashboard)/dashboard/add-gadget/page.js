@@ -6,6 +6,7 @@ import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
+import axios from "axios";
 
 const animatedComponents = makeAnimated();
 
@@ -17,23 +18,30 @@ const includesOption = [
   { value: "battery", label: "Battery" },
 ];
 
+const categoryOption = [
+  { value: "camera", label: "Camera" },
+  { value: "drone", label: "Drone" },
+];
+
 export default function AddGadget() {
   const [selectedImages, setSelectedImages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
+    setLoading(true);
     if (selectedImages.length === 0)
       return toast.error("You need to add gadgets image!");
     if (selectedImages.length > 3)
       return toast.error("You can add maximum three images!");
     if (selectedImages.length === 1)
       return toast.error("Add minimum two images!");
-
     const API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
     const imageUrls = await Promise.all(
@@ -57,7 +65,20 @@ export default function AddGadget() {
       })
     );
 
-    console.log({ ...data, images: imageUrls });
+    const gadgetInfo = { ...data, images: imageUrls };
+
+    const response = await axios.post(
+      "http://localhost:5000/gadget",
+      gadgetInfo
+    );
+    if (response.data.insertedId) {
+      setLoading(false);
+      reset();
+      toast.success("Gadget added successfully!");
+    } else {
+      setLoading(false);
+      toast.error("Faild to added gadget!");
+    }
   };
 
   return (
@@ -267,7 +288,7 @@ export default function AddGadget() {
                 )}
               </fieldset>
 
-              <fieldset className="fieldset col-span-2">
+              <fieldset className="fieldset">
                 <legend className="fieldset-legend text-sm">Include*</legend>
 
                 {/* Multi-Select Dropdown */}
@@ -319,9 +340,99 @@ export default function AddGadget() {
                 )}
               </fieldset>
 
+              <fieldset className="fieldset">
+                <legend className="fieldset-legend text-sm">Cagegory*</legend>
+
+                {/* Multi-Select Dropdown */}
+                <Controller
+                  name="category"
+                  control={control}
+                  rules={{ required: "This field is required" }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      options={categoryOption}
+                      classNamePrefix="select"
+                      styles={{
+                        control: (baseStyles, { isFocused }) => ({
+                          ...baseStyles,
+                          backgroundColor: "transparent",
+                          borderColor: isFocused ? "#03b00b" : "#ccc",
+                          boxShadow: isFocused ? "0 0 0 0.1px #03b00b" : "none",
+                          borderRadius: "2px",
+                          "&:hover": {
+                            borderColor: isFocused ? "#03b00b" : "#ccc",
+                            boxShadow: isFocused
+                              ? "0 0 0 0.1px #03b00b"
+                              : "none",
+                          },
+                        }),
+                        option: (base, { isFocused, isSelected }) => ({
+                          ...base,
+                          backgroundColor: isSelected
+                            ? "#03b00b"
+                            : isFocused
+                            ? "transparent"
+                            : "transparent",
+                          color: isSelected ? "white" : "inherit",
+                          cursor: "pointer",
+                        }),
+                      }}
+                    />
+                  )}
+                />
+
+                {/* Error Message */}
+                {errors.category && (
+                  <span className="text-red-500">
+                    {errors.includes.message}
+                  </span>
+                )}
+              </fieldset>
+
+              <fieldset className="fieldset col-span-2">
+                <legend className="fieldset-legend text-sm">Price*</legend>
+
+                <input
+                  {...register("price", { required: true })}
+                  type="number"
+                  className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] "
+                  placeholder="Price"
+                />
+
+                {/* Error Message */}
+                {errors.price && (
+                  <span className="text-red-500">This field is required</span>
+                )}
+              </fieldset>
+
+              <fieldset className="fieldset col-span-2">
+                <legend className="fieldset-legend text-sm">
+                  Description*
+                </legend>
+
+                <textarea
+                  {...register("description", { required: true })}
+                  className="textarea h-32 w-full input focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] px-3 resize-none overflow-hidden break-words"
+                  placeholder="Description"
+                  style={{
+                    wordWrap: "break-word",
+                    overflowWrap: "break-word",
+                    whiteSpace: "pre-wrap",
+                  }}
+                ></textarea>
+
+                {/* Error Message */}
+                {errors.description && (
+                  <span className="text-red-500">
+                    {errors.includes.message}
+                  </span>
+                )}
+              </fieldset>
+
               {/* BATTARY INFO */}
 
-              <fieldset className="col-span-2 w-full mt-3">
+              <fieldset className="col-span-2 w-full mt-5">
                 <strong className="text-[#03b00b]">
                   Battery Specification
                 </strong>
@@ -443,10 +554,16 @@ export default function AddGadget() {
               </fieldset>
             </div>
 
-            <input
-              className="bg-[#03b00b] cursor-pointer text-white py-2 w-28 mt-5"
+            <button
+              className="bg-[#03b00b] cursor-pointer text-white py-2 w-32 mt-5 rounded"
               type="submit"
-            />
+            >
+              {loading ? (
+                <span className="loading loading-dots loading-sm"></span>
+              ) : (
+                <span>Add Gadget</span>
+              )}
+            </button>
           </div>
         </div>
       </form>
