@@ -47,6 +47,7 @@ const Category = () => {
                   width={80}
                   height={80}
                   className="object-contain"
+                  priority={true}
                 />
               </div>
               <h2 className="text-lg font-semibold mt-3">{category.name}</h2>

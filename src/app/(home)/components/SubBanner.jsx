@@ -31,6 +31,7 @@ export default function SubBanner() {
                   width={500}
                   height={240}
                   alt="Img"
+                  priority={true}
                 />
                 <div className="grid grid-cols-2 absolute top-[50%] translate-y-[-50%] right-4 sm:right-8 xl:right-2">
                   <div></div>

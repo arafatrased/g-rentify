@@ -6,7 +6,7 @@ const WhoWeAre = () => {
     <div id='who_we_are' className='my-20'>
       <div className="container mx-auto flex items-center lg:gap-20 gap-10 flex-col lg:flex-row">
         <div className='lg:w-6/12 overflow-hidden'>
-          <Image className='w-full rounded-lg' src={whoWeAreGadgetImg} alt='who we are' />
+          <Image className='w-full rounded-lg' src={whoWeAreGadgetImg} alt='who we are' priority={true} />
         </div>
         <div className='flex-1'>
           <h2 className='font-bold text-4xl mb-5'>Who We are?</h2>
