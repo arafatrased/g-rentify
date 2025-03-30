@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default async function GadgetPage() {
-  const data = await fetch("http://localhost:5000/gadgets");
+  const data = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/gadgets`);
   const gadgets = await data.json();
 
   return (

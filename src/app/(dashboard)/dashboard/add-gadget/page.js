@@ -68,7 +68,7 @@ export default function AddGadget() {
     const gadgetInfo = { ...data, images: imageUrls };
 
     const response = await axios.post(
-      "http://localhost:5000/gadget",
+      `${process.env.NEXT_PUBLIC_SERVER_LINK}/gadget`,
       gadgetInfo
     );
     if (response.data.insertedId) {

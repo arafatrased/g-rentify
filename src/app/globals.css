@@ -16,3 +16,9 @@ a {
 .swiper-pagination-bullet-active {
   background-color: #03b00b !important;
 }
+
+.swiper-button-prev:after,
+.swiper-button-next:after {
+  font-size: 25px !important;
+  color: #00B33D !important;
+}

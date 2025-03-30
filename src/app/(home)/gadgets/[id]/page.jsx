@@ -1,17 +1,53 @@
 "use client";
 import Button from "@/app/(home)/components/Button";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 export default function GadgetDetails() {
+  const { id } = useParams();
+  const [gadget, setGadget] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isExpandedSpec, setIsExpandedSpec] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
+  const [rentValue, setRentValue] = useState(null);
+
+  // Set Date three day later
+  const [endDate, setEndDate] = useState(() => {
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() + 3);
+    return currentDate;
+  });
+
+  // get single data form mongoDb
+  useEffect(() => {
+    if (!id) return;
+    fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/gadgets/${id}`)
+      .then((res) => res.json())
+      .then((data) => setGadget(data));
+  }, [id]);
+
+  // calculate how long the user want to take it for
+  const differentInDays = Math.round(
+    (endDate - startDate) / (1000 * 60 * 60 * 24)
+  );
+
+  // set default rent value in number
+  useEffect(() => {
+    if (gadget?.price) {
+      setRentValue(Number(gadget.price));
+    }
+  }, [gadget]);
+
+  // total value by day
+  const totalRentValue = rentValue * differentInDays;
 
   return (
     <main className="pt-8 pb-14">
@@ -38,32 +74,23 @@ export default function GadgetDetails() {
           {/* left item  */}
           <div className="col-span-12 xl:col-span-4 order-2 xl:order-1 flex flex-col gap-5 overflow-hidden transition-all duration-500">
             <div className="border border-gray-200 p-3 rounded overflow-hidden transition-all duration-300">
-              <h4 className="text-xl font-semibold">Rent product name</h4>
+              <h4 className="text-xl font-semibold">{gadget?.title}</h4>
               <p
                 className={`${
                   isExpanded ? "max-h-auto" : "max-h-[120px] overflow-hidden"
                 }`}
               >
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto
-                id est facilis harum explicabo, eaque, repudiandae in illo optio
-                assumenda quos voluptate eligendi, molestias nostrum! Sapiente
-                saepe reprehenderit porro possimus. Lorem, ipsum dolor sit amet
-                consectetur adipisicing elit. Error quo sint eius ullam delectus
-                voluptates dignissimos temporibus, in accusamus consequuntur cum
-                sunt, corrupti quae distinctio aut tempore! Praesentium,
-                repellat maxime? Lorem ipsum dolor sit amet consectetur,
-                adipisicing elit. Itaque harum minus assumenda enim architecto
-                quod adipisci illo dolores, tenetur laborum corrupti culpa
-                sapiente, blanditiis, nesciunt quisquam ex omnis similique
-                labore.
+                {gadget?.description}
               </p>
 
-              <button
-                onClick={() => setIsExpanded(!isExpanded)}
-                className="mt-2 text-[#03b00b] hover:underline cursor-pointer"
-              >
-                {isExpanded ? "See Less" : "See More"}
-              </button>
+              {gadget?.description.length > 300 && (
+                <button
+                  onClick={() => setIsExpanded(!isExpanded)}
+                  className="mt-2 text-[#03b00b] hover:underline cursor-pointer"
+                >
+                  {isExpanded ? "See Less" : "See More"}
+                </button>
+              )}
             </div>
 
             <div className=" border border-gray-200 p-3 rounded h-fit">
@@ -91,61 +118,46 @@ export default function GadgetDetails() {
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Sensor
                       </th>
-                      <td className="py-[3px]">
-                        1” CMOS Effective Pixels: 20 million sdfasdf as asdfas
-                        sadfasdf sdf
-                      </td>
+                      <td className="py-[3px]">{gadget?.sensor}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         ISO Range
                       </th>
-                      <td className="py-[3px]">
-                        1” CMOS Effective Pixels: 20 million
-                      </td>
+                      <td className="py-[3px]">{gadget?.iso_range}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Still Image Size
                       </th>
-                      <td className="py-[3px]">
-                        1” CMOS Effective Pixels: 20 million
-                      </td>
+                      <td className="py-[3px]">{gadget?.still_image_size}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Video Resolution
                       </th>
-                      <td className="py-[3px]">
-                        1” CMOS Effective Pixels: 20 million
-                      </td>
+                      <td className="py-[3px]">{gadget?.video_resolution}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Max Video Bitrate
                       </th>
-                      <td className="py-[3px]">
-                        1” CMOS Effective Pixels: 20 million
-                      </td>
+                      <td className="py-[3px]">{gadget?.max_video_bitrate}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Photo Format
                       </th>
-                      <td className="py-[3px]">
-                        1” CMOS Effective Pixels: 20 million
-                      </td>
+                      <td className="py-[3px]">{gadget?.photo_format}</td>
                     </tr>
                     <tr className="border-b">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Video Format
                       </th>
-                      <td className="py-[3px]">
-                        1” CMOS Effective Pixels: 20 million
-                      </td>
+                      <td className="py-[3px]">{gadget?.video_format}</td>
                     </tr>
                     {/* battery section */}
-                    <tr className="border-b-0 relative top-3">
+                    <tr className="border-b-0 relative top-1">
                       <th
                         colSpan={2}
                         className="font-medium uppercase text-base text-start px-0"
@@ -157,49 +169,53 @@ export default function GadgetDetails() {
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Capacity
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">{gadget?.capacity}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Voltage
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">{gadget?.voltage}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Max Charging Voltage
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">
+                        {gadget?.max_charging_voltage}
+                      </td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Battery Type
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">{gadget?.battery_type}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Energy
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">{gadget?.energy}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Net Weight
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">{gadget?.net_weight}</td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Charging Temperature Range
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">
+                        {gadget?.charging_temperature_range}
+                      </td>
                     </tr>
                     <tr className="border-b-0">
                       <th className="text-start text-[15px] text-[#17080c] font-medium py-[3px] pl-0">
                         Max Charging Power
                       </th>
-                      <td className="py-[3px]">3850 mAh</td>
+                      <td className="py-[3px]">{gadget?.max_charging_power}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -214,23 +230,33 @@ export default function GadgetDetails() {
           </div>
           {/* center item  */}
           <div className="col-span-12 xl:col-span-5 order-1 xl:order-2 border border-gray-200 p-3 rounded h-fit">
-            <Image
-              src={
-                "https://i.ibb.co.com/FkfhkxMT/H7897f47494e04d7b9014899f29963bb3-Q-jpg-720x720q50.png"
-              }
-              width={500}
-              height={500}
-              alt="img"
-              className="mx-auto"
-              priority={true}
-            />
+            <Swiper
+              navigation={true}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              {gadget?.images.map((item, idx) => (
+                <SwiperSlide key={idx}>
+                  <Image
+                    src={item}
+                    width={500}
+                    height={500}
+                    alt={gadget?.title}
+                    className="mx-auto"
+                    priority={true}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
             {/* includes section */}
             <h4 className="text-xl font-semibold mt-10 mb-2">Includes</h4>
             <ul>
-              <li className="ml-10 list-disc">Item</li>
-              <li className="ml-10 list-disc">Item</li>
-              <li className="ml-10 list-disc">Item</li>
-              <li className="ml-10 list-disc">Item</li>
+              {gadget?.includes.map((item, idx) => (
+                <li key={idx} className="list-disc ml-10">
+                  {item?.label}
+                </li>
+              ))}
             </ul>
           </div>
           {/* right item  */}
@@ -238,7 +264,7 @@ export default function GadgetDetails() {
             <div className="border border-gray-200 p-3 rounded h-fit text-center mb-5">
               <h4 className="text-xl font-bold">Set Rental Date</h4>
               <h4 className="text-xl font-semibold text-gray-800 my-3">
-                $128.00 / 7 Days
+                ${totalRentValue} / {differentInDays} Days
               </h4>
               <p className="text-base font-medium mb-1">Arrival Date:</p>
               <DatePicker
@@ -279,6 +305,7 @@ export default function GadgetDetails() {
                 selectsStart
                 startDate={startDate}
                 endDate={endDate}
+                minDate={new Date()}
                 className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-1"
               />
               <p className="text-base font-medium mb-1">Return Date:</p>
@@ -320,7 +347,8 @@ export default function GadgetDetails() {
                 selectsEnd
                 startDate={startDate}
                 endDate={endDate}
-                minDate={startDate}
+                minDate={new Date().setDate(new Date().getDate() + 3)}
+                maxDate={new Date().setDate(new Date().getDate() + 30)}
                 className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-3"
               />
               <div>
