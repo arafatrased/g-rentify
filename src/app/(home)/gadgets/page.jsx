@@ -5,6 +5,7 @@ import Image from "next/image";
 export default async function GadgetPage() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/gadgets`);
   const gadgets = await data.json();
+  console.log(gadgets);
 
   return (
     <main className="pt-8 pb-14">
@@ -91,7 +92,7 @@ export default async function GadgetPage() {
                       className="max-w-[150px] lg:max-w-[200px] mx-auto"
                     />
                   </div>
-                  <p className="text-gray-500">{item?.category.label}</p>
+                  <p className="text-gray-500">{item?.category?.label}</p>
                   <Link href={`/gadgets/${item?._id}`}>
                     <h3 className="font-semibold text-[#17080c] hover:text-[#00B22C] duration-300 cursor-pointer">
                       {item?.title?.substring(0, 62)}

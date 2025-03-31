@@ -42,12 +42,12 @@ export default function AddGadget() {
       return toast.error("You can add maximum three images!");
     if (selectedImages.length === 1)
       return toast.error("Add minimum two images!");
-    const API_KEY = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
+    const api_key = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
     const imageUrls = await Promise.all(
       selectedImages.map(async (file) => {
         const formData = new FormData();
-        formData.append("key", API_KEY);
+        formData.append("key", api_key);
         formData.append(
           "image",
           await new Promise((res) => {
