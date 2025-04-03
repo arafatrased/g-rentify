@@ -41,11 +41,10 @@ const Navbar = () => {
         {/* Product Mega Menu */}
         <Link href={"/gadgets"}>
           <li
-            className={`${
-              isProductHover
+            className={`${isProductHover
                 ? "text-[#03b00b]"
                 : " text-gray-600"
-            } flex items-center gap-[5px] cursor-pointer relative`}
+              } flex items-center gap-[5px] cursor-pointer relative`}
             onMouseEnter={() => setIsProductHover(true)}
             onMouseLeave={() => setIsProductHover(false)}
           >
@@ -147,23 +146,30 @@ const Navbar = () => {
             onClick={() => setAccountMenuOpen(!accountMenuOpen)}
             className="flex items-center gap-2 cursor-pointer"
           >
-            {userSession?.user?.image ? (<><Image src={userSession.user.image} width={40} height={40} className="rounded-full" alt="user-Image"/></>):(<FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />)}
+            {userSession?.user?.image ? (<><Image src={userSession.user.image} width={40} height={40} className="rounded-full" alt="user-Image" /></>) : (<FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />)}
             <IoIosArrowDown
-              className={`transition-all duration-300 ${
-                accountMenuOpen ? "rotate-180" : ""
-              }`}
+              className={`transition-all duration-300 ${accountMenuOpen ? "rotate-180" : ""
+                }`}
             />
           </button>
         )}
 
+        {/* toggle account menu */}
+
         {accountMenuOpen && (
           <div className="bg-white z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
-            <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-              <FiUser /> View Profile
-            </p>
-            <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+            <Link href={'/dashboard/view-profile'}>
+              <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                <FiUser /> View Profile
+              </p>
+            </Link>
+            <Link href={'/dashboard/settings'}>
+              <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                <IoSettingsOutline /> Settings
+              </p></Link>
+            {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
               <IoSettingsOutline /> Settings
-            </p>
+            </p> */}
             <button
               onClick={() => signOut()}
               className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer"

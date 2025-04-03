@@ -33,7 +33,7 @@ export default function Sidebar() {
   const userLinks = (
     <>
       <li>
-        <Link href={"/dashboard/settings"} className="flex justify-between items-center">
+        <Link href={"/dashboard/view-profile"} className="flex justify-between items-center">
           <span className="flex items-center gap-1">
             <FiUser />
            View Profile
@@ -42,7 +42,7 @@ export default function Sidebar() {
         </Link>
       </li>
       <li>
-        <Link href={"/dashboard/profile"} className="flex justify-between items-center">
+        <Link href={"/dashboard/settings"} className="flex justify-between items-center">
           <span className="flex items-center gap-1">
             <IoSettingsOutline />
             Settings
