@@ -32,12 +32,15 @@ export default function Sidebar() {
   return (
     <div className="bg-[#03b00b]  w-[250px] min-h-screen">
       <div className="p-3 sticky top-0">
-        <h1 className="italic text-center text-2xl font-medium text-white mb-5">
-          G-Rentify
-        </h1>
+        <Link href={"/"}>
+          <h1 className="italic text-center text-2xl font-medium text-white mb-5">
+            G-Rentify
+          </h1>
+        </Link>
+
         <div className="w-full h-[1px] bg-green-600 my-2"></div>
         <p className="text-[12px] text-gray-200">Dashboard & App</p>
-        <ul className="text-[#edf5ff] mt-5 space-y-2">{links}</ul>
+        <ul className="text-[#edf5ff] mt-5 space-y-4">{links}</ul>
       </div>
     </div>
   );

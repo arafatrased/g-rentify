@@ -4,6 +4,7 @@ import Sidebar from "./components/Sidebar";
 import DashboardNavbar from "./components/DashboardNavbar";
 import DashboardFooter from "./components/DashboardFooter";
 import { Toaster } from "react-hot-toast";
+import NextAuthProviders from "@/Providers/NextAuthProviders";
 
 //Poppins Front
 const poppins = Poppins({
@@ -20,38 +21,40 @@ export const metadata = {
 export default function DashboardLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
-      <body className={`${poppins.className}`}>
-        <div className="flex">
-          <Sidebar />
-          <div className="bg-[#EEF0FB] w-[calc(100%-250px)]">
-            <DashboardNavbar />
-            <Toaster
-              toastOptions={{
-                // Define default options
-                className: "",
-                duration: 3000,
-                removeDelay: 500,
-                style: {
-                  background: "#03b00b",
-                  color: "#fff",
-                  borderRadius: "2px",
-                },
-
-                // Default options for specific types
-                success: {
+      <NextAuthProviders>
+        <body className={`${poppins.className}`}>
+          <div className="flex">
+            <Sidebar />
+            <div className="bg-[#EEF0FB] w-[calc(100%-250px)]">
+              <DashboardNavbar />
+              <Toaster
+                toastOptions={{
+                  // Define default options
+                  className: "",
                   duration: 3000,
-                  iconTheme: {
-                    primary: "white",
-                    secondary: "#03b00b",
+                  removeDelay: 500,
+                  style: {
+                    background: "#03b00b",
+                    color: "#fff",
+                    borderRadius: "2px",
                   },
-                },
-              }}
-            />
-            {children}
-            <DashboardFooter />
+
+                  // Default options for specific types
+                  success: {
+                    duration: 3000,
+                    iconTheme: {
+                      primary: "white",
+                      secondary: "#03b00b",
+                    },
+                  },
+                }}
+              />
+              {children}
+              <DashboardFooter />
+            </div>
           </div>
-        </div>
-      </body>
+        </body>
+      </NextAuthProviders>
     </html>
   );
 }

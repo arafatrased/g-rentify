@@ -90,21 +90,21 @@ const Navbar = () => {
         </Link>
 
         {/* Other Nav Items */}
-        <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
           <AiOutlineFire className="text-[1.1rem]" />
           Features
         </li>
-        <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
           <BiSupport className="text-[1.1rem]" />
           Support
         </li>
-        <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
           <Link href="/contactus" className="flex items-center">
             <CiMail className="text-[1.1rem]" />
             Contacts
           </Link>
         </li>
-        <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
           <Link href="/about" className="flex items-center">
             <TbListDetails className="text-[1.1rem]" />
             About Us
@@ -127,9 +127,9 @@ const Navbar = () => {
             <p className="text-gray-600 text-[0.9rem]">
               {userSession?.user?.name}
             </p>
-            <p className="text-gray-600 text-[0.9rem]">
+            {/* <p className="text-gray-600 text-[0.9rem]">
              <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
-            </p>
+            </p> */}
           </div>
         ) : (
           <div className="flex gap-2">
@@ -147,7 +147,7 @@ const Navbar = () => {
             onClick={() => setAccountMenuOpen(!accountMenuOpen)}
             className="flex items-center gap-2 cursor-pointer"
           >
-            {userSession.user.image ? (<><Image src={userSession.user.image} width={40} height={40} className="rounded-full" alt="user-Image"/></>):(<FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />)}
+            {userSession?.user?.image ? (<><Image src={userSession.user.image} width={40} height={40} className="rounded-full" alt="user-Image"/></>):(<FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />)}
             <IoIosArrowDown
               className={`transition-all duration-300 ${
                 accountMenuOpen ? "rotate-180" : ""
