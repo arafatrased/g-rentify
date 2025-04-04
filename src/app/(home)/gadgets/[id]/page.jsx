@@ -74,7 +74,9 @@ export default function GadgetDetails() {
           {/* left item  */}
           <div className="col-span-12 xl:col-span-4 order-2 xl:order-1 flex flex-col gap-5 overflow-hidden transition-all duration-500">
             <div className="border border-gray-200 p-3 rounded overflow-hidden transition-all duration-300">
-              <h4 className="text-xl font-semibold">{gadget?.title}</h4>
+              <h4 className="text-xl font-semibold mb-2">
+                Rent a {gadget?.title}
+              </h4>
               <p
                 className={`${
                   isExpanded ? "max-h-auto" : "max-h-[120px] overflow-hidden"
@@ -86,7 +88,7 @@ export default function GadgetDetails() {
               {gadget?.description.length > 300 && (
                 <button
                   onClick={() => setIsExpanded(!isExpanded)}
-                  className="mt-2 text-[#03b00b] hover:underline cursor-pointer"
+                  className="text-[#03b00b] hover:underline cursor-pointer mt-2"
                 >
                   {isExpanded ? "See Less" : "See More"}
                 </button>
@@ -111,7 +113,7 @@ export default function GadgetDetails() {
                         colSpan={2}
                         className="font-medium uppercase text-base text-start px-0"
                       >
-                        Camera
+                        {gadget?.category?.label}
                       </th>
                     </tr>
                     <tr className="border-b-0">
@@ -222,7 +224,7 @@ export default function GadgetDetails() {
               </div>
               <button
                 onClick={() => setIsExpandedSpec(!isExpandedSpec)}
-                className="mt-3 text-[#03b00b] hover:underline cursor-pointer text-start"
+                className="text-[#03b00b] hover:underline cursor-pointer mt-2"
               >
                 {isExpandedSpec ? "See Less" : "See More"}
               </button>

@@ -29,8 +29,6 @@ export default function DashboardLayout({ children }) {
               <DashboardNavbar />
               <Toaster
                 toastOptions={{
-                  // Define default options
-                  className: "",
                   duration: 3000,
                   removeDelay: 500,
                   style: {

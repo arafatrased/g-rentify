@@ -98,7 +98,7 @@ export default async function GadgetPage() {
                     </h3>
                   </Link>
                   <p className="font-medium text-[#03b00b] mb-2">
-                    $ {item?.price || "N/A"}
+                    $ {item?.price * 3 || "N/A"} / 3 Days
                   </p>
                   <Link
                     href={`/gadgets/${item?._id}`}

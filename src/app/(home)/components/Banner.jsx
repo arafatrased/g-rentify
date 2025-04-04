@@ -1,5 +1,5 @@
 "use client";
-import img1 from "@/images/banner/image1.webp";
+import img1 from "@/images/banner/image.png";
 import img2 from "@/images/banner/image2.webp";
 import Image from "next/image";
 
