@@ -8,7 +8,7 @@ import { MdAttachEmail, MdPhoneInTalk } from "react-icons/md";
 
 export default function Footer() {
   return (
-    <footer className="pt-14 md:pt-20 pb-10 border-t border-slate-200">
+    <footer className="pt-14 md:pt-20 pb-5 border-t border-slate-200">
       {/* wrapper container  */}
       <div className="container mx-auto px-2 mb-10">
         {/* wrapper gird  */}
@@ -16,7 +16,7 @@ export default function Footer() {
           {/* card 1 */}
           <div>
             <Image src={logo} alt="footer logo" className="w-52" priority={true}/>
-            <p className="text-lg text-justify">
+            <p >
               We envision a future where everyone can experience cutting-edge
               technology without financial barriers. By promoting gadget
               rentals, we aim to reduce e-waste and create a smarter, more
@@ -26,7 +26,7 @@ export default function Footer() {
           {/* card 2 */}
           <div className="max-w-fit">
             <h3 className="text-2xl font-semibold mb-5">Useful Links</h3>
-            <ul className="flex flex-col gap-4 font-medium text-lg">
+            <ul className="flex flex-col gap-3 font-medium">
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>About Renity</Link>
               </li>
@@ -44,7 +44,7 @@ export default function Footer() {
           {/* card 3 */}
           <div className="max-w-fit">
             <h3 className="text-2xl font-semibold mb-5">Explore Renity</h3>
-            <ul className="flex flex-col gap-4 font-medium text-lg">
+            <ul className="flex flex-col gap-3 font-medium">
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={""}>Read FAQ’s</Link>
               </li>
@@ -62,7 +62,7 @@ export default function Footer() {
           {/* card 4 */}
           <div className="max-w-fit">
             <h3 className="text-2xl font-semibold mb-5">Contact us</h3>
-            <ul className="flex flex-col gap-4 font-medium text-lg">
+            <ul className="flex flex-col gap-3 font-medium">
               <li className="flex gap-3">
                 <span>
                   <GrMapLocation className="text-3xl" />
@@ -89,26 +89,26 @@ export default function Footer() {
       </div>
 
       {/* copy right  */}
-      <div className="border-t border-slate-200 pt-10">
+      <div className="border-t border-slate-200 pt-5">
         <div className="container mx-auto px-3 flex flex-col md:flex-row  items-center justify-between gap-5">
           <p>© 2025 G-Rentify. All Rights Reserved. Terms & Conditions</p>
           <ul className="flex gap-5">
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
+            <li className="border w-9 h-9 rounded-full flex justify-center items-center c3rsor-pointer hover:text-[#03b00b] transition-all">
               <a href="">
                 <FaFacebookF />
               </a>
             </li>
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
+            <li className="border w-9 h-9 rounded-full flex justify-center items-center c3rsor-pointer hover:text-[#03b00b] transition-all">
               <a href="">
                 <FaTwitter />
               </a>
             </li>
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
+            <li className="border w-9 h-9 rounded-full flex justify-center items-center c3rsor-pointer hover:text-[#03b00b] transition-all">
               <a href="">
                 <FaGoogle />
               </a>
             </li>
-            <li className="border w-10 h-10 rounded-full flex justify-center items-center cursor-pointer text-xl hover:text-[#03b00b] transition-all">
+            <li className="border w-9 h-9 rounded-full flex justify-center items-center c3rsor-pointer hover:text-[#03b00b] transition-all">
               <a href="">
                 <IoShareSocial />
               </a>
