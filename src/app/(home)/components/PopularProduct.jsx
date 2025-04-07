@@ -54,7 +54,7 @@ export default async function PopularProduct() {
 
   const data = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/gadgets`);
   const gadgets = await data.json();
-  console.log(gadgets);
+
   return (
     <section className="py-14">
       <div className="container mx-auto px-3">

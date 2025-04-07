@@ -92,9 +92,9 @@ export default function Sidebar() {
         <div className="w-full h-[1px] bg-[#dddddd] my-2.5"></div>
         <p className="text-[12px] text-[#2c2c2c]">Dashboard & App</p>
         <div className="flex flex-col gap-2 mt-2 justify-between min-h-[80vh]">
-          <ul className="text-[#2c2c2c] mt-5 space-y-4">{links}</ul>
+          <ul className="text-[#2c2c2c] mt-5 space-y-2">{links}</ul>
           <div className="flex-1"></div>
-          <ul className="text-[#2c2c2c] mt-5 space-y-4">{userLinks}</ul>
+          <ul className="text-[#2c2c2c] mt-5 space-y-2">{userLinks}</ul>
         </div>
       </div>
     </div>

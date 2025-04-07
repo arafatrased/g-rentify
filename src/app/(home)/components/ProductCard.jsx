@@ -5,7 +5,6 @@ import Button from "./Button";
 import "font-awesome/css/font-awesome.min.css";
 
 export default function ProductCard({ item }) {
-  console.log(item);
   return (
     <div className="group">
       <div className="w-full border border-gray-200 rounded mb-2 p-2">
