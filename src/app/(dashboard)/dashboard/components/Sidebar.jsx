@@ -5,9 +5,12 @@ import { FiUser, FiHome } from "react-icons/fi";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { TbPlaylistAdd } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
+import { useSession } from "next-auth/react";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const session = useSession();
+  const {data: sessionUser} = session;
 
   const isActive = (href) => pathname === href;
 
