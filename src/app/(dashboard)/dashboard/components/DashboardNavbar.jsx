@@ -6,8 +6,8 @@ export default function DashboardNavbar() {
   const session = useSession();
   const { data: userSession, status } = session;
   return (
-    <div className="flex justify-between items-center p-3 bg-[#EEF0FB] border-b border-gray-300">
-      <div>
+    <div className="flex justify-end items-center p-3 bg-[#EEF0FB] border-b border-gray-300">
+      <div className="flex flex-col justify-end items-end mr-4">
         <h1 className="text-sm">Welcome, {userSession?.user?.name} </h1>
         <h1><span className="text-green-600 uppercase">{userSession?.user?.role}</span> Dashboard</h1>
       </div>
