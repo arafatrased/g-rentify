@@ -7,6 +7,8 @@ import toast from "react-hot-toast";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import axios from "axios";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const animatedComponents = makeAnimated();
 
@@ -30,6 +32,14 @@ const categoryOption = [
 export default function AddGadget() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const session = useSession();
+  const gadgetAddedPerson = [
+    { itemAddedUser: session?.data?.user?.name },
+    { itemAddedEmail: session?.data?.user?.email },
+  ];
+  console.log(gadgetAddedPerson);
+
+  // react hook form function
   const {
     register,
     handleSubmit,
@@ -38,6 +48,7 @@ export default function AddGadget() {
     formState: { errors },
   } = useForm();
 
+  // submit form function
   const onSubmit = async (data) => {
     setLoading(true);
     if (selectedImages.length === 0)
@@ -48,6 +59,7 @@ export default function AddGadget() {
       return toast.error("Add minimum two images!");
     const api_key = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
 
+    // upload image imgbb hostion server
     const imageUrls = await Promise.all(
       selectedImages.map(async (file) => {
         const formData = new FormData();
@@ -69,8 +81,10 @@ export default function AddGadget() {
       })
     );
 
-    const gadgetInfo = { ...data, images: imageUrls };
+    // get all data
+    const gadgetInfo = { ...data, images: imageUrls, gadgetAddedPerson };
 
+    // post all data in mongoDB
     const response = await axios.post(
       `${process.env.NEXT_PUBLIC_SERVER_LINK}/gadget`,
       gadgetInfo
@@ -79,6 +93,7 @@ export default function AddGadget() {
       setLoading(false);
       reset();
       toast.success("Gadget added successfully!");
+      redirect("/dashboard");
     } else {
       setLoading(false);
       toast.error("Faild to added gadget!");
@@ -356,6 +371,7 @@ export default function AddGadget() {
                     <Select
                       {...field}
                       options={categoryOption}
+                      isSearchable={false}
                       classNamePrefix="select"
                       styles={{
                         control: (baseStyles, { isFocused }) => ({

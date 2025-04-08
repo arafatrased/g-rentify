@@ -14,7 +14,7 @@ export default function ProductCard({ item }) {
           width={720}
           height={720}
           alt={item?.title}
-          className="max-w-[150px] lg:max-w-[200px] mx-auto"
+          className="max-w-[150px] lg:max-w-[200px] h-[200px] mx-auto"
         />
       </div>
       <p className="text-gray-500">{item?.category?.label}</p>

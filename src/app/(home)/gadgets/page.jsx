@@ -82,14 +82,16 @@ export default async function GadgetPage() {
               {gadgets.map((item) => (
                 <div key={item._id} className="group">
                   <div className="w-full border border-gray-200 rounded mb-2 p-2">
-                    <Image
-                      src={item?.images[0]}
-                      width={720}
-                      height={720}
-                      alt={item?.title}
-                      priority={true}
-                      className="max-w-[150px] lg:max-w-[200px] mx-auto"
-                    />
+                    <Link href={`/gadgets/${item?._id}`}>
+                      <Image
+                        src={item?.images[0]}
+                        width={720}
+                        height={720}
+                        alt={item?.title}
+                        priority={true}
+                        className="max-w-[150px] lg:max-w-[200px] min-h-[200px] mx-auto object-cover"
+                      />
+                    </Link>
                   </div>
                   <p className="text-gray-500">{item?.category?.label}</p>
                   <Link href={`/gadgets/${item?._id}`}>
