@@ -29,7 +29,7 @@ const RegistrarForm = ({ regiTitle, role }) => {
       password,
       role: role,
     };
-    console.log(payload);
+    
     const registrarSingleUser = await registrarUser(payload);
     if (registrarSingleUser.insertedId) {
       toast.success("User registered successfully");

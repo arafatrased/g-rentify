@@ -41,7 +41,6 @@ const LoginForm = () => {
     if (result.error) {
       toast.error("Google login failed. Please try again.");
     }
-    console.log(result);
   };
 
   return (
