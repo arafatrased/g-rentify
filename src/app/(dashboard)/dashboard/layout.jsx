@@ -23,9 +23,10 @@ export default function DashboardLayout({ children }) {
     <html lang="en" data-theme="light">
       <NextAuthProviders>
         <body className={`${poppins.className}`}>
-          <div className="flex">
+          <div className="flex lg:relative">
             <Sidebar />
-            <div className="bg-[#EEF0FB] w-[calc(100%-250px)]">
+
+            <div className="bg-[#EEF0FB] w-full lg:w-[calc(100%-250px)]">
               <DashboardNavbar />
               <Toaster
                 toastOptions={{
@@ -47,7 +48,7 @@ export default function DashboardLayout({ children }) {
                   },
                 }}
               />
-              {children}
+              <div className="mt-[69px] lg:mt-0">{children}</div>
               <DashboardFooter />
             </div>
           </div>

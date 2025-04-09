@@ -6,11 +6,14 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { TbPlaylistAdd } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useSession } from "next-auth/react";
+import { useState } from "react";
+import { Sling as Hamburger } from "hamburger-react";
 
 export default function Sidebar() {
+  const [isOpen, setOpen] = useState(false);
   const pathname = usePathname();
   const session = useSession();
-  const {data: sessionUser} = session;
+  const { data: sessionUser } = session;
 
   const isActive = (href) => pathname === href;
 
@@ -84,22 +87,37 @@ export default function Sidebar() {
   );
 
   return (
-    <div className="bg-[#f4f4f4] w-[250px] min-h-screen">
-      <div className="p-3 sticky top-0">
-        <Link href="/">
-          <h1 className="italic text-center text-2xl font-medium text-[#03b00b] mb-5.5">
-            G-Rentify
-          </h1>
-        </Link>
+    <>
+      {/* Hamburger icon */}
+      <div className="fixed top-3 bg-transparent left-0 lg:hidden z-50">
+        <Hamburger size={22} toggled={isOpen} toggle={setOpen} />
+      </div>
 
-        <div className="w-full h-[1px] bg-[#dddddd] my-2.5"></div>
-        <p className="text-[12px] text-[#2c2c2c]">Dashboard & App</p>
-        <div className="flex flex-col gap-2 mt-2 justify-between min-h-[80vh]">
-          <ul className="text-[#2c2c2c] mt-5 space-y-2">{links}</ul>
-          <div className="flex-1"></div>
-          <ul className="text-[#2c2c2c] mt-5 space-y-2">{userLinks}</ul>
+      {/* Sidebar */}
+      <div
+        className={`
+          bg-[#f4f4f4] fixed lg:static top-[70px] left-0 w-[250px] min-h-screen z-50
+          transform transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          lg:translate-x-0 lg:block
+        `}
+      >
+        <div className="p-3 sticky top-0">
+          <Link href="/">
+            <h1 className="italic text-center text-2xl font-medium text-[#03b00b] mb-5.5 hidden lg:block">
+              G-Rentify
+            </h1>
+          </Link>
+
+          <div className="w-full h-[1px] bg-[#dddddd] my-2.5 hidden lg:block"></div>
+          <p className="text-[12px] text-[#2c2c2c]">Dashboard & App</p>
+          <div className="flex flex-col gap-2 mt-2 justify-between min-h-[80vh]">
+            <ul className="text-[#2c2c2c] mt-5 space-y-2">{links}</ul>
+            <div className="flex-1"></div>
+            <ul className="text-[#2c2c2c] mt-5 space-y-2">{userLinks}</ul>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
