@@ -25,34 +25,34 @@ const Navbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
-    <nav className="flex items-center sticky top-0 z-40 backdrop-blur-3xl justify-between w-full px-6 py-4 border-b border-gray-300">
-      {/* Logo */}
-      <Link href="/">
-        <img
-          src="https://i.ibb.co.com/rK6KHcNd/g-rentify.png"
-          alt="logo"
-          className="w-[155px]"
-          loading="eager"
-        />
-      </Link>
+    <div className="border-b border-gray-300 relative">
+      <nav className="flex items-center sticky top-0 z-40 backdrop-blur-3xl justify-between w-full py-4 container mx-auto px-2">
+        {/* Logo */}
+        <Link href="/">
+          <img
+            src="https://i.ibb.co.com/rK6KHcNd/g-rentify.png"
+            alt="logo"
+            className="w-[155px]"
+            loading="eager"
+          />
+        </Link>
 
-      {/* Nav Links */}
-      <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
-        {/* Product Mega Menu */}
-        <Link href={"/gadgets"}>
-          <li
-            className={`${isProductHover
-                ? "text-[#03b00b]"
-                : " text-gray-600"
+        {/* Nav Links */}
+        <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
+          {/* Product Mega Menu */}
+          <Link href={"/gadgets"}>
+            <li
+              className={`${
+                isProductHover ? "text-[#03b00b]" : " text-gray-600"
               } flex items-center gap-[5px] cursor-pointer relative`}
-            onMouseEnter={() => setIsProductHover(true)}
-            onMouseLeave={() => setIsProductHover(false)}
-          >
-            <MdLaptopMac className="text-[1.1rem]" />
-            Gadgets
-            {/* <IoIosArrowUp className={`transition-all duration-300 ${isProductHover ? "rotate-0" : "rotate-180"}`} /> */}
-            {/* Mega Menu */}
-            {/* {isProductHover && (
+              onMouseEnter={() => setIsProductHover(true)}
+              onMouseLeave={() => setIsProductHover(false)}
+            >
+              <MdLaptopMac className="text-[1.1rem]" />
+              Gadgets
+              {/* <IoIosArrowUp className={`transition-all duration-300 ${isProductHover ? "rotate-0" : "rotate-180"}`} /> */}
+              {/* Mega Menu */}
+              {/* {isProductHover && (
             <div className="bg-white rounded-md w-[300px] absolute top-[60px] left-0 p-4 transition-all duration-300 shadow-lg">
               <h3 className="text-[1.2rem] text-gray-500 font-[500]">More Products</h3>
               <ul className="mt-2 space-y-3">
@@ -85,128 +85,143 @@ const Navbar = () => {
               </ul>
             </div>
           )} */}
+            </li>
+          </Link>
+
+          {/* Other Nav Items */}
+          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+            <AiOutlineFire className="text-[1.1rem]" />
+            Features
           </li>
-        </Link>
-
-        {/* Other Nav Items */}
-        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-          <AiOutlineFire className="text-[1.1rem]" />
-          Features
-        </li>
-        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-          <BiSupport className="text-[1.1rem]" />
-          Support
-        </li>
-        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-          <Link href="/contactus" className="flex items-center">
-            <CiMail className="text-[1.1rem]" />
-            Contacts
-          </Link>
-        </li>
-        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-          <Link href="/about" className="flex items-center">
-            <TbListDetails className="text-[1.1rem]" />
-            About Us
-          </Link>
-        </li>
-        {
-          status === "authenticated" && (<li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
-            <Link href="/dashboard" className="flex items-center">
-              <MdDashboard className="text-[1.1rem]" />
-              Dashboard
+          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+            <BiSupport className="text-[1.1rem]" />
+            Support
+          </li>
+          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+            <Link href="/contactus" className="flex items-center">
+              <CiMail className="text-[1.1rem]" />
+              Contacts
             </Link>
-          </li>)
-        }
-      </ul>
+          </li>
+          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+            <Link href="/about" className="flex items-center">
+              <TbListDetails className="text-[1.1rem]" />
+              About Us
+            </Link>
+          </li>
+          {status === "authenticated" && (
+            <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+              <Link href="/dashboard" className="flex items-center">
+                <MdDashboard className="text-[1.1rem]" />
+                Dashboard
+              </Link>
+            </li>
+          )}
+        </ul>
 
-      {/* Account Menu for navbar */}
-      <div className="relative flex gap-4 items-center">
-        {status === "authenticated" ? (
-          <div className="flex flex-col items-end gap-1">
-            <p className="text-gray-600 text-[0.9rem]">
-              {userSession?.user?.name}
-            </p>
-            {/* <p className="text-gray-600 text-[0.9rem]">
+        {/* Account Menu for navbar */}
+        <div className="relative flex gap-4 items-center">
+          {status === "authenticated" ? (
+            <div className="flex flex-col items-end gap-1">
+              <p className="text-gray-600 text-[0.9rem]">
+                {userSession?.user?.name}
+              </p>
+              {/* <p className="text-gray-600 text-[0.9rem]">
              <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
             </p> */}
-          </div>
-        ) : (
-          <div className="flex gap-2">
-            <button className="cursor-pointer hover:text-[#03b00b]">
-              <Link href="/registrar">Sing up</Link>
-            </button>
-            <button className="cursor-pointer hover:text-[#03b00b]">
-              <Link href="/login">Log In</Link>
-            </button>
-          </div>
-        )}
+            </div>
+          ) : (
+            <div className="flex gap-2">
+              <button className="cursor-pointer hover:text-[#03b00b]">
+                <Link href="/registrar">Sing up</Link>
+              </button>
+              <button className="cursor-pointer hover:text-[#03b00b]">
+                <Link href="/login">Log In</Link>
+              </button>
+            </div>
+          )}
 
-        {status === "authenticated" && (
-          <button
-            onClick={() => setAccountMenuOpen(!accountMenuOpen)}
-            className="flex items-center gap-2 cursor-pointer"
-          >
-            {userSession?.user?.image ? (<><Image src={userSession.user.image} width={40} height={40} className="rounded-full" alt="user-Image" /></>) : (<FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />)}
-            <IoIosArrowDown
-              className={`transition-all duration-300 ${accountMenuOpen ? "rotate-180" : ""
+          {status === "authenticated" && (
+            <button
+              onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              {userSession?.user?.image ? (
+                <>
+                  <Image
+                    src={userSession.user.image}
+                    width={40}
+                    height={40}
+                    className="rounded-full"
+                    alt="user-Image"
+                  />
+                </>
+              ) : (
+                <FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />
+              )}
+              <IoIosArrowDown
+                className={`transition-all duration-300 ${
+                  accountMenuOpen ? "rotate-180" : ""
                 }`}
-            />
-          </button>
-        )}
+              />
+            </button>
+          )}
 
-        {/* toggle account menu */}
+          {/* toggle account menu */}
 
-        {accountMenuOpen && (
-          <div className="bg-white z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
-            <Link href={'/dashboard/view-profile'}>
-              <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                <FiUser /> View Profile
-              </p>
-            </Link>
-            <Link href={'/dashboard/settings'}>
-              <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                <IoSettingsOutline /> Settings
-              </p></Link>
-            {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+          {accountMenuOpen && (
+            <div className="bg-white z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
+              <Link href={"/dashboard/view-profile"}>
+                <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                  <FiUser /> View Profile
+                </p>
+              </Link>
+              <Link href={"/dashboard/settings"}>
+                <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                  <IoSettingsOutline /> Settings
+                </p>
+              </Link>
+              {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
               <IoSettingsOutline /> Settings
             </p> */}
+              <button
+                onClick={() => signOut()}
+                className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+              >
+                <TbLogout2 />
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Menu */}
+        <button
+          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+          className="md:hidden"
+        >
+          <CiMenuFries className="text-[2rem]" />
+        </button>
+
+        {mobileSidebarOpen && (
+          <div className="fixed top-0 left-0 bg-white w-[250px] z-[52] h-full shadow-lg p-5 transition-all duration-300">
             <button
-              onClick={() => signOut()}
-              className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+              onClick={() => setMobileSidebarOpen(false)}
+              className="absolute top-2 right-2 text-gray-600"
             >
-              <TbLogout2 />
-              Logout
+              ✖
             </button>
+            <ul className="flex bg-white flex-col space-y-4 mt-6">
+              <li className="cursor-pointer hover:text-[#03b00b]">Gadgets</li>
+              <li className="cursor-pointer hover:text-[#03b00b]">Features</li>
+              <li className="cursor-pointer hover:text-[#03b00b]">Support</li>
+              <li className="cursor-pointer hover:text-[#03b00b]">Contact</li>
+              <li className="cursor-pointer hover:text-[#03b00b]">About Us</li>
+            </ul>
           </div>
         )}
-      </div>
-
-      {/* Mobile Menu */}
-      <button
-        onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-        className="md:hidden"
-      >
-        <CiMenuFries className="text-[2rem]" />
-      </button>
-
-      {mobileSidebarOpen && (
-        <div className="fixed top-0 left-0 bg-white w-[250px] z-[52] h-full shadow-lg p-5 transition-all duration-300">
-          <button
-            onClick={() => setMobileSidebarOpen(false)}
-            className="absolute top-2 right-2 text-gray-600"
-          >
-            ✖
-          </button>
-          <ul className="flex bg-white flex-col space-y-4 mt-6">
-            <li className="cursor-pointer hover:text-[#03b00b]">Gadgets</li>
-            <li className="cursor-pointer hover:text-[#03b00b]">Features</li>
-            <li className="cursor-pointer hover:text-[#03b00b]">Support</li>
-            <li className="cursor-pointer hover:text-[#03b00b]">Contact</li>
-            <li className="cursor-pointer hover:text-[#03b00b]">About Us</li>
-          </ul>
-        </div>
-      )}
-    </nav>
+      </nav>
+    </div>
   );
 };
 

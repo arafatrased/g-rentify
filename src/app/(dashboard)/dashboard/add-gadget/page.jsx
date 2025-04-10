@@ -27,7 +27,6 @@ const includesOption = [
 const categoryOption = [
   { value: "camera", label: "Camera" },
   { value: "drone", label: "Drone" },
-  { value: "console", label: "Gaming Console" },
 ];
 
 export default function AddGadget() {
