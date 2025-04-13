@@ -85,6 +85,9 @@ const LoginForm = () => {
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
+          <div>
+            <Link href={'/reset-password'}><li className="underline">Forgot Password?</li></Link>
+          </div>
 
           {/* Login Button */}
           <button

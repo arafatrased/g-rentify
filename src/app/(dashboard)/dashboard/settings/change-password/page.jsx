@@ -5,12 +5,14 @@ import React from 'react';
 import BreadCrumbs from '../../components/BreadCrumbs';
 
 const ChangePasswordPage = () => {
+
+
     return (
         <div className='p-4 py-5'>
             {/* breadcrumb */}
             <BreadCrumbs />
-            <div className="page-container py-16">
-                <h1 className='text-3xl md:text-3xl lg:text-4xl font-bold text-center'>Want to change your password?</h1>
+            <div className="page-container bg-white py-16">
+                <h1 className='text-2xl md:text-2xl lg:text-3xl font-bold text-center'>Change your password?</h1>
 
                 <form className='w-10/12 md:w-8/12 lg:w-4/12 mx-auto'>
                     <fieldset className="fieldset mt-8 mb-3">

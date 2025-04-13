@@ -20,7 +20,8 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 p-4">
+  <div className='p-4 flex justify-center items-center h-screen bg-gray-100'>
+      <form onSubmit={handleSubmit} className="space-y-4 p-4">
       <input
         type="password"
         placeholder="New Password"
@@ -32,5 +33,6 @@ export default function ResetPasswordPage() {
       </button>
       {message && <p>{message}</p>}
     </form>
+  </div>
   );
 }
