@@ -39,7 +39,7 @@ export default function ResetPasswordPage() {
     <div className='p-4 flex justify-center items-center h-screen bg-gray-100'>
       <div className="bg-white w-10/12 md:w-8/12 lg:w-4/12 mx-auto py-16 rounded-lg">
                 <h1 className='text-2xl md:text-2xl lg:text-3xl font-bold text-center'>Change password</h1>
-
+                {/* form section turned into dev */}
                 <div className='w-full p-10 mx-auto'>
                     <fieldset className="fieldset mt-8 mb-3">
                       <label htmlFor="">New Password</label>
