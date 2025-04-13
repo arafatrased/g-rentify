@@ -1,10 +1,40 @@
-// app/(home)/reset-password/page.tsx
 'use client';
 
-import { Suspense } from 'react';
-import ResetPasswordForm from './ResetPasswordForm';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { sendPasswordResetToken } from '@/lib/passReset';
+
+
 
 export default function ResetPasswordPage() {
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
+  const router = useRouter();
+
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!password || !confirmPassword) {
+      setError('Please fill in all fields');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    // Call the API to send the password reset token
+    const result = await sendPasswordResetToken(token, password);
+    setMessage(result.message);
+    if (result.message === 'Password updated successfully') {
+      router.push('/login');
+    }
+  };
+
   return (
     <div className='p-4 flex justify-center items-center h-screen bg-gray-100'>
       <div className="bg-white w-10/12 md:w-8/12 lg:w-4/12 mx-auto py-16 rounded-lg">
