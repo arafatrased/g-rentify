@@ -20,14 +20,18 @@ export async function POST(req) {
         passwordResetToken: token,
         passwordResetExpires: expires,
       },
-    }
+    },
+    { upsert: true } // Create if not exists
   );
 
   const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL}/reset-password?token=${token}`;
   await sendEmail({
     to: email,
     subject: 'Reset Your Password',
-    html: `<p>Click <a href="${resetUrl}">here</a> to reset your password.</p>`,
+    html: `<p>Click <a href="${resetUrl}">here</a> to reset your password.</p>
+    <p>This link will expire in 1 hour.</p>
+    <p>If you did not request this, please ignore this email.</p>
+    <p>Thank you!</p>`,
   });
 
   return NextResponse.json({ message: 'Reset link sent' });
