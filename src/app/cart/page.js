@@ -2,14 +2,57 @@
 import React, { useState } from 'react'
 import BreadCrumbs from '../(dashboard)/dashboard/components/BreadCrumbs'
 import DatePicker from 'react-datepicker'
-import Button from '../(home)/components/Button'
 import "react-datepicker/dist/react-datepicker.css";
-import Label from 'daisyui/components/label'
+
+import { Button } from "@/components/ui/button"
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
 
 const page = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date(new Date().setDate(new Date().getDate() + 3)));
+
+    const cartProducts = [
+        {
+            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
+            quantity: "10",
+            length: 7,
+            price: 250,
+        },
+        {
+            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
+            quantity: "10",
+            length: 7,
+            price: 250,
+        },
+        {
+            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
+            quantity: "10",
+            length: 7,
+            price: 250,
+        },
+        {
+            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
+            quantity: "10",
+            length: 7,
+            price: 250,
+        },
+        {
+            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
+            quantity: "10",
+            length: 7,
+            price: 250,
+        },
+    ]
 
 
     return (
@@ -72,55 +115,84 @@ const page = () => {
 
 
                                 <div className='flex items-center gap-3 flex-col lg:flex-row'>
-                                <p className="text-base font-medium mb-1">Return Date:</p>
-                                <DatePicker
-                                    showIcon
-                                    icon={
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="1em"
-                                            height="1em"
-                                            viewBox="0 0 48 48"
-                                        >
-                                            <mask id="ipSApplication0">
-                                                <g
-                                                    fill="none"
-                                                    stroke="#fff"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth="4"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        d="M40.04 22v20h-32V22"
-                                                    ></path>
-                                                    <path
-                                                        fill="#fff"
-                                                        d="M5.842 13.777C4.312 17.737 7.263 22 11.51 22c3.314 0 6.019-2.686 6.019-6a6 6 0 0 0 6 6h1.018a6 6 0 0 0 6-6c0 3.314 2.706 6 6.02 6c4.248 0 7.201-4.265 5.67-8.228L39.234 6H8.845l-3.003 7.777Z"
-                                                    ></path>
-                                                </g>
-                                            </mask>
-                                            <path
-                                                fill="currentColor"
-                                                d="M0 0h48v48H0z"
-                                                mask="url(#ipSApplication0)"
-                                            ></path>
-                                        </svg>
-                                    }
-                                    selected={endDate}
-                                    onChange={(date) => setEndDate(date)}
-                                    selectsEnd
-                                    startDate={startDate}
-                                    endDate={endDate}
-                                    minDate={new Date().setDate(new Date().getDate() + 3)}
-                                    maxDate={new Date().setDate(new Date().getDate() + 30)}
-                                    className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-3"
-                                />
+                                    <p className="text-base font-medium mb-1">Return Date:</p>
+                                    <DatePicker
+                                        showIcon
+                                        icon={
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="1em"
+                                                height="1em"
+                                                viewBox="0 0 48 48"
+                                            >
+                                                <mask id="ipSApplication0">
+                                                    <g
+                                                        fill="none"
+                                                        stroke="#fff"
+                                                        strokeLinejoin="round"
+                                                        strokeWidth="4"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            d="M40.04 22v20h-32V22"
+                                                        ></path>
+                                                        <path
+                                                            fill="#fff"
+                                                            d="M5.842 13.777C4.312 17.737 7.263 22 11.51 22c3.314 0 6.019-2.686 6.019-6a6 6 0 0 0 6 6h1.018a6 6 0 0 0 6-6c0 3.314 2.706 6 6.02 6c4.248 0 7.201-4.265 5.67-8.228L39.234 6H8.845l-3.003 7.777Z"
+                                                        ></path>
+                                                    </g>
+                                                </mask>
+                                                <path
+                                                    fill="currentColor"
+                                                    d="M0 0h48v48H0z"
+                                                    mask="url(#ipSApplication0)"
+                                                ></path>
+                                            </svg>
+                                        }
+                                        selected={endDate}
+                                        onChange={(date) => setEndDate(date)}
+                                        selectsEnd
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        minDate={new Date().setDate(new Date().getDate() + 3)}
+                                        maxDate={new Date().setDate(new Date().getDate() + 30)}
+                                        className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-3"
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div className='col-span-8  border border-[#e3e3e3] py-5 px-3 rounded-md'>
-                        dfdf
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead className="w-[100px]">Item</TableHead>
+                                    <TableHead>Qty</TableHead>
+                                    <TableHead>Length</TableHead>
+                                    <TableHead className="text-right">Subtotal</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {cartProducts.map((product, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell className="font-medium">{product.title}</TableCell>
+                                        <TableCell>{product.quantity}</TableCell>
+                                        <TableCell>{product.length}</TableCell>
+                                        <TableCell className="text-right">${product.price}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+
+                            <TableFooter>
+                                <TableRow>
+                                    <TableCell colSpan={4}>
+                                        <div className='flex justify-end'>
+                                        <Button className='bg-green-600 text-white cursor-pointer' variant="outline">Continue Shopping</Button>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            </TableFooter>
+                        </Table>
                     </div>
                 </div>
             </div>
