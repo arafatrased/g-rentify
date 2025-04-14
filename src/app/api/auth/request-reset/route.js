@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import { v4 as uuidv4 } from 'uuid';
 import sendEmail from '@/lib/sendEmail'; // nodemailer or similar
+import toast from 'react-hot-toast';
 
 export async function POST(req) {
   const { email } = await req.json();
@@ -33,6 +34,7 @@ export async function POST(req) {
     <p>If you did not request this, please ignore this email.</p>
     <p>Thank you!</p>`,
   });
+  toast.success('Reset link sent to your email! Please check your inbox.');
 
   return NextResponse.json({ message: 'Reset link sent' });
 }
