@@ -34,7 +34,6 @@ export async function POST(req) {
     <p>If you did not request this, please ignore this email.</p>
     <p>Thank you!</p>`,
   });
-  toast.success('Reset link sent to your email! Please check your inbox.');
 
   return NextResponse.json({ message: 'Reset link sent' });
 }

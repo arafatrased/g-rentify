@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { sendPasswordResetToken } from '@/lib/passReset';
+import toast from 'react-hot-toast';
 
 export default function ResetPasswordForm({ token }) {
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function ResetPasswordForm({ token }) {
     setMessage(result.message);
     if (result.message === 'Password updated successfully') {
       router.push('/login');
+      toast.success('Password updated successfully. Please log in with your new password.');
     }
   };
 
