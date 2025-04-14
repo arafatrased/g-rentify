@@ -24,12 +24,13 @@ const ChangePasswordPage = () => {
             .then(res => res.json())
             .then(data => {
                 if (data) {
-                    toast.success('Email sent to your email address. Please check your inbox.')
+                    toast.success('Email sent.')
                 } else {
                     toast.error('Something went wrong. Please try again later.')
                 }   
             })
             .catch(err => console.error(err))
+            toast.success('Email sent to your email address. Please check your inbox.')
         signOut({ callbackUrl: '/login' })
         // signOut({ callbackUrl: '/login' })
 
