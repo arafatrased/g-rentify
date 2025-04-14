@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import {
     Table,
     TableBody,
@@ -64,7 +65,8 @@ const page = () => {
                 </div>
 
                 <div className='grid grid-cols-12 gap-10'>
-                    <div className='col-span-4  border border-[#e3e3e3] py-5 px-3 rounded-md'>
+                    {/* select rental date  */}
+                    <div className='col-span-4 max-h-[300px] border border-[#e3e3e3] py-5 px-3 rounded-md'>
                         <div className="col-span-12 xl:col-span-3 order-3 flex justify-center">
                             <div className="p-3 rounded h-fit text-center mb-5">
                                 <h4 className="text-xl font-bold mb-5">Select Your Rental Date</h4>
@@ -162,37 +164,57 @@ const page = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='col-span-8  border border-[#e3e3e3] py-5 px-3 rounded-md'>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="w-[100px]">Item</TableHead>
-                                    <TableHead>Qty</TableHead>
-                                    <TableHead>Length</TableHead>
-                                    <TableHead className="text-right">Subtotal</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {cartProducts.map((product, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell className="font-medium">{product.title}</TableCell>
-                                        <TableCell>{product.quantity}</TableCell>
-                                        <TableCell>{product.length}</TableCell>
-                                        <TableCell className="text-right">${product.price}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
 
-                            <TableFooter>
-                                <TableRow>
-                                    <TableCell colSpan={4}>
-                                        <div className='flex justify-end'>
-                                        <Button className='bg-green-600 text-white cursor-pointer' variant="outline">Continue Shopping</Button>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
+                    {/* cart table */}
+                    <div className='col-span-8 px-3'>
+                        <div className='rounded-lg'>
+                            <Table className={'border border-[#e3e3e3] rounded-full'}>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead className="w-[100px] border border-[#e3e3e3] text-center">Item</TableHead>
+                                        <TableHead className={'border border-[#e3e3e3] text-center'}>Qty</TableHead>
+                                        <TableHead className='border border-[#e3e3e3] text-center'>Length</TableHead>
+                                        <TableHead className="border border-[#e3e3e3] text-center">Subtotal</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {cartProducts.map((product, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell className="font-medium py-6 border border-[#e3e3e3]">{product.title}</TableCell>
+                                            <TableCell className='border border-[#e3e3e3] text-center'>{product.quantity}</TableCell>
+                                            <TableCell className={'border border-[#e3e3e3] text-center'}>{product.length}</TableCell>
+                                            <TableCell className=" border border-[#e3e3e3] text-center">${product.price}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+
+                                <TableFooter className='py-5'>
+                                    <TableRow>
+                                        <TableCell colSpan={4}>
+                                            <div className='flex justify-end'>
+                                                <Button className='bg-green-600 hover:bg-green-700 hover:text-white text-white cursor-pointer' variant="outline">Continue Shopping</Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableFooter>
+                            </Table>
+                        </div>
+
+                        <div className='mt-10 flex gap-10'>
+                            <div className='w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md'>
+                                <h3 className='font-bold text-xl mb-1'>Discount Code</h3>
+                                <p>Enter Your coupon code if you have one.</p>
+                                <Input className={'mt-2'} type="text" placeholder="Coupon Code" />
+                                <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer w-full mt-3' variant="outline">Apply Coupon</Button>
+                            </div>
+
+                            <div className='w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md text-right'>
+                                <p>Subtotal: <span>$250</span></p>
+                                <p>Shipping(Rount Trip): <span>$50</span></p>
+                                <p>Grand Total: <span>$500</span></p>
+                                <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer ml-auto mt-3' variant="outline">Procced To Checkout</Button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
