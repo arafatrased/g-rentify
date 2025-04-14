@@ -24,7 +24,7 @@ export async function POST(req) {
     { upsert: true } // Create if not exists
   );
 
-  const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL_PROD}/reset-password?token=${token}`;
+  const resetUrl = `https://g-rentify.vercel.app/reset-password?token=${token}`;
   await sendEmail({
     to: email,
     subject: 'Reset Your Password',
