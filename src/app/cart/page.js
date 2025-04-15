@@ -66,7 +66,7 @@ const page = () => {
 
                 <div className='grid grid-cols-12 gap-10'>
                     {/* select rental date  */}
-                    <div className='col-span-4 max-h-[300px] border border-[#e3e3e3] py-5 px-3 rounded-md'>
+                    <div className='md:col-span-4 col-span-12 max-h-[300px] border border-[#e3e3e3] py-5 px-3 rounded-md'>
                         <div className="col-span-12 xl:col-span-3 order-3 flex justify-center">
                             <div className="p-3 rounded h-fit text-center mb-5">
                                 <h4 className="text-xl font-bold mb-5">Select Your Rental Date</h4>
@@ -166,7 +166,7 @@ const page = () => {
                     </div>
 
                     {/* cart table */}
-                    <div className='col-span-8 px-3'>
+                    <div className='md:col-span-8 col-span-12 px-3'>
                         <div className='rounded-lg'>
                             <Table className={'border border-[#e3e3e3] rounded-full'}>
                                 <TableHeader>
@@ -180,8 +180,14 @@ const page = () => {
                                 <TableBody>
                                     {cartProducts.map((product, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className="font-medium py-6 border border-[#e3e3e3]">{product.title}</TableCell>
-                                            <TableCell className='border border-[#e3e3e3] text-center'>{product.quantity}</TableCell>
+                                            <TableCell className="font-medium py-6 border ">{product.title}</TableCell>
+                                            <TableCell className='text-center flex justify-center items-center  h-full'>
+                                                <div className='flex items-center justify-between gap-y-2 max-w-[150px]'>
+                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
+                                                    <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
+                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
+                                                </div>
+                                            </TableCell>
                                             <TableCell className={'border border-[#e3e3e3] text-center'}>{product.length}</TableCell>
                                             <TableCell className=" border border-[#e3e3e3] text-center">${product.price}</TableCell>
                                         </TableRow>
@@ -200,15 +206,15 @@ const page = () => {
                             </Table>
                         </div>
 
-                        <div className='mt-10 flex gap-10'>
-                            <div className='w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md'>
+                        <div className='mt-10 flex gap-10 flex-col sm:flex-row'>
+                            <div className='sm:w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md w-full'>
                                 <h3 className='font-bold text-xl mb-1'>Discount Code</h3>
                                 <p>Enter Your coupon code if you have one.</p>
                                 <Input className={'mt-2'} type="text" placeholder="Coupon Code" />
                                 <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer w-full mt-3' variant="outline">Apply Coupon</Button>
                             </div>
 
-                            <div className='w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md text-right'>
+                            <div className='sm:w-6/12 w-full border border-[#e3e3e3] py-5 px-5 rounded-md text-right'>
                                 <p>Subtotal: <span>$250</span></p>
                                 <p>Shipping(Rount Trip): <span>$50</span></p>
                                 <p>Grand Total: <span>$500</span></p>
