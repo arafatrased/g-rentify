@@ -9,6 +9,7 @@ import Select from "react-select";
 import axios from "axios";
 import { redirect } from "next/navigation";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 const animatedComponents = makeAnimated();
 
@@ -33,11 +34,11 @@ export default function AddGadget() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const session = useSession();
-  const gadgetAddedPerson = [
-    { itemAddedUser: session?.data?.user?.name },
-    { itemAddedEmail: session?.data?.user?.email },
-  ];
-  console.log(gadgetAddedPerson);
+  const gadgetAddedPerson = {
+    itemAddedUser: session?.data?.user?.name,
+    itemAddedEmail: session?.data?.user?.email,
+  };
+  const date = new Date();
 
   // react hook form function
   const {
@@ -82,7 +83,7 @@ export default function AddGadget() {
     );
 
     // get all data
-    const gadgetInfo = { ...data, images: imageUrls, gadgetAddedPerson };
+    const gadgetInfo = { ...data, images: imageUrls, gadgetAddedPerson, date };
 
     // post all data in mongoDB
     const response = await axios.post(
@@ -93,7 +94,7 @@ export default function AddGadget() {
       setLoading(false);
       reset();
       toast.success("Gadget added successfully!");
-      redirect("/dashboard");
+      redirect("/dashboard/all-gadgets");
     } else {
       setLoading(false);
       toast.error("Faild to added gadget!");
@@ -102,7 +103,21 @@ export default function AddGadget() {
 
   return (
     <div className="min-h-screen bg-[#f9fafb] p-6">
-      <h3 className="text-xl font-medium mb-5">Add Product</h3>
+      <h3 className="text-2xl font-medium">Add Product</h3>
+
+      {/* Breadcrumbs */}
+      <div className="breadcrumbs text-sm mb-5">
+        <ul>
+          <li>
+            <Link className="text-gray-500" href={"/dashboard"}>
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <span className="text-[#03b00b] !no-underline">Add Product</span>
+          </li>
+        </ul>
+      </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-12 gap-5">
