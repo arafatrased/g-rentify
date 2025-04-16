@@ -5,7 +5,7 @@ import React, { useState } from "react";
 // import Button from "@/app/components/Button";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { toast } from "react-hot-toast";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
@@ -27,6 +27,8 @@ const LoginForm = () => {
       if (response.ok) {
         router.push("/");
         toast.success("Login successful");
+      }else if (response.error) {
+        toast.error("Invalid email or password");
       }
     } catch (err) {
       console.log(err);

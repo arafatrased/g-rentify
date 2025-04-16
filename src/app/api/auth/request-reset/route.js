@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import { v4 as uuidv4 } from 'uuid';
 import sendEmail from '@/lib/sendEmail'; // nodemailer or similar
+import toast from 'react-hot-toast';
 
 export async function POST(req) {
   const { email } = await req.json();
@@ -24,7 +25,7 @@ export async function POST(req) {
     { upsert: true } // Create if not exists
   );
 
-  const resetUrl = `${process.env.NEXT_PUBLIC_APP_URL_PROD}/reset-password?token=${token}`;
+  const resetUrl = `https://g-rentify.vercel.app/reset-password?token=${token}`;
   await sendEmail({
     to: email,
     subject: 'Reset Your Password',
