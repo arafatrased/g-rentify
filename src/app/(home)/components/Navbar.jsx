@@ -125,9 +125,10 @@ const Navbar = () => {
         {/* Account Menu for navbar */}
         <div className="relative flex gap-4 items-center">
           <div className="flex gap-4 items-center">
-            <p><IoSearch className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1" /></p>
-            <p><GoHeart className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1" /></p>
-            <p><BsCart3 className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1" /></p>
+            <p><IoSearch className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" /></p>
+            <p><GoHeart className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200 hover:text-red-800" /></p>
+            <Link href={"/cart"}><p><BsCart3 className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" /></p></Link>
+            
           </div>
           {status === "authenticated" ? (
             <div className="flex flex-col items-end gap-1">
@@ -163,7 +164,7 @@ const Navbar = () => {
                   />
                 </>
               ) : (
-                <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-500 object-cover p-1" />
+                <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" />
               )}
               <IoIosArrowDown
                 className={`transition-all duration-300 ${
