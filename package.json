@@ -40,5 +40,9 @@
     "eslint": "^9",
     "eslint-config-next": "15.2.2",
     "tailwindcss": "^4.0.15"
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/arafatrased/g-rentify.git",
+  "author": "swapnilahmedshishir <ahmed66882298@gmail.com>",
+  "license": "MIT"
 }
