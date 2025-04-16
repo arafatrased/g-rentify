@@ -5,6 +5,9 @@ import Link from "next/link";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
+import { BsCart3 } from "react-icons/bs";
+import { IoSearch } from "react-icons/io5";
+import { GoHeart } from "react-icons/go";
 import {
   MdDashboard,
   MdLaptopMac,
@@ -121,11 +124,14 @@ const Navbar = () => {
 
         {/* Account Menu for navbar */}
         <div className="relative flex gap-4 items-center">
+          <div className="flex gap-4 items-center">
+            <p><IoSearch className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1" /></p>
+            <p><GoHeart className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1" /></p>
+            <p><BsCart3 className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1" /></p>
+          </div>
           {status === "authenticated" ? (
             <div className="flex flex-col items-end gap-1">
-              <p className="text-gray-600 text-[0.9rem]">
-                {userSession?.user?.name}
-              </p>
+              
               {/* <p className="text-gray-600 text-[0.9rem]">
              <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
             </p> */}
@@ -157,7 +163,7 @@ const Navbar = () => {
                   />
                 </>
               ) : (
-                <FiUser className="w-[35px] h-[35px] rounded-full ring-2 object-cover" />
+                <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-500 object-cover p-1" />
               )}
               <IoIosArrowDown
                 className={`transition-all duration-300 ${
@@ -170,7 +176,12 @@ const Navbar = () => {
           {/* toggle account menu */}
 
           {accountMenuOpen && (
-            <div className="bg-white z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
+            <div className="bg-white w-[200px] z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
+              {status === "authenticated" && (
+                <p className="text-center text-green-700 my-2 text-[0.9rem]">
+                {userSession?.user?.name}
+              </p>
+            ) }
               <Link href={"/dashboard/view-profile"}>
                 <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
                   <FiUser /> View Profile
