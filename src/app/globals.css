@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 @plugin "daisyui";
 
 body {
@@ -20,5 +23,5 @@ a {
 .swiper-button-prev:after,
 .swiper-button-next:after {
   font-size: 25px !important;
-  color: #00B33D !important;
+  color: #00b33d !important;
 }

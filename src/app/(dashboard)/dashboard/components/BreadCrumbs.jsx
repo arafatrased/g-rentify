@@ -17,7 +17,7 @@ const BreadCrumbs = () => {
   return (
     <div>
       {pathSegments.map((path, index) => {
-        return <span key={index} className={`hover:text-green-600 cursor-pointer ${index == pathSegments.length - 1 ? 'text-green-600' : ''}`} onClick={()=> handleNavigate(index)}>{path}{index == pathSegments.length-1 ? <></> : '/'}</span>
+        return <span key={index} className={`hover:text-green-600 cursor-pointer ${index == pathSegments.length - 1 ? 'text-green-600' : ''}`} onClick={()=> handleNavigate(index)}>Home/{path}{index == pathSegments.length-1 ? <></> : '/'}</span>
       })}
     </div>
   )
