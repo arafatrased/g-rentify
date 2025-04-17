@@ -1,21 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import BreadCrumbs from '../(dashboard)/dashboard/components/BreadCrumbs'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
 import Link from 'next/link';
 
 const page = () => {
@@ -184,58 +170,55 @@ const page = () => {
 
                     {/* cart table */}
                     <div className='w-full lg:w-8/12 px-3'>
-                        <div className='border border-[#e3e3e3] rounded-lg'>
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead className="w-[100px] text-center">Item</TableHead>
-                                        <TableHead className={'text-center'}>Qty</TableHead>
-                                        <TableHead className=' text-center'>Length</TableHead>
-                                        <TableHead className=" text-center">Subtotal</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody className='h-[400px] overflow-auto'>
-                                    {cartProducts.map((product, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell className="font-medium  border-r border-[#e3e3e3] py-5">{product.title}</TableCell>
-                                            <TableCell className='text-center flex justify-center items-center h-full py-5'>
-                                                <div id='cart-page-quantity' className='flex items-center justify-between gap-y-2 max-w-[150px]'>
-                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
-                                                    <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
-                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
-                                                </div>
-                                            </TableCell>
-                                            <TableCell className={'border border-[#e3e3e3] text-center py-5'}>{product.length}</TableCell>
-                                            <TableCell className=" border-l border-[#e3e3e3] text-center py-5">${product.price}</TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-
-                                <TableFooter className='py-5'>
-                                    <TableRow>
-                                        <TableCell colSpan={4}>
-                                            <div className='flex justify-end py-3'>
-                                                <Button className='bg-green-600 hover:bg-green-700 hover:text-white text-white cursor-pointer' variant="outline">Continue Shopping</Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
+                        <div className=''>
+                            <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+                                <table className="table">
+                                    {/* head */}
+                                    <thead>
+                                        <tr>
+                                            <th className='py-5 border border-[#e3e3e3]'>Item</th>
+                                            <th className='py-5 border border-[#e3e3e3]'>Qantity</th>
+                                            <th className='py-5 border border-[#e3e3e3]'>Length</th>
+                                            <th className='py-5 border border-[#e3e3e3]'>Subtotal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {cartProducts.map((product, index) => (
+                                            <tr key={index}>
+                                                <td  className='py-5 border border-[#e3e3e3]'>{product.title}</td>
+                                                <td className='py-5 border border-[#e3e3e3] flex justify-center'>
+                                                    <div id='cart-page-quantity' className='flex items-center justify-between gap-y-2 max-w-[150px]'>
+                                                        <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
+                                                        <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
+                                                        <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
+                                                    </div>
+                                                </td>
+                                                <td className='py-5 border border-[#e3e3e3] text-center'>
+                                                    {product.length}
+                                                </td>
+                                                <td className='py-5 border border-[#e3e3e3] text-center'>
+                                                    ${product.price}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         <div className='mt-10 flex gap-10 flex-col sm:flex-row'>
                             <div className='sm:w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md w-full'>
                                 <h3 className='font-bold text-xl mb-1'>Discount Code</h3>
                                 <p>Enter Your coupon code if you have one.</p>
-                                <Input className={'mt-2'} type="text" placeholder="Coupon Code" />
-                                <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer w-full mt-3' variant="outline">Apply Coupon</Button>
+                                <input className={'mt-2'} type="text" placeholder="Coupon Code" />
+                                {/* <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer w-full mt-3' variant="outline">Apply Coupon</Button> */}
                             </div>
 
                             <div className='sm:w-6/12 w-full border border-[#e3e3e3] py-5 px-5 rounded-md text-right'>
                                 <p>Subtotal: <span>$250</span></p>
                                 <p>Shipping(Rount Trip): <span>$50</span></p>
                                 <p>Grand Total: <span>$500</span></p>
-                                <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer ml-auto mt-3' variant="outline">Procced To Checkout</Button>
+                                {/* <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer ml-auto mt-3' variant="outline">Procced To Checkout</Button> */}
                             </div>
                         </div>
                     </div>
