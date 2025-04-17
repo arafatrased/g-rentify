@@ -17,7 +17,7 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-const page = () => {
+const CartPage = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     const [endDate, setEndDate] = useState(new Date(new Date().setDate(new Date().getDate() + 3)));
@@ -228,4 +228,4 @@ const page = () => {
     )
 }
 
-export default page
+export default CartPage;
