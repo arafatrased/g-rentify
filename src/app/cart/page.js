@@ -6,6 +6,16 @@ import Link from 'next/link';
 
 const CartPage = () => {
 
+    const [cartProducts, setCartProducts] = useState([
+        { id: 1, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 10, length: 7, price: 250 },
+        { id: 2, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 15, length: 7, price: 250 },
+        { id: 3, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 9, length: 7, price: 250 },
+        { id: 4, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 8, length: 7, price: 250 },
+        { id: 5, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 7, length: 7, price: 250 }
+    ]);
+
+    const [quantity, setQuantity] = useState(1)
+    const [decreaseBtnDisabled, setDecreaseBtnDisabled] = useState(false)
     const [startDate, setStartDate] = useState(new Date());
     // Set Date three day later
     const [endDate, setEndDate] = useState(() => {
@@ -14,38 +24,27 @@ const CartPage = () => {
         return currentDate;
     });
 
-    const cartProducts = [
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        }
-    ]
+    // Decrease quantity
+    const handleDecreaseQuantity = (productId) => {
+        const updatedProducts = cartProducts.map((product) => {
+            if(product.id === productId){
+                return {...product, quantity: product.quantity - 1}
+            }
+            return product
+        })
+        setCartProducts(updatedProducts)
+    }
+
+    // Increase quantity
+    const handleIncreaseQuantity = (productId) => {
+        const updatedProducts = cartProducts.map((product) => {
+            if(product.id === productId){
+                return {...product, quantity: product.quantity + 1}
+            }
+            return product
+        })
+        setCartProducts(updatedProducts)
+    }
 
 
     return (
@@ -172,7 +171,6 @@ const CartPage = () => {
                         {/* cart table */}
                         <div className="overflow-x-auto w-full">
                             <table className="table w-full bg-[#F9FAFB] rounded-md border">
-                                {/* head */}
                                 <thead>
                                     <tr className="uppercase">
                                         <th>Item</th>
@@ -192,13 +190,13 @@ const CartPage = () => {
                                             </td>
                                             <td className="capitalize text-gray-500">
                                                 <div id='cart-page-quantity' className='flex items-center justify-between gap-y-2 max-w-[150px]'>
-                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
+                                                    <button disabled={product.quantity <= 1} onClick={() => handleDecreaseQuantity(product.id)} className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
                                                     <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
-                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
+                                                    <button onClick={() => handleIncreaseQuantity(product.id)} className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
                                                 </div>
                                             </td>
                                             <td className='text-center'>
-                                                {product.length} Day
+                                                {product.length} Days
                                             </td>
                                             <td className="font-bold text-center">${product?.price}</td>
                                         </tr>
@@ -211,15 +209,22 @@ const CartPage = () => {
                             <div className='sm:w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md w-full'>
                                 <h3 className='font-bold text-xl mb-1'>Discount Code</h3>
                                 <p>Enter Your coupon code if you have one.</p>
-                                <input className={'mt-2'} type="text" placeholder="Coupon Code" />
-                                {/* <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer w-full mt-3' variant="outline">Apply Coupon</Button> */}
+
+                                <form>
+                                    <input className={'mt-3 border border-[#e3e3e3] w-full rounded-md py-3 px-4 mb-3'} type="text" placeholder="Coupon Code" />
+                                    <button type='submit' className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-2 text-sm rounded transition-all duration-300 cursor-pointer w-fit uppercase mt">
+                                        Apply Coupon
+                                    </button>
+                                </form>
                             </div>
 
                             <div className='sm:w-6/12 w-full border border-[#e3e3e3] py-5 px-5 rounded-md text-right'>
                                 <p>Subtotal: <span>$250</span></p>
                                 <p>Shipping(Rount Trip): <span>$50</span></p>
                                 <p>Grand Total: <span>$500</span></p>
-                                {/* <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer ml-auto mt-3' variant="outline">Procced To Checkout</Button> */}
+                                <button type='submit' className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-2 text-sm rounded transition-all duration-300 cursor-pointer w-fit uppercase mt-3">
+                                    Procced To Checkout
+                                </button>
                             </div>
                         </div>
                     </div>
