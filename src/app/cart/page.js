@@ -16,11 +16,17 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import Link from 'next/link';
 
 const page = () => {
 
     const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date(new Date().setDate(new Date().getDate() + 3)));
+    // Set Date three day later
+    const [endDate, setEndDate] = useState(() => {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 3);
+        return currentDate;
+    });
 
     const cartProducts = [
         {
@@ -52,7 +58,7 @@ const page = () => {
             quantity: "10",
             length: 7,
             price: 250,
-        },
+        }
     ]
 
 
@@ -61,12 +67,23 @@ const page = () => {
             <div className='container mx-auto py-10'>
                 <div className='mb-5'>
                     {/* breadcrumb  */}
-                    <BreadCrumbs />
+                    <div className="breadcrumbs text-sm mb-6">
+                        <ul>
+                            <li>
+                                <Link href={"/"}>Home</Link>
+                            </li>
+                            <li>
+                                <Link className="text-[#03b00b]" href={"/cart"}>
+                                    Cart
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div className='grid grid-cols-12 gap-10'>
+                <div className='flex gap-10 flex-col lg:flex-row'>
                     {/* select rental date  */}
-                    <div className='md:col-span-4 col-span-12 max-h-[300px] border border-[#e3e3e3] py-5 px-3 rounded-md'>
+                    <div className='w-full lg:w-4/12 max-h-[300px] border border-[#e3e3e3] py-5 px-3 rounded-md'>
                         <div className="col-span-12 xl:col-span-3 order-3 flex justify-center">
                             <div className="p-3 rounded h-fit text-center mb-5">
                                 <h4 className="text-xl font-bold mb-5">Select Your Rental Date</h4>
@@ -166,30 +183,30 @@ const page = () => {
                     </div>
 
                     {/* cart table */}
-                    <div className='md:col-span-8 col-span-12 px-3'>
-                        <div className='rounded-lg'>
-                            <Table className={'border border-[#e3e3e3] rounded-full'}>
+                    <div className='w-full lg:w-8/12 px-3'>
+                        <div className='border border-[#e3e3e3] rounded-lg'>
+                            <Table>
                                 <TableHeader>
                                     <TableRow>
-                                        <TableHead className="w-[100px] border border-[#e3e3e3] text-center">Item</TableHead>
-                                        <TableHead className={'border border-[#e3e3e3] text-center'}>Qty</TableHead>
-                                        <TableHead className='border border-[#e3e3e3] text-center'>Length</TableHead>
-                                        <TableHead className="border border-[#e3e3e3] text-center">Subtotal</TableHead>
+                                        <TableHead className="w-[100px] text-center">Item</TableHead>
+                                        <TableHead className={'text-center'}>Qty</TableHead>
+                                        <TableHead className=' text-center'>Length</TableHead>
+                                        <TableHead className=" text-center">Subtotal</TableHead>
                                     </TableRow>
                                 </TableHeader>
-                                <TableBody>
+                                <TableBody className='h-[400px] overflow-auto'>
                                     {cartProducts.map((product, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className="font-medium py-6 border ">{product.title}</TableCell>
-                                            <TableCell className='text-center flex justify-center items-center  h-full'>
-                                                <div className='flex items-center justify-between gap-y-2 max-w-[150px]'>
+                                            <TableCell className="font-medium  border-r border-[#e3e3e3] py-5">{product.title}</TableCell>
+                                            <TableCell className='text-center flex justify-center items-center h-full py-5'>
+                                                <div id='cart-page-quantity' className='flex items-center justify-between gap-y-2 max-w-[150px]'>
                                                     <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
                                                     <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
                                                     <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
                                                 </div>
                                             </TableCell>
-                                            <TableCell className={'border border-[#e3e3e3] text-center'}>{product.length}</TableCell>
-                                            <TableCell className=" border border-[#e3e3e3] text-center">${product.price}</TableCell>
+                                            <TableCell className={'border border-[#e3e3e3] text-center py-5'}>{product.length}</TableCell>
+                                            <TableCell className=" border-l border-[#e3e3e3] text-center py-5">${product.price}</TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -197,7 +214,7 @@ const page = () => {
                                 <TableFooter className='py-5'>
                                     <TableRow>
                                         <TableCell colSpan={4}>
-                                            <div className='flex justify-end'>
+                                            <div className='flex justify-end py-3'>
                                                 <Button className='bg-green-600 hover:bg-green-700 hover:text-white text-white cursor-pointer' variant="outline">Continue Shopping</Button>
                                             </div>
                                         </TableCell>

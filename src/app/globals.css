@@ -141,3 +141,18 @@ a {
     @apply bg-background text-foreground;
   }
 }
+
+
+
+/** Remove arrow button of input type number in cart page
+/* Chrome, Safari, Edge, Opera */
+#cart-page-quantity input[type=number]::-webkit-outer-spin-button,
+#cart-page-quantity input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+#cart-page-quantity input[type=number] {
+  -moz-appearance: textfield;
+}
