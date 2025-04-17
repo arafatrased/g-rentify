@@ -9,6 +9,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
 import { useState } from "react";
 import { Sling as Hamburger } from "hamburger-react";
+import { SiEngadget } from "react-icons/si";
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false);
@@ -47,6 +48,20 @@ export default function Sidebar() {
           <span className="flex items-center gap-1">
             <TbPlaylistAdd />
             Add Gadget
+          </span>
+          <MdKeyboardArrowRight />
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/dashboard/all-gadgets"
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/all-gadgets") ? activeClass : inactiveClass
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <SiEngadget className="text-sm" />
+            All Gadgets
           </span>
           <MdKeyboardArrowRight />
         </Link>

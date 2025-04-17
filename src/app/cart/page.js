@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
 import Link from 'next/link';
 
-const page = () => {
+const CartPage = () => {
 
     const [startDate, setStartDate] = useState(new Date());
     // Set Date three day later
@@ -168,42 +168,43 @@ const page = () => {
                         </div>
                     </div>
 
-                    {/* cart table */}
                     <div className='w-full lg:w-8/12 px-3'>
-                        <div className=''>
-                            <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                                <table className="table">
-                                    {/* head */}
-                                    <thead>
-                                        <tr>
-                                            <th className='py-5 border border-[#e3e3e3]'>Item</th>
-                                            <th className='py-5 border border-[#e3e3e3]'>Qantity</th>
-                                            <th className='py-5 border border-[#e3e3e3]'>Length</th>
-                                            <th className='py-5 border border-[#e3e3e3]'>Subtotal</th>
+                        {/* cart table */}
+                        <div className="overflow-x-auto w-full">
+                            <table className="table w-full bg-[#F9FAFB] rounded-md border">
+                                {/* head */}
+                                <thead>
+                                    <tr className="uppercase">
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Length</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white">
+                                    {cartProducts.map((product, index) => (
+                                        <tr
+                                            key={index}
+                                            className="border-b border last:border-none border-slate-200"
+                                        >
+                                            <td className="flex items-center gap-2 py-6">
+                                                <h4 className='font-bold'>{product?.title}</h4>
+                                            </td>
+                                            <td className="capitalize text-gray-500">
+                                                <div id='cart-page-quantity' className='flex items-center justify-between gap-y-2 max-w-[150px]'>
+                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
+                                                    <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
+                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
+                                                </div>
+                                            </td>
+                                            <td className='text-center'>
+                                                {product.length} Day
+                                            </td>
+                                            <td className="font-bold text-center">${product?.price}</td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        {cartProducts.map((product, index) => (
-                                            <tr key={index}>
-                                                <td  className='py-5 border border-[#e3e3e3]'>{product.title}</td>
-                                                <td className='py-5 border border-[#e3e3e3] flex justify-center'>
-                                                    <div id='cart-page-quantity' className='flex items-center justify-between gap-y-2 max-w-[150px]'>
-                                                        <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
-                                                        <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
-                                                        <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
-                                                    </div>
-                                                </td>
-                                                <td className='py-5 border border-[#e3e3e3] text-center'>
-                                                    {product.length}
-                                                </td>
-                                                <td className='py-5 border border-[#e3e3e3] text-center'>
-                                                    ${product.price}
-                                                </td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                    ))}
+                                </tbody>
+                            </table>
                         </div>
 
                         <div className='mt-10 flex gap-10 flex-col sm:flex-row'>
@@ -228,4 +229,4 @@ const page = () => {
     )
 }
 
-export default page
+export default CartPage;

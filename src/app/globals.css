@@ -23,7 +23,7 @@ a {
 .swiper-button-prev:after,
 .swiper-button-next:after {
   font-size: 25px !important;
-  color: #00B33D !important;
+  color: #00b33d !important;
 }
 
 @theme inline {
@@ -142,9 +142,6 @@ a {
   }
 }
 
-
-
-/** Remove arrow button of input type number in cart page
 /* Chrome, Safari, Edge, Opera */
 #cart-page-quantity input[type=number]::-webkit-outer-spin-button,
 #cart-page-quantity input[type=number]::-webkit-inner-spin-button {

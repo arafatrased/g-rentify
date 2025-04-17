@@ -47,7 +47,7 @@ const LoginForm = () => {
 
   return (
     <div className="w-10/12 mx-auto flex justify-center items-center bg-white-100 px-4 py-20 mb-3">
-      <div className="w-full max-w-lg mx-auto p-6 bg-white  rounded-lg shadow-lg">
+      <div className="w-full max-w-lg mx-auto p-6 bg-white  rounded shadow-lg">
         <h2 className="text-2xl font-bold text-center text-gray-800  mb-6">
           User Login
         </h2>
@@ -62,7 +62,7 @@ const LoginForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
               required
             />
           </div>
@@ -77,7 +77,7 @@ const LoginForm = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
+              className="w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-700"
               required
             />
             <div
@@ -88,13 +88,15 @@ const LoginForm = () => {
             </div>
           </div>
           <div>
-            <Link href={'/reset-password'}><li className="underline">Forgot Password?</li></Link>
+            <Link href={"/reset-password"}>
+              <li className="underline">Forgot Password?</li>
+            </Link>
           </div>
 
           {/* Login Button */}
           <button
             type="submit"
-            className="w-full py-3 bg-green-500 text-white hover:bg-green-600 font-bold rounded-lg transition duration-300"
+            className="w-full py-3 bg-green-500 text-white hover:bg-green-600 font-bold rounded transition duration-300 cursor-pointer"
           >
             Login
           </button>
@@ -110,7 +112,7 @@ const LoginForm = () => {
         {/* Google Login Button */}
         <button
           onClick={handleGoogleLogin}
-          className="w-full py-3 bg-gray-200 text-gray-600 font-bold rounded-lg hover:bg-gray-300 hover:text-gray-700 transition duration-300 flex gap-3 justify-center items-center"
+          className="w-full py-3 bg-gray-200 text-gray-600 font-bold rounded hover:bg-gray-300 hover:text-gray-700 transition duration-300 flex gap-3 justify-center items-center cursor-pointer"
         >
           <FcGoogle className="text-xl" />
           Continue with Google

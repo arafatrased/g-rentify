@@ -48,7 +48,7 @@ export default function DashboardLayout({ children }) {
                   },
                 }}
               />
-              <div className="mt-[69px] lg:mt-0">{children}</div>
+              <div className="mt-[69px] lg:mt-0 min-h-[800px]">{children}</div>
               <DashboardFooter />
             </div>
           </div>
