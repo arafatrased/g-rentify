@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import SuccessModal from "./components/SuccessModal";
 import axios from "axios";
 import { useOrders } from "../../context/OrderContext";
+import "@/app/(home)/css/datePicker.css";
 
 export default function GadgetDetails() {
   const { id } = useParams();

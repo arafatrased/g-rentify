@@ -130,7 +130,7 @@ const Navbar = () => {
                 {total}
               </span>
             )}
-            <Link href={"/cart"}>
+            <Link href={"/mycart"}>
               <p>
                 <HiOutlineShoppingBag className="w-[30px] h-[30px] object-cover text-gray-600" />
               </p>
