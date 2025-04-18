@@ -2,23 +2,17 @@
 import React, { useState } from "react";
 import Link from "next/link";
 // react icons
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
-import { BsCart3 } from "react-icons/bs";
-import { IoSearch } from "react-icons/io5";
-import { GoHeart } from "react-icons/go";
-import {
-  MdDashboard,
-  MdLaptopMac,
-  MdOutlineArrowRightAlt,
-} from "react-icons/md";
+import { HiOutlineShoppingBag } from "react-icons/hi";
+import { MdDashboard, MdLaptopMac } from "react-icons/md";
 import { AiOutlineFire } from "react-icons/ai";
 import { BiSupport } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
+import { useOrders } from "../context/OrderContext";
 
 const Navbar = () => {
   const session = useSession();
@@ -26,6 +20,7 @@ const Navbar = () => {
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [isProductHover, setIsProductHover] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const { loading, total } = useOrders();
 
   return (
     <div className="border-b border-gray-300 relative">
@@ -124,15 +119,26 @@ const Navbar = () => {
 
         {/* Account Menu for navbar */}
         <div className="relative flex gap-4 items-center">
-          <div className="flex gap-4 items-center">
-            <p><IoSearch className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" /></p>
-            <p><GoHeart className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200 hover:text-red-800" /></p>
-            <Link href={"/cart"}><p><BsCart3 className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" /></p></Link>
-            
+          <div
+            className="indicator tooltip tooltip-right tooltip-success"
+            data-tip="Shopping Cart"
+          >
+            {loading ? (
+              <div className="indicator-item skeleton h-5 w-5 rounded-full"></div>
+            ) : (
+              <span className="indicator-item w-5 h-5 text-[12px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
+                {total}
+              </span>
+            )}
+            <Link href={"/cart"}>
+              <p>
+                <HiOutlineShoppingBag className="w-[30px] h-[30px] object-cover text-gray-600" />
+              </p>
+            </Link>
           </div>
+
           {status === "authenticated" ? (
             <div className="flex flex-col items-end gap-1">
-              
               {/* <p className="text-gray-600 text-[0.9rem]">
              <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
             </p> */}
@@ -166,11 +172,6 @@ const Navbar = () => {
               ) : (
                 <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" />
               )}
-              <IoIosArrowDown
-                className={`transition-all duration-300 ${
-                  accountMenuOpen ? "rotate-180" : ""
-                }`}
-              />
             </button>
           )}
 
@@ -180,9 +181,9 @@ const Navbar = () => {
             <div className="bg-white w-[200px] z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
               {status === "authenticated" && (
                 <p className="text-center text-green-700 my-2 text-[0.9rem]">
-                {userSession?.user?.name}
-              </p>
-            ) }
+                  {userSession?.user?.name}
+                </p>
+              )}
               <Link href={"/dashboard/view-profile"}>
                 <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
                   <FiUser /> View Profile

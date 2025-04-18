@@ -25,3 +25,12 @@ a {
   font-size: 25px !important;
   color: #00b33d !important;
 }
+
+.tooltip-success[data-tip]:before {
+  color: white;
+  background-color: #03b00b;
+}
+
+.tooltip:after {
+  background-color: #03b00b;
+}

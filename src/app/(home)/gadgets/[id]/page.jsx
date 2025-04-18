@@ -1,8 +1,8 @@
 "use client";
-import Button from "@/app/(home)/components/Button";
+
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -11,22 +11,48 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import ProductDetailsSkeleton from "./components/ProductDetailsSkeleton";
+import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import SuccessModal from "./components/SuccessModal";
+import axios from "axios";
+import { useOrders } from "../../context/OrderContext";
 
 export default function GadgetDetails() {
   const { id } = useParams();
+  const session = useSession();
+  const user = session?.data?.user;
   const [gadget, setGadget] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [isExpandedSpec, setIsExpandedSpec] = useState(false);
-  const [startDate, setStartDate] = useState(new Date());
   const [rentValue, setRentValue] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(
+    new Date().setDate(new Date().getDate() + 1)
+  );
+  const [cartModal, setCartModal] = useState(false);
+  const [cartLoading, setCartLoading] = useState(false);
+  const { setTotalOrders } = useOrders();
 
-  // Set Date three day later
-  const [endDate, setEndDate] = useState(() => {
-    const currentDate = new Date();
-    currentDate.setDate(currentDate.getDate() + 3);
-    return currentDate;
-  });
+  // Create a handler function for arrival date changes
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+
+    // Set return date to be one day after the selected arrival date
+    if ((date) => endDate) {
+      const nextDate = new Date(date).setDate(date.getDate() + 1);
+      setEndDate(nextDate);
+    }
+  };
+
+  // Handle return date changes
+  const handleEndDateChange = (date) => {
+    if (date > startDate) {
+      setEndDate(date);
+    } else {
+      toast.error("You cannot set the return date before the arrival date.");
+    }
+  };
 
   // get single data form mongoDb
   useEffect(() => {
@@ -39,9 +65,10 @@ export default function GadgetDetails() {
         );
         const data = await res.json();
         setGadget(data);
+      } catch (error) {
+        console.log("Failed to fetch gadget.", error);
+      } finally {
         setLoading(false);
-      } catch {
-        console.log("faild to fetch data");
       }
     };
 
@@ -49,7 +76,7 @@ export default function GadgetDetails() {
   }, [id]);
 
   // calculate how long the user want to take it for
-  const differentInDays = Math.round(
+  const durationInDay = Math.round(
     (endDate - startDate) / (1000 * 60 * 60 * 24)
   );
 
@@ -61,7 +88,45 @@ export default function GadgetDetails() {
   }, [gadget]);
 
   // total value by day
-  const totalRentValue = rentValue * differentInDays;
+  const totalRentValue = rentValue * durationInDay;
+  // share productData in the successModal
+  const productData = { ...gadget, durationInDay, totalRentValue };
+
+  const orderInfo = {
+    productTitle: gadget?.title,
+    qty: 1,
+    totalRentValue,
+    user,
+  };
+
+  const handleOrderInfo = async () => {
+    // Check user is loged in or not if the user not login then redirect login page
+    if (!user) {
+      redirect("/login");
+    }
+
+    setCartLoading(true); // start button loading when user click for cart
+
+    try {
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/user-order`,
+        orderInfo
+      );
+
+      if (res.data.insertedId) {
+        setCartModal(true); // show the success modal
+        setCartLoading(false); // close loading when order successfull
+        setTotalOrders((prev) => prev + 1); // incrise data length
+        // Auto close the success modal
+        setTimeout(() => {
+          setCartModal(false);
+        }, 5000);
+      }
+    } catch (error) {
+      setCartLoading(false); // close loading when order successfull
+      console.log("Faield to send order.", error);
+    }
+  };
 
   return (
     <main className="pt-8 pb-14">
@@ -284,10 +349,10 @@ export default function GadgetDetails() {
             </div>
             {/* right item  */}
             <div className="col-span-12 xl:col-span-3 order-3">
-              <div className="border border-gray-200 p-3 rounded h-fit text-center mb-5">
+              <div className="border border-gray-200 p-3 rounded h-fit text-center mb-5 relative">
                 <h4 className="text-xl font-bold">Set Rental Date</h4>
                 <h4 className="text-xl font-semibold text-gray-800 my-3">
-                  ${totalRentValue} / {differentInDays} Days
+                  ${totalRentValue} / {durationInDay} Days
                 </h4>
                 <p className="text-base font-medium mb-1">Arrival Date:</p>
                 <DatePicker
@@ -324,12 +389,12 @@ export default function GadgetDetails() {
                     </svg>
                   }
                   selected={startDate}
-                  onChange={(date) => setStartDate(date)}
+                  onChange={handleStartDateChange}
                   selectsStart
                   startDate={startDate}
                   endDate={endDate}
                   minDate={new Date()}
-                  className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-1"
+                  className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-4"
                 />
                 <p className="text-base font-medium mb-1">Return Date:</p>
                 <DatePicker
@@ -366,17 +431,27 @@ export default function GadgetDetails() {
                     </svg>
                   }
                   selected={endDate}
-                  onChange={(date) => setEndDate(date)}
+                  onChange={handleEndDateChange}
                   selectsEnd
                   startDate={startDate}
                   endDate={endDate}
-                  minDate={new Date().setDate(new Date().getDate() + 3)}
+                  minDate={new Date().setDate(new Date().getDate() + 1)}
                   maxDate={new Date().setDate(new Date().getDate() + 30)}
-                  className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-3"
+                  className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200"
                 />
                 <div>
-                  <Button buttonText={"ADD TO CART"}></Button>
+                  <button
+                    disabled={cartLoading}
+                    className="bg-[#03b00b] cursor-pointer text-white py-2 w-32 mt-5 rounded"
+                  >
+                    {cartLoading ? (
+                      <span className="loading loading-dots loading-sm"></span>
+                    ) : (
+                      <span onClick={handleOrderInfo}>ADD TO CART</span>
+                    )}
+                  </button>
                 </div>
+                <SuccessModal productData={productData} cartModal={cartModal} />
               </div>
 
               <div className="border border-gray-200 p-3 rounded h-fit text-center">

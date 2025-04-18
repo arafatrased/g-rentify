@@ -5,9 +5,9 @@ import { ToastContainer } from "react-toastify";
 import { Toaster } from "react-hot-toast";
 import NextAuthProviders from "@/Providers/NextAuthProviders";
 import Navbar from "./components/Navbar";
+import { OrdersProvider } from "./context/OrderContext";
 
 //Poppins Front
-
 
 const poppins = Poppins({
   weight: ["300", "400", "500", "600", "700"],
@@ -25,10 +25,31 @@ export default function RootLayout({ children }) {
     <html lang="en" data-theme="light">
       <body className={`${poppins.className}`}>
         <NextAuthProviders>
-          <Toaster />
+          <Toaster
+            toastOptions={{
+              duration: 3000,
+              removeDelay: 500,
+              style: {
+                background: "#03b00b",
+                color: "#fff",
+                borderRadius: "2px",
+              },
+
+              // Default options for specific types
+              success: {
+                duration: 3000,
+                iconTheme: {
+                  primary: "white",
+                  secondary: "#03b00b",
+                },
+              },
+            }}
+          />
           <ToastContainer />
-          <Navbar />
-          {children}
+          <OrdersProvider>
+            <Navbar />
+            {children}
+          </OrdersProvider>
           <Footer />
         </NextAuthProviders>
       </body>

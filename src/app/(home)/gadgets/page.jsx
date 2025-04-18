@@ -25,7 +25,6 @@ export default function GadgetPage() {
   const [cameraLength, setCameraLength] = useState(0);
   const [droneLength, setDroneLength] = useState(0);
 
-  console.log(cameraLength);
   const sotingValue = sort.value;
   const categoryParams = selectedCategories.join(",");
 
@@ -279,7 +278,7 @@ export default function GadgetPage() {
                         </h3>
                       </Link>
                       <p className="font-medium text-[#03b00b] mb-2">
-                        $ {item?.price * 3 || "N/A"} / 3 Days
+                        $ {item?.price} / 1 Day
                       </p>
                       <Link
                         href={`/gadgets/${item?._id}`}
