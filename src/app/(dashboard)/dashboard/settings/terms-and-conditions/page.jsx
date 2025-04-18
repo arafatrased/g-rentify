@@ -1,14 +1,31 @@
 'use client';
 import React from 'react';
 import BreadCrumbs from '../../components/BreadCrumbs';
+import Link from 'next/link';
 
 const TermsAndConditions = () => {
   return (
     <div className='py-5 px-5'>
-      {/* breadcrumb */}
-      <BreadCrumbs />
+      {/* breadcrumb  */}
+      <div className="breadcrumbs text-sm mb-6">
+        <ul>
+          <li>
+            <Link href={"/dashboard"}>Dashboard</Link>
+          </li>
+          <li>
+            <Link href='/dashboard/settings'>
+              Settings
+            </Link>
+          </li>
+          <li>
+            <Link href='/dashboard/settings/terms-and-conditions' className="text-[#03b00b]">
+              Terms & Conditions
+            </Link>
+          </li>
+        </ul>
+      </div>
 
-      <div className="page-container py-16">
+      <div className="page-container py-3">
         <h1 className='text-3xl md:text-3xl lg:text-4xl font-bold text-center mb-8'>
           Terms & Conditions
         </h1>

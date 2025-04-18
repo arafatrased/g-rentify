@@ -1,59 +1,50 @@
 'use client'
 import React, { useState } from 'react'
-import BreadCrumbs from '../(dashboard)/dashboard/components/BreadCrumbs'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
-
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+import Link from 'next/link';
 
 const CartPage = () => {
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date(new Date().setDate(new Date().getDate() + 3)));
+    const [cartProducts, setCartProducts] = useState([
+        { id: 1, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 10, length: 7, price: 250 },
+        { id: 2, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 15, length: 7, price: 250 },
+        { id: 3, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 9, length: 7, price: 250 },
+        { id: 4, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 8, length: 7, price: 250 },
+        { id: 5, title: "Sony FE 200-600mm f/5.6-6.3 G OSS", quantity: 7, length: 7, price: 250 }
+    ]);
 
-    const cartProducts = [
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-        {
-            title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-            quantity: "10",
-            length: 7,
-            price: 250,
-        },
-    ]
+    const [quantity, setQuantity] = useState(1)
+    const [decreaseBtnDisabled, setDecreaseBtnDisabled] = useState(false)
+    const [startDate, setStartDate] = useState(new Date());
+    // Set Date three day later
+    const [endDate, setEndDate] = useState(() => {
+        const currentDate = new Date();
+        currentDate.setDate(currentDate.getDate() + 3);
+        return currentDate;
+    });
+
+    // Decrease quantity
+    const handleDecreaseQuantity = (productId) => {
+        const updatedProducts = cartProducts.map((product) => {
+            if(product.id === productId){
+                return {...product, quantity: product.quantity - 1}
+            }
+            return product
+        })
+        setCartProducts(updatedProducts)
+    }
+
+    // Increase quantity
+    const handleIncreaseQuantity = (productId) => {
+        const updatedProducts = cartProducts.map((product) => {
+            if(product.id === productId){
+                return {...product, quantity: product.quantity + 1}
+            }
+            return product
+        })
+        setCartProducts(updatedProducts)
+    }
 
 
     return (
@@ -61,12 +52,23 @@ const CartPage = () => {
             <div className='container mx-auto py-10'>
                 <div className='mb-5'>
                     {/* breadcrumb  */}
-                    <BreadCrumbs />
+                    <div className="breadcrumbs text-sm mb-6">
+                        <ul>
+                            <li>
+                                <Link href={"/"}>Home</Link>
+                            </li>
+                            <li>
+                                <Link className="text-[#03b00b]" href={"/cart"}>
+                                    Cart
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <div className='grid grid-cols-12 gap-10'>
+                <div className='flex gap-10 flex-col lg:flex-row'>
                     {/* select rental date  */}
-                    <div className='md:col-span-4 col-span-12 max-h-[300px] border border-[#e3e3e3] py-5 px-3 rounded-md'>
+                    <div className='w-full lg:w-4/12 max-h-[300px] border border-[#e3e3e3] py-5 px-3 rounded-md'>
                         <div className="col-span-12 xl:col-span-3 order-3 flex justify-center">
                             <div className="p-3 rounded h-fit text-center mb-5">
                                 <h4 className="text-xl font-bold mb-5">Select Your Rental Date</h4>
@@ -165,60 +167,64 @@ const CartPage = () => {
                         </div>
                     </div>
 
-                    {/* cart table */}
-                    <div className='md:col-span-8 col-span-12 px-3'>
-                        <div className='rounded-lg'>
-                            <Table className={'border border-[#e3e3e3] rounded-full'}>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead className="w-[100px] border border-[#e3e3e3] text-center">Item</TableHead>
-                                        <TableHead className={'border border-[#e3e3e3] text-center'}>Qty</TableHead>
-                                        <TableHead className='border border-[#e3e3e3] text-center'>Length</TableHead>
-                                        <TableHead className="border border-[#e3e3e3] text-center">Subtotal</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
+                    <div className='w-full lg:w-8/12 px-3'>
+                        {/* cart table */}
+                        <div className="overflow-x-auto w-full">
+                            <table className="table w-full bg-[#F9FAFB] rounded-md border">
+                                <thead>
+                                    <tr className="uppercase">
+                                        <th>Item</th>
+                                        <th>Quantity</th>
+                                        <th>Length</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="bg-white">
                                     {cartProducts.map((product, index) => (
-                                        <TableRow key={index}>
-                                            <TableCell className="font-medium py-6 border ">{product.title}</TableCell>
-                                            <TableCell className='text-center flex justify-center items-center  h-full'>
-                                                <div className='flex items-center justify-between gap-y-2 max-w-[150px]'>
-                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
+                                        <tr
+                                            key={index}
+                                            className="border-b border last:border-none border-slate-200"
+                                        >
+                                            <td className="flex items-center gap-2 py-6">
+                                                <h4 className='font-bold'>{product?.title}</h4>
+                                            </td>
+                                            <td className="capitalize text-gray-500">
+                                                <div id='cart-page-quantity' className='flex items-center justify-between gap-y-2 max-w-[150px]'>
+                                                    <button disabled={product.quantity <= 1} onClick={() => handleDecreaseQuantity(product.id)} className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>-</button>
                                                     <input type='number' value={product.quantity} className='border-none w-[50px] text-center focus:outline-none' />
-                                                    <button className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
+                                                    <button onClick={() => handleIncreaseQuantity(product.id)} className='bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer'>+</button>
                                                 </div>
-                                            </TableCell>
-                                            <TableCell className={'border border-[#e3e3e3] text-center'}>{product.length}</TableCell>
-                                            <TableCell className=" border border-[#e3e3e3] text-center">${product.price}</TableCell>
-                                        </TableRow>
+                                            </td>
+                                            <td className='text-center'>
+                                                {product.length} Days
+                                            </td>
+                                            <td className="font-bold text-center">${product?.price}</td>
+                                        </tr>
                                     ))}
-                                </TableBody>
-
-                                <TableFooter className='py-5'>
-                                    <TableRow>
-                                        <TableCell colSpan={4}>
-                                            <div className='flex justify-end'>
-                                                <Button className='bg-green-600 hover:bg-green-700 hover:text-white text-white cursor-pointer' variant="outline">Continue Shopping</Button>
-                                            </div>
-                                        </TableCell>
-                                    </TableRow>
-                                </TableFooter>
-                            </Table>
+                                </tbody>
+                            </table>
                         </div>
 
                         <div className='mt-10 flex gap-10 flex-col sm:flex-row'>
                             <div className='sm:w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md w-full'>
                                 <h3 className='font-bold text-xl mb-1'>Discount Code</h3>
                                 <p>Enter Your coupon code if you have one.</p>
-                                <Input className={'mt-2'} type="text" placeholder="Coupon Code" />
-                                <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer w-full mt-3' variant="outline">Apply Coupon</Button>
+
+                                <form>
+                                    <input className={'mt-3 border border-[#e3e3e3] w-full rounded-md py-3 px-4 mb-3'} type="text" placeholder="Coupon Code" />
+                                    <button type='submit' className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-2 text-sm rounded transition-all duration-300 cursor-pointer w-fit uppercase mt">
+                                        Apply Coupon
+                                    </button>
+                                </form>
                             </div>
 
                             <div className='sm:w-6/12 w-full border border-[#e3e3e3] py-5 px-5 rounded-md text-right'>
                                 <p>Subtotal: <span>$250</span></p>
                                 <p>Shipping(Rount Trip): <span>$50</span></p>
                                 <p>Grand Total: <span>$500</span></p>
-                                <Button className='bg-green-600 text-white hover:bg-green-700 hover:text-white cursor-pointer ml-auto mt-3' variant="outline">Procced To Checkout</Button>
+                                <button type='submit' className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-2 text-sm rounded transition-all duration-300 cursor-pointer w-fit uppercase mt-3">
+                                    Procced To Checkout
+                                </button>
                             </div>
                         </div>
                     </div>

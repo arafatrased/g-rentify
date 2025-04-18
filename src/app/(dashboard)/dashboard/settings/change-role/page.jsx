@@ -6,8 +6,24 @@ import BreadCrumbs from '../../components/BreadCrumbs';
 const ChangeRolePage = () => {
     return (
         <div className='py-5 px-5'>
-            {/* breadcrumb */}
-            <BreadCrumbs/>
+            {/* breadcrumb  */}
+            <div className="breadcrumbs text-sm">
+                <ul>
+                    <li>
+                        <Link href={"/dashboard"}>Dashboard</Link>
+                    </li>
+                    <li>
+                        <Link href='/dashboard/settings'>
+                            Settings
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href='/dashboard/settings/change-role' className="text-[#03b00b]">
+                            Become a Lender
+                        </Link>
+                    </li>
+                </ul>
+            </div>
             <div className="page-container py-16">
                 <h1 className='text-3xl md:text-3xl lg:text-4xl font-bold text-center mb-8'>Apply to Become a Lender</h1>
                 <form className='w-10/12 md:w-8/12 lg:w-4/12 mx-auto'>
