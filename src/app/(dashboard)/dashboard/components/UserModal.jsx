@@ -26,8 +26,6 @@ const UserModal = ({ openModal, userId, allUser }) => {
             role,
             status
         }
-
-        console.log(updatedUser)
     }
     return (
         <div>
@@ -39,32 +37,32 @@ const UserModal = ({ openModal, userId, allUser }) => {
                     <form onSubmit={handleUpdateUser}>
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Name</label>
-                            <input name='name' type="text" className='input input-bordered w-full' defaultValue={selectedUser?.name} />
+                            <input name='name' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.name} />
                         </div>
 
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Image</label>
-                            <input name='profile' type="text" className='input input-bordered w-full' defaultValue={selectedUser?.profile} />
+                            <input name='profile' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.profile} />
                         </div>
 
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Address</label>
-                            <input name='address' type="text" className='input input-bordered w-full' defaultValue={selectedUser?.address} />
+                            <input name='address' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.address} />
                         </div>
 
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Email</label>
-                            <input name='email' type="email" className='input input-bordered w-full' defaultValue={selectedUser?.email} />
+                            <input name='email' type="email" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.email} />
                         </div>
 
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Phone</label>
-                            <input name='phone' type="text" className='input input-bordered w-full' defaultValue={selectedUser?.phone} />
+                            <input name='phone' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.phone} />
                         </div>
 
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Role</label>
-                            <select name='role' className='select select-bordered w-full'>
+                            <select name='role' className='select border border-[#e3e3e3] w-full'>
                                 <option value='admin'>Admin</option>
                                 <option value='renter'>Renter</option>
                                 <option value='lender'>Lender</option>
@@ -73,7 +71,7 @@ const UserModal = ({ openModal, userId, allUser }) => {
 
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Status</label>
-                            <select name='status' className='select select-bordered w-full'>
+                            <select name='status' className='select border border-[#e3e3e3] w-full'>
                                 <option value='approved'>Approved</option>
                                 <option value='pending'>Pending</option>
                                 <option value='blocked'>Blocked</option>
