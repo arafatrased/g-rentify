@@ -10,6 +10,7 @@ const ViewProfile = () => {
   const user = session?.user;
   const [currentCountry, setCurrentCountry] = useState("");
   const [currentCity, setCurrentCity] = useState("");
+  const [dbUser, setDbUser] = useState(null);
 
   useEffect(() => {
     const fetchLocation = async () => {
@@ -29,7 +30,30 @@ const ViewProfile = () => {
     fetchLocation();
   }, []);
 
-  console.log(currentCountry);
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(
+          `/api/auth/profile-update?email=${user?.email}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // Authorization: `Bearer ${session.accessToken}`,
+            },
+          }
+        );
+        const data = await res.json();
+        setDbUser(data);
+        console.log("Fetched user:", data);
+      } catch (error) {
+        console.error("User fetch failed:", error);
+      }
+    }
+    fetchUser()
+  }, [user?.email]);
+
+  console.log(dbUser);
 
   if (status === "loading")
     return <p className="text-center mt-10">Loading...</p>;
@@ -74,7 +98,7 @@ const ViewProfile = () => {
                 <div className="relative">
                   <img
                     src={
-                      user.image ||
+                      dbUser?.photoURL ||
                       "https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
                     }
                     alt="Profile"
@@ -85,7 +109,7 @@ const ViewProfile = () => {
                   </div>
                 </div>
                 <div>
-                  <h2 className="text-xl font-semibold">{user.name}</h2>
+                  <h2 className="text-xl font-semibold">{dbUser?.name}</h2>
                   <div className="flex items-center gap-2">
                     <p className="text-sm mt-1 bg-blue-100 text-[#00B22C] px-2 py-1 rounded-xl capitalize">
                       {user.role || "user"}
