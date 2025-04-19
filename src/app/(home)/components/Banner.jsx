@@ -9,10 +9,11 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Button from "./Button";
+import Link from "next/link";
 
 export default function Banner() {
   return (
-    <div className="py-10">
+    <div className="py-5 md:py-10">
       <div className="container mx-auto px-3">
         <Swiper
           pagination={{
@@ -22,10 +23,10 @@ export default function Banner() {
           className="mySwiper"
         >
           <SwiperSlide>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-10 place-items-center min-h-[700px]">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 lg:gap-10 place-items-center min-h-[700px]">
               {/* left item */}
               <div className="flex flex-col md:gap-5 gap-4">
-                <h1 className="font-bold text-5xl md:text-5xl  2xl:text-[80px] 2xl:leading-22 leading-15">
+                <h1 className="font-bold text-3xl md:text-5xl  2xl:text-[80px] 2xl:leading-22">
                   Explore the Skies with Power & Precision
                 </h1>
                 <p className="text-[#17080c]">
@@ -35,15 +36,18 @@ export default function Banner() {
                   performance. Capture every moment from a whole new
                   perspective—bold, dynamic, and unforgettable.
                 </p>
-                <Button buttonText={"click me"} />
+                <Link href={"/gadgets"}>
+                  <Button buttonText={"click me"} />
+                </Link>
               </div>
               {/* right item */}
               <div>
                 <Image
                   src={img1}
                   alt="Banner Image"
-                  className="max-w-[400px] md:max-w-[550px]"
+                  className="max-w-[300px] md:max-w-[550px]"
                   priority={true}
+                  quality={10}
                 />
               </div>
             </div>
@@ -52,7 +56,7 @@ export default function Banner() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 lg:gap-10 place-items-center min-h-[700px]">
               {/* left item */}
               <div className="flex flex-col gap-7">
-                <h1 className="font-bold text-5xl md:text-5xl 2xl:text-[80px] 2xl:leading-22 leading-15">
+                <h1 className="font-bold text-3xl md:text-5xl 2xl:text-[80px] 2xl:leading-22">
                   Capture Every Angle in Stunning Clarity
                 </h1>
                 <p>
@@ -61,15 +65,18 @@ export default function Banner() {
                   inspections—get sharp, steady footage with ease. Rent the
                   gear, own the sky, and tell your story from above.
                 </p>
-                <Button buttonText={"click me"} />
+                <Link href={"/gadgets"}>
+                  <Button buttonText={"click me"} />
+                </Link>
               </div>
               {/* right item */}
               <div>
                 <Image
                   src={img2}
                   alt="Banner Image"
-                  className="max-w-[400px] md:max-w-[550px]"
+                  className="max-w-[300px] md:max-w-[550px]"
                   priority={true}
+                  quality={10}
                 />
               </div>
             </div>

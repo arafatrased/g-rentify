@@ -24,7 +24,7 @@ export default function ProductCard({ item }) {
           {item?.title?.substring(0, 62)}
         </h3>
       </Link>
-      <p className="font-medium text-[#03b00b] mb-2">$ {item?.price}</p>
+      <p className="font-medium text-[#03b00b] mb-2">$ {item?.price} / 1 Day</p>
       <Link
         href={`gadgets/${item?._id}`}
         className="opacity-0 -translate-y-5 table group-hover:opacity-100 group-hover:translate-y-0 duration-500"

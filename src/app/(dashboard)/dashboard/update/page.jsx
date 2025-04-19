@@ -1,28 +1,31 @@
 "use client";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const UpdateProfile = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const user = session?.user;
 
   const [name, setName] = useState(user?.name || "");
-  const [image, setImage] = useState(user?.image || "");
+  const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
+  const [address, setAddress] = useState(user?.address|| "");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(name, image);
+    console.log(user?.email ,name, photoURL, address);
 
     try {
-      const res = await fetch("/api/user/update", {
+      const res = await fetch("/api/auth/profile-update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, image }),
+        body: JSON.stringify({ email: user?.email ,name, address, photoURL }),
       });
 
       if (res.ok) {
         alert("Profile updated!");
-        window.location.href = "/profile/view";
+        router.push("/dashboard/view-profile");
       } else {
         alert("Failed to update profile.");
       }
@@ -57,8 +60,19 @@ const UpdateProfile = () => {
             <input
               type="text"
               className="input w-full px-4 py-2 focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] border"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
+              value={photoURL}
+              onChange={(e) => setPhotoURL(e.target.value)}
+            />
+          </div>
+          <div>
+            <label className="block text-gray-700 font-medium">
+              Address
+            </label>
+            <input
+              type="text"
+              className="input w-full px-4 py-2 focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] border"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
             />
           </div>
           <button
