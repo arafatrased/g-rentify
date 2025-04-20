@@ -23,8 +23,8 @@ const Navbar = () => {
   const { loading, total } = useOrders();
 
   return (
-    <div className="border-b border-gray-300 relative">
-      <nav className="flex items-center sticky top-0 z-40 backdrop-blur-3xl justify-between w-full py-4 container mx-auto px-2">
+    <div className="border-b border-gray-300 sticky top-0 z-40 backdrop-blur-3xl">
+      <nav className="flex items-center justify-between w-full py-4 container mx-auto px-2">
         {/* Logo */}
         <Link href="/">
           <img

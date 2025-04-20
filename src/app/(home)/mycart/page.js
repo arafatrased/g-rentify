@@ -1,308 +1,381 @@
 "use client";
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
+import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import Link from "next/link";
-import "@/app/(home)/css/datePicker.css"
+import "@/app/(home)/css/datePicker.css";
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import { RxCross1 } from "react-icons/rx";
+import toast from "react-hot-toast";
+import { useOrders } from "../context/OrderContext";
+import EmptyPage from "./components/EmptyPage";
+import { MdErrorOutline } from "react-icons/md";
+import MyCartPageSkeleton from "./components/MyCartPageSkeleton";
+import CartModals from "./components/CartModals";
+import { LuMinus } from "react-icons/lu";
+import { GoPlus } from "react-icons/go";
 
 const CartPage = () => {
-  const [cartProducts, setCartProducts] = useState([
-    {
-      id: 1,
-      title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-      quantity: 10,
-      length: 7,
-      price: 250,
-    },
-    {
-      id: 2,
-      title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-      quantity: 15,
-      length: 7,
-      price: 250,
-    },
-    {
-      id: 3,
-      title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-      quantity: 9,
-      length: 7,
-      price: 250,
-    },
-    {
-      id: 4,
-      title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-      quantity: 8,
-      length: 7,
-      price: 250,
-    },
-    {
-      id: 5,
-      title: "Sony FE 200-600mm f/5.6-6.3 G OSS",
-      quantity: 7,
-      length: 7,
-      price: 250,
-    },
-  ]);
-
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(
-    new Date().setDate(new Date().getDate() + 1)
+  const session = useSession();
+  const userEmail = session?.data?.user?.email;
+  const [gadgets, setGadgets] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const { setTotalOrders } = useOrders();
+  const allGadgetsPrice = gadgets.reduce(
+    (total, item) => total + item.totalRentValue,
+    0
   );
 
-  // Create a handler function for arrival date changes
-  const handleStartDateChange = (date) => {
-    setStartDate(date);
-
-    // Set return date to be one day after the selected arrival date
-    if ((date) => endDate) {
-      const nextDate = new Date(date).setDate(date.getDate() + 1);
-      setEndDate(nextDate);
-    }
-  };
-
-  // Handle return date changes
-  const handleEndDateChange = (date) => {
-    if (date > startDate) {
-      setEndDate(date);
-    } else {
-      toast.error("You cannot set the return date before the arrival date.");
-    }
-  };
+  const shippingCharge = 5; // Default shipping charge 5
+  const discountPrice = 30; // Default discount charge 30
+  const taxRate = 2 / 100; // Default tax charge 2%
+  const taxAmount = allGadgetsPrice * taxRate;
+  const amountWithTax = allGadgetsPrice + taxAmount;
+  const estimatedSubtotal = amountWithTax + shippingCharge;
+  const grandTotal = estimatedSubtotal - discountPrice; // final price
 
   // Decrease quantity
-  const handleDecreaseQuantity = (productId) => {
-    const updatedProducts = cartProducts.map((product) => {
-      if (product.id === productId) {
-        return { ...product, quantity: product.quantity - 1 };
-      }
-      return product;
-    });
-    setCartProducts(updatedProducts);
+  const handleDecreaseQuantity = (id) => {
+    setGadgets((prev) =>
+      prev.map((item) => {
+        if (item._id === id) {
+          const newQty = item.qty > 1 ? item.qty - 1 : 1;
+          const unitRent = item.totalRentValue / item.qty;
+          return {
+            ...item,
+            qty: newQty,
+            totalRentValue: unitRent * newQty,
+          };
+        }
+        return item;
+      })
+    );
   };
 
   // Increase quantity
-  const handleIncreaseQuantity = (productId) => {
-    const updatedProducts = cartProducts.map((product) => {
-      if (product.id === productId) {
-        return { ...product, quantity: product.quantity + 1 };
+  const handleIncreaseQuantity = (id) => {
+    setGadgets((prev) =>
+      prev.map((item) => {
+        if (item._id === id) {
+          const newQty = item.qty + 1;
+          const unitRent = item.totalRentValue / item.qty;
+          return {
+            ...item,
+            qty: newQty,
+            totalRentValue: unitRent * newQty,
+          };
+        }
+        return item;
+      })
+    );
+  };
+
+  const fetchMyOrder = async () => {
+    try {
+      setLoading(true);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-orders?email=${userEmail}`
+      );
+      const data = await res.json();
+      setGadgets(data);
+      if (data.length === 0) {
+        setLoading(false);
       }
-      return product;
-    });
-    setCartProducts(updatedProducts);
+    } catch (error) {
+      console.log("Failed to fetch my order.", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchMyOrder();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userEmail]);
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-orders/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+      const data = await res.json();
+      if (data.success === true) {
+        toast.success("Remove Successful!");
+        fetchMyOrder();
+        setTotalOrders((prev) => prev - 1);
+      }
+    } catch (error) {
+      console.log("Delete failed!", error);
+    }
+  };
+
+  const orderGadgetsInfo = {
+    gadgets,
+  };
+
+  // HandleCheckout
+  const handleCheckout = () => {
+    console.log(gadgets);
   };
 
   return (
-    <div className="container mx-auto py-7 px-2">
-      <div className="mb-5">
-        {/* breadcrumb  */}
-        <div className="breadcrumbs text-sm mb-6">
-          <ul>
-            <li>
-              <Link href={"/"}>Home</Link>
-            </li>
-            <li>
-              <Link href={"/gadgets"}>Gadgets</Link>
-            </li>
-            <li>
-              <Link className="text-[#03b00b]" href={"/cart"}>
-                Cart
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-12 gap-5">
-        {/* select rental date  */}
-        <div className="col-span-12 lg:col-span-4 xl:col-span-3 h-fit border border-gray-200 py-10">
-          <div className="col-span-12 xl:col-span-3 order-3 flex justify-center">
-            <div className="p-3 rounded h-fit text-center">
-              <h4 className="text-xl font-bold mb-5">
-                Select Your Rental Date
-              </h4>
-              <p className="text-base font-medium mb-1">Arrival Date:</p>
-              <DatePicker
-                showIcon
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 48 48"
-                  >
-                    <mask id="ipSApplication0">
-                      <g
-                        fill="none"
-                        stroke="#fff"
-                        strokeLinejoin="round"
-                        strokeWidth="4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          d="M40.04 22v20h-32V22"
-                        ></path>
-                        <path
-                          fill="#fff"
-                          d="M5.842 13.777C4.312 17.737 7.263 22 11.51 22c3.314 0 6.019-2.686 6.019-6a6 6 0 0 0 6 6h1.018a6 6 0 0 0 6-6c0 3.314 2.706 6 6.02 6c4.248 0 7.201-4.265 5.67-8.228L39.234 6H8.845l-3.003 7.777Z"
-                        ></path>
-                      </g>
-                    </mask>
-                    <path
-                      fill="currentColor"
-                      d="M0 0h48v48H0z"
-                      mask="url(#ipSApplication0)"
-                    ></path>
-                  </svg>
-                }
-                selected={startDate}
-                onChange={handleStartDateChange}
-                selectsStart
-                startDate={startDate}
-                endDate={endDate}
-                minDate={new Date()}
-                className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200 mb-4"
-              />
-              <p className="text-base font-medium mb-1">Return Date:</p>
-              <DatePicker
-                showIcon
-                icon={
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="1em"
-                    height="1em"
-                    viewBox="0 0 48 48"
-                  >
-                    <mask id="ipSApplication0">
-                      <g
-                        fill="none"
-                        stroke="#fff"
-                        strokeLinejoin="round"
-                        strokeWidth="4"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          d="M40.04 22v20h-32V22"
-                        ></path>
-                        <path
-                          fill="#fff"
-                          d="M5.842 13.777C4.312 17.737 7.263 22 11.51 22c3.314 0 6.019-2.686 6.019-6a6 6 0 0 0 6 6h1.018a6 6 0 0 0 6-6c0 3.314 2.706 6 6.02 6c4.248 0 7.201-4.265 5.67-8.228L39.234 6H8.845l-3.003 7.777Z"
-                        ></path>
-                      </g>
-                    </mask>
-                    <path
-                      fill="currentColor"
-                      d="M0 0h48v48H0z"
-                      mask="url(#ipSApplication0)"
-                    ></path>
-                  </svg>
-                }
-                selected={endDate}
-                onChange={handleEndDateChange}
-                selectsEnd
-                startDate={startDate}
-                endDate={endDate}
-                minDate={new Date().setDate(new Date().getDate() + 1)}
-                maxDate={new Date().setDate(new Date().getDate() + 30)}
-                className="text-center border border-[#e3e3e3] py-1 max-w-40 outline-gray-200"
-              />
-            </div>
+    <>
+      <div className="container mx-auto py-7 px-2">
+        <div className="mb-5">
+          {/* breadcrumb  */}
+          <div className="breadcrumbs text-sm mb-6">
+            <ul>
+              <li>
+                <Link href={"/"}>Home</Link>
+              </li>
+              <li>
+                <Link href={"/gadgets"}>Gadgets</Link>
+              </li>
+              <li>
+                <Link className="text-[#03b00b]" href={"/cart"}>
+                  Cart
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
 
-        <div className="col-span-12 lg:col-span-8 xl:col-span-9">
-          {/* cart table */}
-          <div className="overflow-x-auto w-full">
-            <table className="table w-full">
-              <thead className="border border-gray-200 bg-gray-100">
-                <tr className="uppercase text-gray-600">
-                  <th>Item</th>
-                  <th>Quantity</th>
-                  <th>Length</th>
-                  <th>Subtotal</th>
-                </tr>
-              </thead>
-              <tbody className="bg-white">
-                {cartProducts.map((product, index) => (
-                  <tr key={index} className="border-b border border-gray-200">
-                    <td className="flex items-center gap-2 py-6">
-                      <h4 className="font-bold">{product?.title}</h4>
-                    </td>
-                    <td className="capitalize text-gray-500">
-                      <div
-                        id="cart-page-quantity"
-                        className="flex items-center justify-between gap-y-2 max-w-[150px]"
-                      >
-                        <button
-                          disabled={product.quantity <= 1}
-                          onClick={() => handleDecreaseQuantity(product.id)}
-                          className="bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer"
-                        >
-                          -
-                        </button>
+        <div className="grid grid-cols-12 gap-5">
+          {loading ? (
+            <MyCartPageSkeleton />
+          ) : (
+            <>
+              {gadgets.length === 0 ? (
+                <EmptyPage />
+              ) : (
+                <>
+                  <div className="col-span-12 lg:col-span-8 xl:col-span-9 flex flex-col gap-5">
+                    {/* cart table */}
+                    <div className="overflow-x-auto w-full">
+                      <table className="table w-full">
+                        <thead>
+                          <tr className="text-[#333333] text-center">
+                            <th className="border border-gray-200">Item</th>
+                            <th className="border border-gray-200">Quantity</th>
+                            <th className="border border-gray-200">Length</th>
+                            <th className="border border-gray-200">Subtotal</th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-white">
+                          {gadgets.map((item) => (
+                            <tr
+                              key={item._id}
+                              className="border-b border-gray-200"
+                            >
+                              <td className="py-1 max-w-56 min-w-52 text-center border border-gray-200">
+                                <div className="flex items-center gap-3 md:gap-8">
+                                  <div>
+                                    <button
+                                      onClick={() => handleDelete(item?._id)}
+                                    >
+                                      <RxCross1 className="cursor-pointer hover:text-red-500 transition-colors duration-150" />
+                                    </button>
+                                  </div>
+                                  <Image
+                                    src={item?.productImage}
+                                    width={80}
+                                    height={80}
+                                    className="w-10 h-10 md:w-20 md:h-20"
+                                    alt={item?.productTitle}
+                                  />
+                                  <h4 className="font-bold">
+                                    {item?.productTitle.slice(0, 30)}
+                                  </h4>
+                                </div>
+                              </td>
+
+                              <td className="py-1 capitalize text-gray-500 text-center border border-gray-200">
+                                <div className="flex items-center justify-center gap-y-2 ">
+                                  <button
+                                    onClick={() =>
+                                      handleDecreaseQuantity(item._id)
+                                    }
+                                    className={`bg-green-600 text-white flex justify-center items-center text-lg rounded cursor-pointer w-8 h-8 ${
+                                      item.qty <= 1 &&
+                                      "hover:cursor-not-allowed opacity-50"
+                                    }`}
+                                    disabled={item.qty <= 1}
+                                  >
+                                    <LuMinus />
+                                  </button>
+                                  <input
+                                    type="number"
+                                    value={item.qty}
+                                    readOnly
+                                    className="border-none w-[50px] text-center focus:outline-none"
+                                  />
+                                  <button
+                                    onClick={() =>
+                                      handleIncreaseQuantity(item._id)
+                                    }
+                                    className="bg-green-600 text-white flex justify-center items-center text-lg rounded cursor-pointer w-8 h-8"
+                                  >
+                                    <GoPlus />
+                                  </button>
+                                </div>
+                              </td>
+
+                              <td className="py-1 text-center border border-gray-200">
+                                {item?.durationInDay} Days
+                              </td>
+                              <td className="py-1 font-bold text-center border border-gray-200">
+                                ${item?.totalRentValue}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    {/* coupon form */}
+                    <div className="border border-[#e3e3e3] py-5 px-5 rounded w-full">
+                      <h3 className="font-bold text-xl mb-1">Discount Code</h3>
+                      <p>Enter Your coupon code if you have one.</p>
+
+                      <form className="sm:flex items-center justify-between gap-5">
                         <input
-                          type="number"
-                          value={product.quantity}
-                          className="border-none w-[50px] text-center focus:outline-none"
+                          className={
+                            "mt-3 border border-gray-200 w-full rounded py-2 px-4 mb-3 focus:outline-[#03b00b] focus:outline-1"
+                          }
+                          type="text"
+                          placeholder="Coupon Code"
                         />
                         <button
-                          onClick={() => handleIncreaseQuantity(product.id)}
-                          className="bg-green-600 text-white px-3 py-1 rounded-sm cursor-pointer"
+                          type="submit"
+                          className="sm:min-w-40 bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-3 text-sm rounded transition-all duration-300 cursor-pointer"
                         >
-                          +
+                          Apply Coupon
                         </button>
+                      </form>
+                    </div>
+                  </div>
+
+                  <div className="col-span-12 lg:col-span-4 xl:col-span-3">
+                    {/* order summery  */}
+                    <div className="w-full border border-[#e3e3e3]  py-5 px-5 rounded sticky top-[170px]">
+                      <h1 className="text-[32px] font-medium text-[#1c1c1c] mb-8">
+                        Order Summary
+                      </h1>
+                      <div className="text-[#494949] flex flex-col gap-2 mb-5">
+                        <div className="flex justify-between">
+                          <p>Subtotal</p>
+                          <p>
+                            <strong className="text-[#1c1c1c]">
+                              ${allGadgetsPrice}
+                            </strong>
+                          </p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p>Shipping(Rount Trip)</p>
+                          <p>
+                            <strong className="text-[#1c1c1c]">
+                              ${shippingCharge}
+                            </strong>
+                          </p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="flex items-center gap-1">
+                            Taxes(2%)
+                            <span
+                              onClick={() =>
+                                document.getElementById("taxsModal").showModal()
+                              }
+                              className="text-[#03b00b] cursor-pointer"
+                            >
+                              <MdErrorOutline />
+                            </span>
+                          </p>
+                          <p>
+                            <strong className="text-[#1c1c1c]">
+                              ${taxAmount.toFixed(2)}
+                            </strong>
+                          </p>
+                        </div>
+                        <div className="flex justify-between">
+                          <p className="flex items-center gap-1">
+                            In-store pickup
+                            <span
+                              onClick={() =>
+                                document
+                                  .getElementById("inStoreModal")
+                                  .showModal()
+                              }
+                              className="text-[#03b00b] cursor-pointer"
+                            >
+                              <MdErrorOutline />
+                            </span>
+                          </p>
+                          <p>
+                            <strong className="text-[#1c1c1c]">Free</strong>
+                          </p>
+                        </div>
+
+                        <div className="flex justify-between">
+                          <p>Estimated subtotal</p>
+                          <p>
+                            <strong className="text-[#1c1c1c]">
+                              ${estimatedSubtotal}
+                            </strong>
+                          </p>
+                        </div>
+                        <div className="w-full h-[1px] bg-gray-600 my-2"></div>
+                        <div className="flex justify-between">
+                          <p className="flex items-center gap-1">
+                            Discount
+                            <span
+                              onClick={() =>
+                                document
+                                  .getElementById("discountModal")
+                                  .showModal()
+                              }
+                              className="text-[#03b00b] cursor-pointer"
+                            >
+                              <MdErrorOutline />
+                            </span>
+                          </p>
+                          <p>
+                            <strong className="text-[#1c1c1c]">
+                              ${discountPrice}
+                            </strong>
+                          </p>
+                        </div>
+
+                        <div className="w-full h-[1px] bg-gray-600 my-2"></div>
+                        <div className="flex justify-between">
+                          <p className="text-[#1c1c1c] font-semibold">
+                            Grand Total
+                          </p>
+                          <p>
+                            <strong className="text-[#1c1c1c]">
+                              ${grandTotal}
+                            </strong>
+                          </p>
+                        </div>
                       </div>
-                    </td>
-                    <td className="text-center">{product.length} Days</td>
-                    <td className="font-bold text-center">${product?.price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-
-          <div className="mt-10 flex gap-10 flex-col sm:flex-row">
-            <div className="sm:w-6/12 border border-[#e3e3e3] py-5 px-5 rounded-md w-full">
-              <h3 className="font-bold text-xl mb-1">Discount Code</h3>
-              <p>Enter Your coupon code if you have one.</p>
-
-              <form>
-                <input
-                  className={
-                    "mt-3 border border-[#e3e3e3] w-full rounded-md py-3 px-4 mb-3"
-                  }
-                  type="text"
-                  placeholder="Coupon Code"
-                />
-                <button
-                  type="submit"
-                  className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-2 text-sm rounded transition-all duration-300 cursor-pointer w-fit uppercase mt"
-                >
-                  Apply Coupon
-                </button>
-              </form>
-            </div>
-
-            <div className="sm:w-6/12 w-full border border-[#e3e3e3] py-5 px-5 rounded-md text-right">
-              <p>
-                Subtotal: <span>$250</span>
-              </p>
-              <p>
-                Shipping(Rount Trip): <span>$50</span>
-              </p>
-              <p>
-                Grand Total: <span>$500</span>
-              </p>
-              <button
-                type="submit"
-                className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-2 text-sm rounded transition-all duration-300 cursor-pointer w-fit uppercase mt-3"
-              >
-                Procced To Checkout
-              </button>
-            </div>
-          </div>
+                      <button
+                        onClick={handleCheckout}
+                        className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-3 text-sm rounded transition-all duration-300 cursor-pointer w-full"
+                      >
+                        Conntinue to checkout
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+            </>
+          )}
         </div>
       </div>
-    </div>
+      {/* modals */}
+      <CartModals />
+    </>
   );
 };
 
