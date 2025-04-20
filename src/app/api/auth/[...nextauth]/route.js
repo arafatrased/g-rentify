@@ -49,12 +49,12 @@ const authOptions = {
 
               if (!existingUser) {
                   // Assign role dynamically (you can set logic for role assignment)
-                  const assignedRole = "renter"; // Default role, change logic as needed
+                  const assignedRole = "borrower"; // Default role, change logic as needed
 
                   const newUser = {
                       name: user.name,
                       email: user.email,
-                      image: user.image,
+                      photoURL: user.image,
                       role: assignedRole, // Assign default or conditional role
                       createdAt: new Date()
                   };
