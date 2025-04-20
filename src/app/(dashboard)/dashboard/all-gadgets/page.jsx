@@ -193,7 +193,7 @@ export default function AllGadgets() {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody className="bg-white">
+          <tbody className="bg-white block max-h-[400px] overflow-y-auto w-full">
             {gadgets.map((item) => (
               <tr
                 key={item?._id}
@@ -240,6 +240,9 @@ export default function AllGadgets() {
           </tbody>
         </table>
       </div>
+
+
+      
 
       {/* Pagination Controls */}
       <div className="flex justify-between items-center mt-6">

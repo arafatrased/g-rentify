@@ -4,7 +4,6 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import { v4 as uuidv4 } from 'uuid';
 import sendEmail from '@/lib/sendEmail'; // nodemailer or similar
-import toast from 'react-hot-toast';
 
 export async function POST(req) {
   const { email } = await req.json();
