@@ -31,7 +31,6 @@ const LoginForm = () => {
         toast.error("Invalid email or password");
       }
     } catch (err) {
-      console.log(err);
       toast.error("Invalid email or password");
     }
     e.target.reset();

@@ -24,7 +24,7 @@ export const OrdersProvider = ({ children }) => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        console.log("Failed to fetch data length", error);
+        // console.log("Failed to fetch data length", error);
       } finally {
         setLoading(false);
       }

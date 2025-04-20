@@ -11,7 +11,7 @@ const ChangePasswordPage = () => {
     const session = useSession()
     const user = session?.data?.user;
     const email = user?.email;
-    console.log(email)
+
 
     const handleChangePassOnClick = () => {
 

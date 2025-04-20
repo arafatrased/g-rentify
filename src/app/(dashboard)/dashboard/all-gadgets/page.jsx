@@ -82,7 +82,7 @@ export default function AllGadgets() {
           }
         }
       } catch (error) {
-        console.log("Delete failed!", error);
+        // console.log("Delete failed!", error);
       }
     });
   };

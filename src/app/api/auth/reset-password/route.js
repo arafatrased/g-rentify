@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 
 export async function POST(req) {
   const { token, password } = await req.json();
-  console.log(token, password);
+  // console.log(token, password);
   const user = await dbConnect('users').findOne({
     passwordResetToken: token,
     passwordResetExpires: { $gt: new Date() },

@@ -19,7 +19,6 @@ const ViewProfile = () => {
           `${process.env.NEXT_PUBLIC_SERVER_LINK}/api/location`
         );
         const data = await res.json();
-        console.log("Fetched country:", data);
         setCurrentCountry(data.country_name);
         setCurrentCity(data.city);
       } catch (error) {
@@ -45,7 +44,6 @@ const ViewProfile = () => {
         );
         const data = await res.json();
         setDbUser(data);
-        console.log("Fetched user:", data);
       } catch (error) {
         console.error("User fetch failed:", error);
       }
@@ -53,7 +51,6 @@ const ViewProfile = () => {
     fetchUser()
   }, [user?.email]);
 
-  console.log(dbUser);
 
   if (status === "loading")
     return <p className="text-center mt-10">Loading...</p>;

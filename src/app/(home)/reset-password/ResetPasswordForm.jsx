@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 export default function ResetPasswordForm({ token }) {
   const router = useRouter();
-  console.log(token);
+  // console.log(token);
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');

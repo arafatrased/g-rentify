@@ -69,7 +69,7 @@ export default function GadgetDetails() {
         const data = await res.json();
         setGadget(data);
       } catch (error) {
-        console.log("Failed to fetch gadget.", error);
+        // console.log("Failed to fetch gadget.", error);
       } finally {
         setLoading(false);
       }
@@ -131,7 +131,7 @@ export default function GadgetDetails() {
       }
     } catch (error) {
       setCartLoading(false); // close loading when order successfull
-      console.log("Faield to send order.", error);
+      // console.log("Faield to send order.", error);
     }
   };
 

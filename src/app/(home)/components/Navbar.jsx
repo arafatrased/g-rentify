@@ -39,7 +39,6 @@ const Navbar = () => {
           );
           const data = await res.json();
           setDbUser(data);
-          console.log("Fetched user:", data);
         } catch (error) {
           console.error("User fetch failed:", error);
         }

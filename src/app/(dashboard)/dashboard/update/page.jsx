@@ -14,7 +14,6 @@ const UpdateProfile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(user?.email ,name, photoURL, address);
 
     try {
       const res = await fetch("/api/auth/profile-update", {
