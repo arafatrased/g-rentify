@@ -27,21 +27,23 @@ export default function GadgetDetails() {
   const [isExpandedSpec, setIsExpandedSpec] = useState(false);
   const [rentValue, setRentValue] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(
-    new Date().setDate(new Date().getDate() + 1)
-  );
   const [cartModal, setCartModal] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
   const { setTotalOrders } = useOrders();
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(
+    new Date(new Date().setDate(new Date().getDate() + 1))
+  );
+
 
   // Create a handler function for arrival date changes
   const handleStartDateChange = (date) => {
     setStartDate(date);
 
-    // Set return date to be one day after the selected arrival date
-    if ((date) => endDate) {
-      const nextDate = new Date(date).setDate(date.getDate() + 1);
+    // If the selected start date is same or later than end date, update end date
+    if (date >= endDate) {
+      const nextDate = new Date(date);
+      nextDate.setDate(date.getDate() + 1);
       setEndDate(nextDate);
     }
   };
@@ -94,10 +96,14 @@ export default function GadgetDetails() {
   const productData = { ...gadget, durationInDay, totalRentValue };
 
   const orderInfo = {
+    productImage: gadget?.images[0],
     productTitle: gadget?.title,
+    durationInDay,
     qty: 1,
     totalRentValue,
     user,
+    startDate,
+    endDate,
   };
 
   const handleOrderInfo = async () => {
@@ -121,7 +127,7 @@ export default function GadgetDetails() {
         // Auto close the success modal
         setTimeout(() => {
           setCartModal(false);
-        }, 5000);
+        }, 3000);
       }
     } catch (error) {
       setCartLoading(false); // close loading when order successfull
@@ -141,11 +147,7 @@ export default function GadgetDetails() {
             <li>
               <Link href={"/gadgets"}>Gadgets</Link>
             </li>
-            <li>
-              <Link className="text-[#03b00b]" href={"/"}>
-                Title
-              </Link>
-            </li>
+            <li className="text-[#03b00b]">{gadget?.title.slice(0, 50)}</li>
           </ul>
         </div>
 

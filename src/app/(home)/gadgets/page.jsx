@@ -192,6 +192,7 @@ export default function GadgetPage() {
                           height={500}
                           alt={item?.title}
                           priority={true}
+                          quality={10}
                           className="w-full lg:w-[150px] lg:h-[130px] h-[150px] object-cover p-2 mx-auto border border-[#e3e3e3] mb-1"
                         />
                       </Link>

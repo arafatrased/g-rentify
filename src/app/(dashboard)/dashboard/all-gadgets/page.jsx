@@ -199,12 +199,13 @@ export default function AllGadgets() {
                 key={item?._id}
                 className="border-b border-dashed last:border-none border-slate-200"
               >
-                <td className="flex items-center gap-2">
+                <td className="flex items-center gap-2 w-[300px] md:w-auto">
                   <Image
                     width={100}
                     height={100}
                     src={item?.images[0]}
                     alt={item?.title}
+                    quality={10}
                     className="w-10 h-10"
                   />
                   {item?.title}
@@ -218,10 +219,10 @@ export default function AllGadgets() {
                   </span>
                 </td>
                 <td className="font-bold">${item?.price}</td>
-                <td className="text-gray-500">
+                <td className="text-gray-500 min-w-36 md:w-auto">
                   {item?.date ? format(new Date(item.date), "PP") : "N/A"}
                 </td>
-                <td className="text-gray-500">
+                <td className="text-gray-500 min-w-44 md:w-auto">
                   {item?.gadgetAddedPerson?.itemAddedUser || "Anonymous"}
                 </td>
                 <td>
