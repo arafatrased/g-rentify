@@ -1,8 +1,8 @@
 'use client'
 import React, { useState } from 'react'
 
-const UserModal = ({ openModal, userId, allUser }) => {
-    const selectedUser = allUser.find((user) => user.id === userId)
+const UserModal = ({ openModal, userId, allUsers }) => {
+    const selectedUser = allUsers.find((user) => user.id === userId)
 
     // update user 
     const handleUpdateUser = (e) => {
@@ -35,29 +35,11 @@ const UserModal = ({ openModal, userId, allUser }) => {
 
                     {/* update user form  */}
                     <form onSubmit={handleUpdateUser}>
-                        <div className='input-group mb-3'>
-                            <label className='label mb-2'>Name</label>
-                            <input name='name' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.name} />
-                        </div>
-
-                        <div className='input-group mb-3'>
-                            <label className='label mb-2'>Image</label>
-                            <input name='profile' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.profile} />
-                        </div>
+                       
 
                         <div className='input-group mb-3'>
                             <label className='label mb-2'>Address</label>
                             <input name='address' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.address} />
-                        </div>
-
-                        <div className='input-group mb-3'>
-                            <label className='label mb-2'>Email</label>
-                            <input name='email' type="email" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.email} />
-                        </div>
-
-                        <div className='input-group mb-3'>
-                            <label className='label mb-2'>Phone</label>
-                            <input name='phone' type="text" className='input border border-[#e3e3e3] w-full' defaultValue={selectedUser?.phone} />
                         </div>
 
                         <div className='input-group mb-3'>

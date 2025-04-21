@@ -68,7 +68,7 @@ const AllUser = () => {
 
     return (
         <div id='all-user' className='p-5'>
-            <UserModal userId={selectedUserId} openModal={openModal} allUser={allUsers} />
+            <UserModal userId={selectedUserId} openModal={openModal} allUsers={allUsers} />
 
             {/* Breadcrumb */}
             <div className='mb-5'>
