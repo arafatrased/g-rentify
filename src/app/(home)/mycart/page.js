@@ -82,7 +82,7 @@ const CartPage = () => {
         setLoading(false);
       }
     } catch (error) {
-      console.log("Failed to fetch my order.", error);
+      // console.log("Failed to fetch my order.", error);
     } finally {
       setLoading(false);
     }
@@ -108,7 +108,7 @@ const CartPage = () => {
         setTotalOrders((prev) => prev - 1);
       }
     } catch (error) {
-      console.log("Delete failed!", error);
+      toast.error(error);
     }
   };
 
@@ -118,7 +118,7 @@ const CartPage = () => {
 
   // HandleCheckout
   const handleCheckout = () => {
-    console.log(gadgets);
+    // console.log(gadgets);
   };
 
   return (

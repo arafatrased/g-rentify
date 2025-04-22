@@ -12,6 +12,7 @@ import { Sling as Hamburger } from "hamburger-react";
 import { SiEngadget } from "react-icons/si";
 import { FaUsers } from "react-icons/fa";
 import { RiCoupon4Line } from "react-icons/ri";
+import { TbTruckDelivery } from "react-icons/tb";
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false);
@@ -58,7 +59,7 @@ export default function Sidebar() {
         <Link
           href="/dashboard/add-coupon"
           className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/add-gadget") ? activeClass : inactiveClass
+            isActive("/dashboard/add-coupon") ? activeClass : inactiveClass
           }`}
         >
           <span className="flex items-center gap-1">
@@ -93,6 +94,20 @@ export default function Sidebar() {
           <span className="flex items-center gap-1">
             <FaUsers />
             All Users
+          </span>
+          <MdKeyboardArrowRight />
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/dashboard/all-orders"
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/all-orders") ? activeClass : inactiveClass
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <TbTruckDelivery />
+            All Orders
           </span>
           <MdKeyboardArrowRight />
         </Link>

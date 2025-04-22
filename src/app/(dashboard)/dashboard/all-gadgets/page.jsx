@@ -82,7 +82,7 @@ export default function AllGadgets() {
           }
         }
       } catch (error) {
-        console.log("Delete failed!", error);
+        // console.log("Delete failed!", error);
       }
     });
   };
@@ -193,7 +193,7 @@ export default function AllGadgets() {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody className="bg-white block max-h-[400px] overflow-y-auto w-full">
+          <tbody className="bg-white max-h-[400px] overflow-y-auto w-full">
             {gadgets.map((item) => (
               <tr
                 key={item?._id}

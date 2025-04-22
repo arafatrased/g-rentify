@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // react icons
 import { TbLogout2, TbListDetails } from "react-icons/tb";
@@ -23,6 +23,30 @@ const Navbar = () => {
   const [isProductHover, setIsProductHover] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { loading, total } = useOrders();
+  const [dbUser, setDbUser] = useState(null);
+
+
+    useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const res = await fetch(
+            `/api/auth/profile-update?email=${userSession?.user?.email}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization: `Bearer ${session.accessToken}`,
+              },
+            }
+          );
+          const data = await res.json();
+          setDbUser(data);
+        } catch (error) {
+          console.error("User fetch failed:", error);
+        }
+      }
+      fetchUser()
+    }, [userSession?.user?.email]);
 
   return (
     <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
@@ -159,14 +183,13 @@ const Navbar = () => {
               onClick={() => setAccountMenuOpen(!accountMenuOpen)}
               className="flex items-center gap-2 cursor-pointer"
             >
-              {userSession?.user?.image ? (
+              {dbUser?.photoURL ? (
                 <>
-                  <Image
-                    src={userSession.user.image}
-                    width={40}
-                    height={40}
-                    className="rounded-full"
+                  <img
+                    src={dbUser?.photoURL}
+                    className="rounded-full w-10 h-10 ring-1 ring-[#03b00b] object-cover p-[2px]"
                     alt="user-Image"
+                    referrerPolicy="no-referrer"
                   />
                 </>
               ) : (

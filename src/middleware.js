@@ -11,7 +11,7 @@ export const middleware = async (req, res) => {
     const isTokenOk = !!token;
     const isAdmin = token?.role === 'admin';
     const isLender = token?.role === 'lender';
-    const isRenter = token?.role === 'renter';
+    const isRenter = token?.role === 'borrower';
 
     const isAuthenticated = isTokenOk && (isAdmin || isLender || isRenter);
     // const isLoginPath = req.nextUrl.pathname.startsWith('/login');
