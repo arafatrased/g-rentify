@@ -5,9 +5,11 @@ import Link from "next/link";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { MdDashboard, MdLaptopMac } from "react-icons/md";
-import { AiOutlineFire } from "react-icons/ai";
-import { BiSupport } from "react-icons/bi";
+import {
+  MdDashboard,
+  MdLaptopMac,
+  MdOutlineAccountCircle,
+} from "react-icons/md";
 import { FiUser } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
@@ -23,7 +25,7 @@ const Navbar = () => {
   const { loading, total } = useOrders();
 
   return (
-    <div className="border-b border-gray-300 sticky top-0 z-40 backdrop-blur-3xl">
+    <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
       <nav className="flex items-center justify-between w-full py-4 container mx-auto px-2">
         {/* Logo */}
         <Link href="/">
@@ -88,14 +90,6 @@ const Navbar = () => {
 
           {/* Other Nav Items */}
           <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-            <AiOutlineFire className="text-[1.1rem]" />
-            Features
-          </li>
-          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-            <BiSupport className="text-[1.1rem]" />
-            Support
-          </li>
-          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
             <Link href="/contactus" className="flex items-center">
               <CiMail className="text-[1.1rem]" />
               Contacts
@@ -105,6 +99,12 @@ const Navbar = () => {
             <Link href="/about" className="flex items-center">
               <TbListDetails className="text-[1.1rem]" />
               About Us
+            </Link>
+          </li>
+          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+            <Link href="/my-account" className="flex items-center">
+              <MdOutlineAccountCircle className="text-[1.1rem]" />
+              My Account
             </Link>
           </li>
           {status === "authenticated" && (

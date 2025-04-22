@@ -11,7 +11,7 @@ import { useState } from "react";
 import { Sling as Hamburger } from "hamburger-react";
 import { SiEngadget } from "react-icons/si";
 import { FaUsers } from "react-icons/fa";
-
+import { RiCoupon4Line } from "react-icons/ri";
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false);
@@ -29,8 +29,9 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard") ? activeClass : inactiveClass
-            }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard") ? activeClass : inactiveClass
+          }`}
         >
           <span className="flex items-center gap-1">
             <FiHome />
@@ -42,8 +43,9 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard/add-gadget"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/add-gadget") ? activeClass : inactiveClass
-            }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/add-gadget") ? activeClass : inactiveClass
+          }`}
         >
           <span className="flex items-center gap-1">
             <TbPlaylistAdd />
@@ -54,9 +56,24 @@ export default function Sidebar() {
       </li>
       <li>
         <Link
+          href="/dashboard/add-coupon"
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/add-gadget") ? activeClass : inactiveClass
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <RiCoupon4Line />
+            Add Coupon
+          </span>
+          <MdKeyboardArrowRight />
+        </Link>
+      </li>
+      <li>
+        <Link
           href="/dashboard/all-gadgets"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/all-gadgets") ? activeClass : inactiveClass
-            }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/all-gadgets") ? activeClass : inactiveClass
+          }`}
         >
           <span className="flex items-center gap-1">
             <SiEngadget className="text-sm" />
@@ -69,8 +86,9 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard/all-user"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/all-user") ? activeClass : inactiveClass
-            }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/all-user") ? activeClass : inactiveClass
+          }`}
         >
           <span className="flex items-center gap-1">
             <FaUsers />
@@ -87,8 +105,9 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard/view-profile"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/view-profile") ? activeClass : inactiveClass
-            }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/view-profile") ? activeClass : inactiveClass
+          }`}
         >
           <span className="flex items-center gap-1">
             <FiUser />
@@ -100,8 +119,9 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard/settings"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/settings") ? activeClass : inactiveClass
-            }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/settings") ? activeClass : inactiveClass
+          }`}
         >
           <span className="flex items-center gap-1">
             <IoSettingsOutline />
@@ -114,8 +134,9 @@ export default function Sidebar() {
         <Link
           href="/"
           onClick={() => signOut()}
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/") ? activeClass : inactiveClass
-            }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/") ? activeClass : inactiveClass
+          }`}
         >
           <span className="flex items-center gap-1">
             <TbLogout2 />
@@ -145,12 +166,12 @@ export default function Sidebar() {
       >
         <div className="p-3 sticky top-0">
           <Link href="/">
-            <h1 className="italic text-center text-2xl font-medium text-[#03b00b] mb-5.5 hidden lg:block">
+            <h1 className="italic text-center text-2xl font-medium text-[#03b00b] hidden lg:block">
               G-Rentify
             </h1>
           </Link>
 
-          <div className="w-full h-[1px] bg-[#dddddd] my-2.5 hidden lg:block"></div>
+          <div className="w-full h-[1px] bg-[#dddddd] mt-6 mb-3 hidden lg:block"></div>
           <p className="text-[12px] text-[#2c2c2c]">Dashboard & App</p>
           <div className="flex flex-col gap-2 mt-2 justify-between min-h-[80vh]">
             <ul className="text-[#2c2c2c] mt-5 space-y-1">{links}</ul>
