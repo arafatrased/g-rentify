@@ -14,17 +14,19 @@ import MyCartPageSkeleton from "./components/MyCartPageSkeleton";
 import CartModals from "./components/CartModals";
 import { LuMinus } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
+import Swal from "sweetalert2";
 
 const CartPage = () => {
   const session = useSession();
   const userEmail = session?.data?.user?.email;
   const [gadgets, setGadgets] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { setTotalOrders } = useOrders();
+  const { setTotalCart } = useOrders();
   const allGadgetsPrice = gadgets.reduce(
     (total, item) => total + item.totalRentValue,
     0
   );
+  const [couponCode, setCouponCode] = useState("");
 
   const shippingCharge = 5; // Default shipping charge 5
   const discountPrice = 30; // Default discount charge 30
@@ -74,7 +76,7 @@ const CartPage = () => {
     try {
       setLoading(true);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-orders?email=${userEmail}`
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-cart?email=${userEmail}`
       );
       const data = await res.json();
       setGadgets(data);
@@ -97,7 +99,7 @@ const CartPage = () => {
   const handleDelete = async (id) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-orders/${id}`,
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-cart/${id}`,
         {
           method: "DELETE",
         }
@@ -106,20 +108,37 @@ const CartPage = () => {
       if (data.success === true) {
         toast.success("Remove Successful!");
         fetchMyOrder();
-        setTotalOrders((prev) => prev - 1);
+        setTotalCart((prev) => prev - 1);
       }
     } catch (error) {
       toast.error(error);
     }
   };
 
-  const orderGadgetsInfo = {
-    gadgets,
-  };
+  const handleCouponSubmit = async (e) => {
+    e.preventDefault();
+    const couponCode = e.target.couponCode.value;
+    if (!couponCode) return;
 
-  // HandleCheckout
-  const handleCheckout = () => {
-    // console.log(gadgets);
+    // fetch valid coupon code
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_LINK}/coupon-code/${couponCode}`
+    );
+
+    const data = await res.json();
+
+    // check valid couponCode
+    if (data.message === "ok") {
+      console.log("ok");
+    } else {
+      Swal.fire({
+        position: "top-center",
+        icon: "error",
+        title: `${data.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (
@@ -240,11 +259,15 @@ const CartPage = () => {
                       <h3 className="font-bold text-xl mb-1">Discount Code</h3>
                       <p>Enter Your coupon code if you have one.</p>
 
-                      <form className="sm:flex items-center justify-between gap-5">
+                      <form
+                        onSubmit={handleCouponSubmit}
+                        className="sm:flex items-center justify-between gap-5"
+                      >
                         <input
                           className={
                             "mt-3 border border-gray-200 w-full rounded py-2 px-4 mb-3 focus:outline-[#03b00b] focus:outline-1"
                           }
+                          name="couponCode"
                           type="text"
                           placeholder="Coupon Code"
                         />
@@ -269,7 +292,7 @@ const CartPage = () => {
                           <p>Subtotal</p>
                           <p>
                             <strong className="text-[#1c1c1c]">
-                              ${allGadgetsPrice}
+                              ${allGadgetsPrice.toFixed(2)}
                             </strong>
                           </p>
                         </div>
@@ -277,7 +300,7 @@ const CartPage = () => {
                           <p>Shipping(Rount Trip)</p>
                           <p>
                             <strong className="text-[#1c1c1c]">
-                              ${shippingCharge}
+                              ${shippingCharge.toFixed(2)}
                             </strong>
                           </p>
                         </div>
@@ -322,7 +345,7 @@ const CartPage = () => {
                           <p>Estimated subtotal</p>
                           <p>
                             <strong className="text-[#1c1c1c]">
-                              ${estimatedSubtotal}
+                              ${estimatedSubtotal.toFixed(2)}
                             </strong>
                           </p>
                         </div>
@@ -343,7 +366,7 @@ const CartPage = () => {
                           </p>
                           <p>
                             <strong className="text-[#1c1c1c]">
-                              ${discountPrice}
+                              ${discountPrice.toFixed(2)}
                             </strong>
                           </p>
                         </div>
@@ -355,17 +378,12 @@ const CartPage = () => {
                           </p>
                           <p>
                             <strong className="text-[#1c1c1c]">
-                              ${grandTotal}
+                              ${grandTotal.toFixed(2)}
                             </strong>
                           </p>
                         </div>
                       </div>
-                      <Link
-                        href={"/payment"}
-                        disabled={gadgets.length === 0}
-                        onClick={handleCheckout}
-                        className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-3 text-sm rounded transition-all duration-300 cursor-pointer w-full"
-                      >
+                      <button className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-3 text-sm rounded transition-all duration-300 cursor-pointer w-full">
                         Conntinue to checkout
                       </Link>
                     </div>

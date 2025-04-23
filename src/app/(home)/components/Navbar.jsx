@@ -148,9 +148,9 @@ const Navbar = () => {
             data-tip="Shopping Cart"
           >
             {loading ? (
-              <div className="indicator-item skeleton h-5 w-5 rounded-full"></div>
+              <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
             ) : (
-              <span className="indicator-item w-5 h-5 text-[12px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
+              <span className="indicator-item w-4 h-4 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
                 {total}
               </span>
             )}
@@ -185,7 +185,7 @@ const Navbar = () => {
             >
               {dbUser?.photoURL ? (
                 <>
-                  <img
+                  <Image
                     src={dbUser?.photoURL}
                     className="rounded-full w-10 h-10 ring-1 ring-[#03b00b] object-cover p-[2px]"
                     alt="user-Image"
