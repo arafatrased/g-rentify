@@ -7,8 +7,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
-
-
 const CheckoutForm = () => {
     const router = useRouter()
     const session = useSession();
@@ -67,8 +65,6 @@ const CheckoutForm = () => {
           fetchClientSecret();
         }   
       },[totalPrice])
-   
-      console.log(clientSecret)
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -138,7 +134,7 @@ const CheckoutForm = () => {
                 if (data) {
                     // console.log('Payment successful!', data);
                     setTransactionId(paymentIntent.id);
-                    toast.success(`Payment successful! Transaction Id: ${paymentIntent.id}`);
+                    toast.success(`Payment successful! Transaction Id: ${transactionId}`);
                     setCart([])
                     router.push('/my-account')
                     // Here you can update the order status in your application state
