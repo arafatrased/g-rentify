@@ -79,6 +79,7 @@ const CartPage = () => {
         `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-cart?email=${userEmail}`
       );
       const data = await res.json();
+      console.log(data);
       setGadgets(data);
 
       if (data.length === 0) {
@@ -95,6 +96,8 @@ const CartPage = () => {
     fetchMyOrder();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEmail]);
+
+  console.log(gadgets);
 
   const handleDelete = async (id) => {
     try {
@@ -383,7 +386,7 @@ const CartPage = () => {
                           </p>
                         </div>
                       </div>
-                      <button className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-3 text-sm rounded transition-all duration-300 cursor-pointer w-full">
+                      <Link href={"/payment"} className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-3 text-sm rounded transition-all duration-300 cursor-pointer w-full">
                         Conntinue to checkout
                       </Link>
                     </div>

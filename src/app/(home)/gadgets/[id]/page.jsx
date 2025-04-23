@@ -98,6 +98,7 @@ export default function GadgetDetails() {
   const cartInfo = {
     productImage: gadget?.images[0],
     productTitle: gadget?.title,
+    gadgetId: gadget?._id,
     durationInDay,
     qty: 1,
     totalRentValue,

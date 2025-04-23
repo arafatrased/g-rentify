@@ -151,7 +151,7 @@ const Navbar = () => {
               <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
             ) : (
               <span className="indicator-item w-4 h-4 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
-                {total}
+                {total || 0}
               </span>
             )}
             <Link href={"/mycart"}>
@@ -187,9 +187,11 @@ const Navbar = () => {
                 <>
                   <Image
                     src={dbUser?.photoURL}
-                    className="rounded-full w-10 h-10 ring-1 ring-[#03b00b] object-cover p-[2px]"
+                    className="rounded-full ring-1 ring-[#03b00b] object-cover p-[2px]"
                     alt="user-Image"
                     referrerPolicy="no-referrer"
+                    width={40}
+                    height={35}
                   />
                 </>
               ) : (

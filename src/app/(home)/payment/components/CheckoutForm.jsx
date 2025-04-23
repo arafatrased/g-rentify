@@ -3,10 +3,14 @@
 
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+
 
 
 const CheckoutForm = () => {
+    const router = useRouter()
     const session = useSession();
     const user = session?.data?.user;
     const [error, setError] = useState(null);
@@ -14,13 +18,12 @@ const CheckoutForm = () => {
     const [transactionId, setTransactionId] = useState('');
     const stripe = useStripe();
     const elements = useElements();
-    console.log(user?.email)
     const [cart, setCart] = useState([]);
 
       const fetchMyOrder = async () => {
         try {
           const res = await fetch(
-            `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-orders?email=${user?.email}`,
+            `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-cart?email=${user?.email}`,
           );
           const data = await res.json();
           setCart(data);
@@ -84,11 +87,11 @@ const CheckoutForm = () => {
             card,
         });
         if(error) {
-            console.error('[error]', error);
+            // console.error('[error]', error);
             setError(error.message)
         }
         else {
-            console.log('[PaymentMethod]', paymentMethod);
+            // console.log('[PaymentMethod]', paymentMethod);
             // Here you can send the paymentMethod.id to your server to process the payment
             setError('')
         }
@@ -107,21 +110,45 @@ const CheckoutForm = () => {
             },
         );
         if (confirmError) {
-            console.error('[error]', confirmError);
+            // console.error('[error]', confirmError);
             setError(confirmError.message)
         } else {
-            console.log('[PaymentIntent]', paymentIntent);
+
             if (paymentIntent.status === 'succeeded') {
-                console.log('Payment succeeded! Transaction Id:', paymentIntent.id);
-                setTransactionId(paymentIntent.id);
+                // console.log('Payment succeeded! Transaction Id:', paymentIntent.id);
+
                 // Here you can send the paymentIntent.id to your server to update the order status
+                const payment = {
+                    email: user?.email,
+                    transactionId: paymentIntent.id,
+                    totalRentValue: totalPrice,
+                    cartItemsId: cart.map(item => item._id),
+                    date: new Date(), //should be in ISO format(moment.js)
+                    gadgetId: cart.map(item => item.gadgetId),
+                    status: 'pending',
+                }
+                const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/payment`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payment),
+                });
+                const data = await res.json();
+                if (data) {
+                    // console.log('Payment successful!', data);
+                    setTransactionId(paymentIntent.id);
+                    toast.success(`Payment successful! Transaction Id: ${paymentIntent.id}`);
+                    setCart([])
+                    router.push('/my-account')
+                    // Here you can update the order status in your application state
+                } else {
+                    console.error('Failed to update order status:', data.message);
             }
             // Here you can send the paymentIntent.id to your server to update the order status
             setError('')
         }
-
-
-
+      }
     }
 
     return (
@@ -153,12 +180,6 @@ const CheckoutForm = () => {
                 Pay
             </button>
             <p className='text-red-600'>{error}</p>
-            {transactionId && (
-                <div className='text-green-600'>
-                    <p>Transaction successful!</p>
-                    <p>Transaction ID: {transactionId}</p>
-                </div>
-            )}
         </form>
 
     );
