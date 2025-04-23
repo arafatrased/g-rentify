@@ -13,12 +13,10 @@ export default function AddCouponForm() {
   } = useForm();
 
   const onSubmit = async (data) => {
-    const couponCode = data.code;
-
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_LINK}/coupon-code`,
-        { couponCode }
+        data
       );
 
       if (res.data.insertedId) {
@@ -106,7 +104,6 @@ export default function AddCouponForm() {
                 Coupon Code
               </label>
               <input
-                id="code"
                 {...register("code", {
                   required: "Coupon code is required",
                   maxLength: {
@@ -120,6 +117,31 @@ export default function AddCouponForm() {
               {errors.code && (
                 <p className="text-sm text-red-500 mt-2">
                   {errors.code.message}
+                </p>
+              )}
+            </div>
+            <div className="flex flex-col">
+              <label
+                htmlFor="code"
+                className="mb-2 font-semibold text-gray-700"
+              >
+               Discount Value
+              </label>
+              <input
+                {...register("discountValue", {
+                  required: "Discount value is required",
+                  maxLength: {
+                    value: 2,
+                    message: "Maximum 99 allowed",
+                  },
+                })}
+                type="number"
+                placeholder="Enter your discount value"
+                className="px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#03b00b]"
+              />
+              {errors.discountValue && (
+                <p className="text-sm text-red-500 mt-2">
+                  {errors.discountValue.message}
                 </p>
               )}
             </div>

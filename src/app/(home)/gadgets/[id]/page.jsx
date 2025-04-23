@@ -29,7 +29,7 @@ export default function GadgetDetails() {
   const [loading, setLoading] = useState(true);
   const [cartModal, setCartModal] = useState(false);
   const [cartLoading, setCartLoading] = useState(false);
-  const { setTotalOrders } = useOrders();
+  const { setTotalCart } = useOrders();
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(
     new Date(new Date().setDate(new Date().getDate() + 1))
@@ -95,7 +95,7 @@ export default function GadgetDetails() {
   // share productData in the successModal
   const productData = { ...gadget, durationInDay, totalRentValue };
 
-  const orderInfo = {
+  const cartInfo = {
     productImage: gadget?.images[0],
     productTitle: gadget?.title,
     durationInDay,
@@ -106,7 +106,7 @@ export default function GadgetDetails() {
     endDate,
   };
 
-  const handleOrderInfo = async () => {
+  const handleCartInfo = async () => {
     // Check user is loged in or not if the user not login then redirect login page
     if (!user) {
       redirect("/login");
@@ -116,14 +116,14 @@ export default function GadgetDetails() {
 
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_LINK}/user-order`,
-        orderInfo
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/user-cart`,
+        cartInfo
       );
 
       if (res.data.insertedId) {
         setCartModal(true); // show the success modal
         setCartLoading(false); // close loading when order successfull
-        setTotalOrders((prev) => prev + 1); // incrise data length
+        setTotalCart((prev) => prev + 1); // incrise data length
         // Auto close the success modal
         setTimeout(() => {
           setCartModal(false);
@@ -450,7 +450,7 @@ export default function GadgetDetails() {
                     {cartLoading ? (
                       <span className="loading loading-dots loading-sm"></span>
                     ) : (
-                      <span onClick={handleOrderInfo}>ADD TO CART</span>
+                      <span onClick={handleCartInfo}>ADD TO CART</span>
                     )}
                   </button>
                 </div>

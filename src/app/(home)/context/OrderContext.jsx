@@ -9,14 +9,14 @@ export const OrdersProvider = ({ children }) => {
   const userEmail = session?.data?.user?.email;
   const [loading, setLoading] = useState(true);
   const [myOrder, setMyOrder] = useState();
-  const [totalOrders, setTotalOrders] = useState(0);
-  const total = totalOrders + myOrder?.length;
+  const [totalCart, setTotalCart] = useState(0);
+  const total = totalCart + myOrder?.length;
 
   useEffect(() => {
     const fetchMyOrder = async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-orders?email=${userEmail}`
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-cart?email=${userEmail}`
         );
 
         const data = await res.json();
@@ -35,7 +35,7 @@ export const OrdersProvider = ({ children }) => {
 
   return (
     <OrdersContext.Provider
-      value={{ total, totalOrders, setTotalOrders, loading }}
+      value={{ total, totalCart, setTotalCart, loading }}
     >
       {children}
     </OrdersContext.Provider>
