@@ -125,9 +125,9 @@ export default function AddCouponForm() {
             </div>
 
             <div className="text-center">
-              <button type="submit">
+              <h1 type="submit">
                 <Button buttonText={"Add Coupon"} />
-              </button>
+              </h1>
             </div>
           </form>
         </div>

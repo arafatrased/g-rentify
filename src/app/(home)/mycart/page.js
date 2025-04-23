@@ -78,6 +78,7 @@ const CartPage = () => {
       );
       const data = await res.json();
       setGadgets(data);
+
       if (data.length === 0) {
         setLoading(false);
       }
@@ -359,12 +360,14 @@ const CartPage = () => {
                           </p>
                         </div>
                       </div>
-                      <button
+                      <Link
+                        href={"/payment"}
+                        disabled={gadgets.length === 0}
                         onClick={handleCheckout}
                         className="bg-[#00B22C] hover:bg-[#00b22cda] text-white px-5 py-3 text-sm rounded transition-all duration-300 cursor-pointer w-full"
                       >
                         Conntinue to checkout
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </>

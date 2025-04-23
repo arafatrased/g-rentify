@@ -96,12 +96,13 @@ export default function GadgetDetails() {
   const productData = { ...gadget, durationInDay, totalRentValue };
 
   const orderInfo = {
+    gadgetId: gadget?._id,
     productImage: gadget?.images[0],
     productTitle: gadget?.title,
     durationInDay,
     qty: 1,
     totalRentValue,
-    user,
+    userEmail: user?.email,
     startDate,
     endDate,
   };
