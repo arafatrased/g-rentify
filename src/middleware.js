@@ -17,7 +17,16 @@ export const middleware = async (req, res) => {
     // const isLoginPath = req.nextUrl.pathname.startsWith('/login');
     // const isRegisterPath = req.nextUrl.pathname.startsWith('/register');
     const isDashBoardPath = req.nextUrl.pathname.startsWith('/dashboard');
+    const isMyAccountPath = req.nextUrl.pathname.startsWith('/my-account');
+    const isPaymentPath = req.nextUrl.pathname.startsWith('/payment');
     if(!isAuthenticated && isDashBoardPath) {
+        return NextResponse.redirect(new URL('/login', req.url));
+    }
+
+    if(!isAuthenticated && isMyAccountPath) {
+        return NextResponse.redirect(new URL('/login', req.url));
+    }
+    if(!isAuthenticated && isPaymentPath) {
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
