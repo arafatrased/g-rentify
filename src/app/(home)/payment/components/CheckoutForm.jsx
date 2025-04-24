@@ -13,7 +13,6 @@ const CheckoutForm = () => {
     const user = session?.data?.user;
     const [error, setError] = useState(null);
     const [clientSecret, setClientSecret] = useState('');
-    const [transactionId, setTransactionId] = useState('');
     const stripe = useStripe();
     const elements = useElements();
     const [cart, setCart] = useState([]);
@@ -133,8 +132,7 @@ const CheckoutForm = () => {
                 const data = await res.json();
                 if (data) {
                     // console.log('Payment successful!', data);
-                    setTransactionId(paymentIntent.id);
-                    toast.success(`Payment successful! Transaction Id: ${transactionId}`);
+                    toast.success(`Payment successful! Transaction Id: ${paymentIntent.id}`);
                     setCart([])
                     router.push('/my-account')
                     // Here you can update the order status in your application state
@@ -148,8 +146,24 @@ const CheckoutForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="border border-gray-300 p-4 rounded-md shadow-sm">
+        <form onSubmit={handleSubmit} className="flex flex-col items-center justify-center">
+            <h1 className="text-2xl font-bold mb-4">Checkout via Stripe</h1>
+            <div className='flex flex-col gap-4 w-full md:w-8/12 justify-between items-center p-8'>
+                <div className='border border-gray-300 w-full p-4 rounded-md shadow-sm'>
+                    <h1 className='text-2xl'>Total Amount: <span className='text-green-700 font-semibold'>${totalPrice}</span></h1>
+                </div>
+                <div className='border border-gray-300 w-full p-4 rounded-md shadow-sm'>
+                    <h1 className='font-semibold'>Shipping Address</h1>
+                    <h1>Name: {user?.name}</h1>
+                    <h1>Email: {user?.email}</h1>
+                    <h1>Address: {cart[0]?.address}</h1>
+                    <h1>City: {cart[0]?.city}</h1>
+                    <h1>Phone: {cart[0]?.state}</h1>
+                </div>
+            </div>
+            <div className="border w-full md:w-8/12 border-gray-300 pt-4 pb-10 px-4 rounded-md shadow-sm">
+                <h1 className="text-xl font-semibold mb-4">Card Information</h1>
+                <p className="text-gray-600 mb-10">Please enter your card details below:</p>
                 <CardElement
                     options={{
                         style: {
@@ -170,7 +184,7 @@ const CheckoutForm = () => {
 
             <button
                 disabled={!stripe || !clientSecret}
-                className="my-10 py-2 px-4 rounded-2xl border bg-green-600 text-white hover:bg-green-500 "
+                className="my-10 py-2 px-4 w-6/12 rounded-2xl border bg-green-600 text-white hover:bg-green-500 "
                 type="submit"
             >
                 Pay

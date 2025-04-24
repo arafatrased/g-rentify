@@ -5,6 +5,7 @@ import Link from "next/link";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
 import { HiOutlineShoppingBag } from "react-icons/hi";
+import { IoIosSearch } from "react-icons/io";
 import {
   MdDashboard,
   MdLaptopMac,
@@ -26,27 +27,29 @@ const Navbar = () => {
   const [dbUser, setDbUser] = useState(null);
 
 
-    useEffect(() => {
-      const fetchUser = async () => {
-        try {
-          const res = await fetch(
-            `/api/auth/profile-update?email=${userSession?.user?.email}`,
-            {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                // Authorization: `Bearer ${session.accessToken}`,
-              },
-            }
-          );
-          const data = await res.json();
-          setDbUser(data);
-        } catch (error) {
-          // console.error("User fetch failed:", error);
-        }
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(
+          `/api/auth/profile-update?email=${userSession?.user?.email}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              // Authorization: `Bearer ${session.accessToken}`,
+            },
+          }
+        );
+        const data = await res.json();
+        setDbUser(data);
+      } catch (error) {
+        // console.error("User fetch failed:", error);
       }
-      fetchUser()
-    }, [userSession?.user?.email]);
+    }
+    fetchUser()
+  }, [userSession?.user?.email]);
+
+  console.log("dbUser", dbUser);
 
   return (
     <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
@@ -60,23 +63,33 @@ const Navbar = () => {
             loading="eager"
           />
         </Link>
+        {/* Search Bar */}
+        <div className="">
+          <div className="hidden lg:flex flex-1 relative justify-center w-full items-center">
+            <input
+              className="px-4 py-2 border rounded-xl pl-[40px] w-full outline-none focus:border-[#65de87]"
+              placeholder="Search gadgets ..."
+            />
+            <IoIosSearch className=" absolute left-2 text-[1.5rem] text-[#adadad]" />
+          </div>
+        </div>
 
-        {/* Nav Links */}
-        <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
-          {/* Product Mega Menu */}
-          <Link href={"/gadgets"}>
-            <li
-              className={`${
-                isProductHover ? "text-[#03b00b]" : " text-gray-600"
-              } flex items-center gap-[5px] cursor-pointer relative`}
-              onMouseEnter={() => setIsProductHover(true)}
-              onMouseLeave={() => setIsProductHover(false)}
-            >
-              <MdLaptopMac className="text-[1.1rem]" />
-              Gadgets
-              {/* <IoIosArrowUp className={`transition-all duration-300 ${isProductHover ? "rotate-0" : "rotate-180"}`} /> */}
-              {/* Mega Menu */}
-              {/* {isProductHover && (
+        <div className="flex items-center gap-6">
+          {/* Nav Links */}
+          <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
+            {/* Product Mega Menu */}
+            <Link href={"/gadgets"}>
+              <li
+                className={`${isProductHover ? "text-[#03b00b]" : " text-gray-600"
+                  } flex items-center gap-[5px] cursor-pointer relative`}
+                onMouseEnter={() => setIsProductHover(true)}
+                onMouseLeave={() => setIsProductHover(false)}
+              >
+                <MdLaptopMac className="text-[1.1rem]" />
+                Gadgets
+                {/* <IoIosArrowUp className={`transition-all duration-300 ${isProductHover ? "rotate-0" : "rotate-180"}`} /> */}
+                {/* Mega Menu */}
+                {/* {isProductHover && (
             <div className="bg-white rounded-md w-[300px] absolute top-[60px] left-0 p-4 transition-all duration-300 shadow-lg">
               <h3 className="text-[1.2rem] text-gray-500 font-[500]">More Products</h3>
               <ul className="mt-2 space-y-3">
@@ -109,128 +122,144 @@ const Navbar = () => {
               </ul>
             </div>
           )} */}
-            </li>
-          </Link>
+              </li>
+            </Link>
 
-          {/* Other Nav Items */}
-          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-            <Link href="/contactus" className="flex items-center">
-              <CiMail className="text-[1.1rem]" />
-              Contacts
-            </Link>
-          </li>
-          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-            <Link href="/about" className="flex items-center">
-              <TbListDetails className="text-[1.1rem]" />
-              About Us
-            </Link>
-          </li>
-          <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-            <Link href="/my-account" className="flex items-center">
-              <MdOutlineAccountCircle className="text-[1.1rem]" />
-              My Account
-            </Link>
-          </li>
-          {status === "authenticated" && (
-            <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
-              <Link href="/dashboard" className="flex items-center">
-                <MdDashboard className="text-[1.1rem]" />
-                Dashboard
+            {/* Other Nav Items */}
+            <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+              <Link href="/contactus" className="flex items-center">
+                <CiMail className="text-[1.1rem]" />
+                Contacts
               </Link>
             </li>
-          )}
-        </ul>
-
-        {/* Account Menu for navbar */}
-        <div className="relative flex gap-4 items-center">
-          <div
-            className="indicator tooltip tooltip-right tooltip-success"
-            data-tip="Shopping Cart"
-          >
-            {loading ? (
-              <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
-            ) : (
-              <span className="indicator-item w-4 h-4 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
-                {total || 0}
-              </span>
+            <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+              <Link href="/about" className="flex items-center">
+                <TbListDetails className="text-[1.1rem]" />
+                About Us
+              </Link>
+            </li>
+            {dbUser?.role === "borrower" && (
+              <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+              <Link href="/my-account" className="flex items-center">
+                <MdOutlineAccountCircle className="text-[1.1rem]" />
+                My Account
+              </Link>
+            </li>
             )}
-            <Link href={"/mycart"}>
-              <p>
-                <HiOutlineShoppingBag className="w-[30px] h-[30px] object-cover text-gray-600" />
-              </p>
-            </Link>
-          </div>
+            
+            {(dbUser?.role === "admin" || dbUser?.role === "lender") ? (
+              <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+                <Link href="/dashboard" className="flex items-center">
+                  <MdDashboard className="text-[1.1rem]" />
+                  Dashboard
+                </Link>
+              </li>
+            ): null}
+          </ul>
 
-          {status === "authenticated" ? (
-            <div className="flex flex-col items-end gap-1">
-              {/* <p className="text-gray-600 text-[0.9rem]">
+          {/* Account Menu for navbar */}
+          <div className="relative flex gap-4 items-center">
+            <div
+              className="indicator tooltip tooltip-right tooltip-success"
+              data-tip="Shopping Cart"
+            >
+              {loading ? (
+                <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
+              ) : (
+                <span className="indicator-item w-4 h-4 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
+                  {total || 0}
+                </span>
+              )}
+              <Link href={"/mycart"}>
+                <p>
+                  <HiOutlineShoppingBag className="w-[30px] h-[30px] object-cover text-gray-600" />
+                </p>
+              </Link>
+            </div>
+
+            {status === "authenticated" ? (
+              <div className="flex flex-col items-end gap-1">
+                {/* <p className="text-gray-600 text-[0.9rem]">
              <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
             </p> */}
-            </div>
-          ) : (
-            <div className="flex gap-2">
-              <button className="cursor-pointer hover:text-[#03b00b]">
-                <Link href="/registrar">Sing up</Link>
-              </button>
-              <button className="cursor-pointer hover:text-[#03b00b]">
-                <Link href="/login">Log In</Link>
-              </button>
-            </div>
-          )}
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                {/* <button className="cursor-pointer hover:text-[#03b00b]">
+                  <Link href="/registrar">Sing up</Link>
+                </button> */}
+                <Link href="/login"><button className="cursor-pointer ml-4 py-1 px-6 rounded-md border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
+                  Log In
+                </button></Link>
+              </div>
+            )}
 
-          {status === "authenticated" && (
-            <button
-              onClick={() => setAccountMenuOpen(!accountMenuOpen)}
-              className="flex items-center gap-2 cursor-pointer"
-            >
-              {dbUser?.photoURL ? (
-                <>
-                  <Image
-                    src={dbUser?.photoURL}
-                    className="rounded-full ring-1 ring-[#03b00b] object-cover p-[2px]"
-                    alt="user-Image"
-                    referrerPolicy="no-referrer"
-                    width={40}
-                    height={35}
-                  />
-                </>
-              ) : (
-                <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" />
-              )}
-            </button>
-          )}
-
-          {/* toggle account menu */}
-
-          {accountMenuOpen && (
-            <div className="bg-white w-[200px] z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
-              {status === "authenticated" && (
-                <p className="text-center text-green-700 my-2 text-[0.9rem]">
-                  {userSession?.user?.name}
-                </p>
-              )}
-              <Link href={"/dashboard/view-profile"}>
-                <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                  <FiUser /> View Profile
-                </p>
-              </Link>
-              <Link href={"/dashboard/settings"}>
-                <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                  <IoSettingsOutline /> Settings
-                </p>
-              </Link>
-              {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-              <IoSettingsOutline /> Settings
-            </p> */}
+            {status === "authenticated" && (
               <button
-                onClick={() => signOut()}
-                className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+                onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+                className="flex items-center gap-2 cursor-pointer"
               >
-                <TbLogout2 />
-                Logout
+                {dbUser?.photoURL ? (
+                  <>
+                    <Image
+                      src={dbUser?.photoURL}
+                      className="rounded-full ring-1 ring-[#03b00b] object-cover p-[2px]"
+                      alt="user-Image"
+                      referrerPolicy="no-referrer"
+                      width={40}
+                      height={35}
+                    />
+                  </>
+                ) : (
+                  <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" />
+                )}
               </button>
-            </div>
-          )}
+            )}
+
+            {/* toggle account menu */}
+
+            {accountMenuOpen && (
+              <div className="bg-white w-[200px] z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
+                {status === "authenticated" && (
+                  <p className="text-center text-green-700 my-2 text-[0.9rem]">
+                    {userSession?.user?.name}
+                  </p>
+                )}
+                {( dbUser?.role == "admin" || dbUser?.role == "lender") ? (<Link href={"/dashboard/view-profile"}>
+                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                    <FiUser /> View Profile
+                  </p>
+                </Link>) : (<Link href={"/my-account"}>
+                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                    <FiUser /> My Account
+                  </p>
+                </Link>) }
+                
+                {( dbUser?.role == "admin" || dbUser?.role == "lender") && (<Link href={"/dashboard/settings"}>
+                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                    <IoSettingsOutline /> Settings
+                  </p>
+                </Link>)}
+                               
+                {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                 <IoSettingsOutline /> Settings
+                </p> */}
+                <button
+                  onClick={() => signOut()}
+                  className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+                >
+                  <TbLogout2 />
+                  Logout
+                </button>
+                {dbUser?.role == "borrower" && (<Link href={"/how-this-works"}>
+                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                    <TbListDetails /> How this works?
+                  </p>
+                </Link>)}
+
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Mobile Menu */}
