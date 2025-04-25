@@ -52,7 +52,6 @@ const Navbar = () => {
     fetchUser()
   }, [userSession?.user?.email]);
 
-  console.log("dbUser", dbUser);
 
   return (
     <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
