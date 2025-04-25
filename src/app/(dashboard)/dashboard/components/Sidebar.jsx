@@ -13,6 +13,7 @@ import { SiEngadget } from "react-icons/si";
 import { FaUsers } from "react-icons/fa";
 import { RiCoupon4Line } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
+import MyAccount from './../../../(home)/my-account/page';
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false);
@@ -108,6 +109,21 @@ export default function Sidebar() {
           <span className="flex items-center gap-1">
             <TbTruckDelivery />
             All Orders
+          </span>
+          <MdKeyboardArrowRight />
+        </Link>
+      </li>
+
+      <li>
+        <Link
+          href="/dashboard/my-orders"
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/my-orders") ? activeClass : inactiveClass
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <TbTruckDelivery />
+            My Orders
           </span>
           <MdKeyboardArrowRight />
         </Link>
