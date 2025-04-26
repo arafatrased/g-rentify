@@ -158,20 +158,7 @@ const Navbar = () => {
               </li>
             ) : null}
 
-            <li className="flex items-center gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative" data-tip="Notifications">
-              <IoNotificationsSharp onClick={()=> setNotificationClicked(!notificationClicked)} className="w-[30px] h-[30px]" />
-              <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">10</span>
 
-              <div className={`${notificationClicked ? 'block' : 'hidden'} bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}>
-                <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago'/>
-                <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago'/>
-                <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago'/>
-                <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago'/>
-                <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago'/>
-                <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago'/>
-                <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago'/>
-              </div>
-            </li>
           </ul>
 
           {/* Account Menu for navbar */}
@@ -180,6 +167,20 @@ const Navbar = () => {
               className="indicator tooltip tooltip-right tooltip-success"
               data-tip="Shopping Cart"
             >
+              <li className="flex items-center mr-2 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative" data-tip="Notifications">
+                <IoNotificationsSharp onClick={() => setNotificationClicked(!notificationClicked)} className="w-[30px] h-[30px]" />
+                <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">10</span>
+
+                <div className={`${notificationClicked ? 'block' : 'hidden'} bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}>
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                </div>
+              </li>
               {loading ? (
                 <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
               ) : (
