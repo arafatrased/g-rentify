@@ -1,13 +1,10 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
-
-
 export const middleware = async (req, res) => {
 
     const token = await getToken({ req });
     // const isAuthenticated = !!token;
-
     const isTokenOk = !!token;
     const isAdmin = token?.role === 'admin';
     const isLender = token?.role === 'lender';
@@ -30,8 +27,6 @@ export const middleware = async (req, res) => {
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
-
-
     const isAdminSpecificPath = req.nextUrl.pathname.startsWith('/dashboard/add-gadget');
     if(isAdminSpecificPath && !isAuthenticated) {
         return NextResponse.redirect(new URL('/login', req.url));
@@ -44,4 +39,4 @@ export const middleware = async (req, res) => {
 
   // Continue with the request
   return NextResponse.next();
-}
+};

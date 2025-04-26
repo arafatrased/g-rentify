@@ -2,119 +2,52 @@
 import Link from 'next/link'
 import React from 'react'
 import UserStatusCard from '../components/UseStatsCard'
-import Image from 'next/image'
 import { FaDownload } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import OrderStatusBadge from '../components/OrderStatusBadge'
+import { getOrders } from '@/app/serverData/getOrders'
 
 const AllOrders = () => {
+    const [allorders, setAllOrders] = React.useState([]);
+    const [limit, setLimit] = React.useState(10);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [search, setSearch] = React.useState('');
+    const [filterRole, setFilterRole] = React.useState('');
+    const [filterStatus, setFilterStatus] = React.useState('');
 
-    const allOrders = [
-        {
-            id: 1,
-            client: {
-                name: 'Nabil Siddik',
-                email: 'nabilsiddik90@gmail.com',
-                profile: 'https://i.ibb.co.com/Y4T0LX3q/nabil-siddik-youtube-channel-ministry-of-web-programming.png',
-            },
-            product: {
-                name: 'Lenovo Laptop',
-                image: 'https://i.ibb.co.com/7JPrMtFn/OIP-3.jpg',
-                orderId: '1xdgjkh324khd'
-            },
-            amount: 250,
-            payment: {
-                title: 'Bkash',
-                logo: 'https://i.ibb.co.com/XZxv1hk1/flat-origami-paper-bird-vector-808505-4051.jpg'
-            },
-            status: 'pending',
-            date: '12/05/2025'
-        },
+    const getorders = async () => {
+        const allOrder = await getOrders();
+        setAllOrders(allOrder.orders);
+    };
 
-        {
-            id: 2,
-            client: {
-                name: 'Nabil Siddik',
-                email: 'nabilsiddik90@gmail.com',
-                profile: 'https://i.ibb.co.com/Y4T0LX3q/nabil-siddik-youtube-channel-ministry-of-web-programming.png',
-            },
-            product: {
-                name: 'Lenovo Laptop',
-                image: 'https://i.ibb.co.com/7JPrMtFn/OIP-3.jpg',
-                orderId: '1xdgjkh324khd'
-            },
-            amount: 250,
-            payment: {
-                title: 'Bkash',
-                logo: 'https://i.ibb.co.com/XZxv1hk1/flat-origami-paper-bird-vector-808505-4051.jpg'
-            },
-            status: 'shipped',
-            date: '12/05/2025'
-        },
+    React.useEffect(() => {
+        getorders();
+    }, []);
 
-        {
-            id: 3,
-            client: {
-                name: 'Nabil Siddik',
-                email: 'nabilsiddik90@gmail.com',
-                profile: 'https://i.ibb.co.com/Y4T0LX3q/nabil-siddik-youtube-channel-ministry-of-web-programming.png',
-            },
-            product: {
-                name: 'Lenovo Laptop',
-                image: 'https://i.ibb.co.com/7JPrMtFn/OIP-3.jpg',
-                orderId: '1xdgjkh324khd'
-            },
-            amount: 250,
-            payment: {
-                title: 'Bkash',
-                logo: 'https://i.ibb.co.com/XZxv1hk1/flat-origami-paper-bird-vector-808505-4051.jpg'
-            },
-            status: 'received',
-            date: '12/05/2025'
-        },
+    const filteredOrders = allorders
+        ?.filter(order => {
+            if (filterRole && order?.payment?.title?.toLowerCase() !== filterRole.toLowerCase()) return false;
+            if (filterStatus && order?.status?.toLowerCase() !== filterStatus.toLowerCase()) return false;
+            if (
+                search &&
+                !(
+                    order?.transactionId?.toLowerCase().includes(search.toLowerCase()) ||
+                    order?.client?.email?.toLowerCase().includes(search.toLowerCase())
+                )
+            ) return false;
+            return true;
+        });
 
-        {
-            id: 4,
-            client: {
-                name: 'Nabil Siddik',
-                email: 'nabilsiddik90@gmail.com',
-                profile: 'https://i.ibb.co.com/Y4T0LX3q/nabil-siddik-youtube-channel-ministry-of-web-programming.png',
-            },
-            product: {
-                name: 'Lenovo Laptop',
-                image: 'https://i.ibb.co.com/7JPrMtFn/OIP-3.jpg',
-                orderId: '1xdgjkh324khd'
-            },
-            amount: 250,
-            payment: {
-                title: 'Bkash',
-                logo: 'https://i.ibb.co.com/XZxv1hk1/flat-origami-paper-bird-vector-808505-4051.jpg'
-            },
-            status: 'cancled',
-            date: '12/05/2025'
-        },
+    const totalPages = Math.ceil(filteredOrders.length / limit);
+    const paginatedOrders = filteredOrders.slice((currentPage - 1) * limit, currentPage * limit);
 
-        {
-            id: 5,
-            client: {
-                name: 'Nabil Siddik',
-                email: 'nabilsiddik90@gmail.com',
-                profile: 'https://i.ibb.co.com/Y4T0LX3q/nabil-siddik-youtube-channel-ministry-of-web-programming.png',
-            },
-            product: {
-                name: 'Lenovo Laptop',
-                image: 'https://i.ibb.co.com/7JPrMtFn/OIP-3.jpg',
-                orderId: '1xdgjkh324khd'
-            },
-            amount: 250,
-            payment: {
-                title: 'Bkash',
-                logo: 'https://i.ibb.co.com/XZxv1hk1/flat-origami-paper-bird-vector-808505-4051.jpg'
-            },
-            status: 'pending',
-            date: '12/05/2025'
-        },
-    ]
+    const handlePageChange = (page) => {
+        if (page >= 1 && page <= totalPages) setCurrentPage(page);
+    };
+
+    const openModal = (id) => {
+        console.log("Open modal for ID:", id);
+    };
 
     return (
         <div id='all-orders' className='p-5'>
@@ -129,47 +62,38 @@ const AllOrders = () => {
             </div>
 
             {/* Status Cards */}
-            {/* <div className='grid grid-cols-12 items-center gap-5 mb-6'>
-                {statusData.map((status, index) => (
-                    <div key={index} className='col-span-2'>
-                        <UserStatusCard number={status.number} title={status.title} bgColor={status.bgColor} />
-                    </div>
-                ))}
-            </div> */}
-
             <div className='grid grid-cols-12 items-center gap-5 mb-6'>
                 <div className='lg:col-span-3 md:col-span-6 col-span-full'>
-                    <UserStatusCard number={20} title={'Pending Orders'} bgColor={'#C537DD'} />
+                    <UserStatusCard number={allorders.filter(o => o.status === 'pending').length} title={'Pending Orders'} bgColor={'#C537DD'} />
                 </div>
                 <div className='lg:col-span-3 md:col-span-6 col-span-full'>
-                    <UserStatusCard number={20} title={'Shipped Orders'} bgColor={'#3980D8'} />
+                    <UserStatusCard number={allorders.filter(o => o.status === 'shipped').length} title={'Shipped Orders'} bgColor={'#3980D8'} />
                 </div>
                 <div className='lg:col-span-3 md:col-span-6 col-span-full'>
-                    <UserStatusCard number={20} title={'Received Orders'} bgColor={'#2CAA62'} />
+                    <UserStatusCard number={allorders.filter(o => o.status === 'received').length} title={'Received Orders'} bgColor={'#2CAA62'} />
                 </div>
                 <div className='lg:col-span-3 md:col-span-6 col-span-full'>
-                    <UserStatusCard number={20} title={'Cancled Orders'} bgColor={'#EB0000'} />
+                    <UserStatusCard number={allorders.filter(o => o.status === 'cancled').length} title={'Cancled Orders'} bgColor={'#EB0000'} />
                 </div>
             </div>
 
-
             <div className='bg-white shadow-md p-5 rounded-md'>
-                {/* Filters (left static, implement if needed) */}
+                {/* Filters */}
                 <div className='grid grid-cols-12 gap-5 mb-6'>
                     <div className='col-span-3'>
                         <fieldset className="fieldset w-full">
                             <legend className="fieldset-legend">Show By</legend>
                             <select className="select w-full border" onChange={(e) => setLimit(parseInt(e.target.value))}>
-                                <option value={12}>12 Row</option>
-                                <option value={24}>24 Row</option>
-                                <option value={36}>36 Row</option>
+                                <option value={10}>10 Row</option>
+                                <option value={20}>20 Row</option>
+                                <option value={30}>30 Row</option>
                             </select>
                         </fieldset>
                     </div>
                     <div className='col-span-3'>
                         <fieldset className="fieldset w-full">
                             <legend className="fieldset-legend">Payment By</legend>
-                            <select className="select w-full border" value={'df'} onChange={(e) => setFilterRole(e.target.value)}>
+                            <select className="select w-full border" value={filterRole} onChange={(e) => setFilterRole(e.target.value)}>
                                 <option value="">All</option>
                                 <option value="bkash">Bkash</option>
                                 <option value="nagad">Nagad</option>
@@ -181,7 +105,7 @@ const AllOrders = () => {
                     <div className='col-span-3'>
                         <fieldset className="fieldset w-full">
                             <legend className="fieldset-legend">Status By</legend>
-                            <select className="select w-full border" value={'df'} onChange={(e) => setFilterStatus(e.target.value)}>
+                            <select className="select w-full border" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
                                 <option value="">All</option>
                                 <option value="pending">Pending</option>
                                 <option value="shipped">Shipped</option>
@@ -207,7 +131,7 @@ const AllOrders = () => {
                 <div className="overflow-x-auto">
                     <table className="table border border-[#e3e3e3]">
                         <thead className='bg-green-600 text-white'>
-                            <tr className='border-b border-[#e3e3e3]'>
+                            <tr>
                                 <th>Number</th>
                                 <th>Customer</th>
                                 <th>Product</th>
@@ -219,68 +143,43 @@ const AllOrders = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {allOrders.map((order, index) => (
-                                <tr key={order.id} className='border-b border-[#e3e3e3]'>
-                                    {/* <th>#{(currentPage - 1) * limit + index + 1}</th> */}
+                            {allorders.map((order, index) => (
+                                <tr key={order._id} className='border-b border-[#e3e3e3]'>
                                     <th>#{index + 1}</th>
                                     <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle h-12 w-12">
-                                                    <Image src={order?.client?.profile} alt={order?.product} width={72} height={72} />
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">{order?.client?.name}</div>
-                                                <p>{order?.client?.email}</p>
-                                            </div>
+                                        <div>
+                                            <div className="font-bold">{order.email || 'No Email'}</div>
+                                            <p>{order.transactionId || 'No Transaction ID'}</p>
                                         </div>
                                     </td>
                                     <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle h-12 w-12">
-                                                    <Image src={order?.product?.image} alt={order?.product} width={72} height={72} />
-                                                    <p>{order?.product?.orderId}</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">{order?.product?.name}</div>
-                                                <p>{order?.product?.orderId}</p>
-                                            </div>
+                                        <div>
+                                            <div className="font-bold">Item(s): {order?.gadgetId?.length || 0}</div>
+                                            <p>Cart ID(s): {order?.cartItemsId?.join(', ')}</p>
                                         </div>
                                     </td>
-                                    <td>${order?.amount}</td>
+                                    <td>${order?.totalRentValue || 0}</td>
                                     <td>
-                                        <div className="flex items-center gap-3">
-                                            <div className="avatar">
-                                                <div className="mask mask-squircle h-12 w-12">
-                                                    <Image src={order?.payment?.logo} alt={order?.payment?.title} width={72} height={72} />
-                                                    <p>{order?.product?.orderId}</p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <div className="font-bold">{order?.payment?.title}</div>
-                                            </div>
-                                        </div>
+                                        <div className="font-bold">Online</div>
                                     </td>
                                     <td>
-                                        <OrderStatusBadge badgeText={order?.status}/>
+                                        <OrderStatusBadge badgeText={order?.status || 'N/A'} />
                                     </td>
-                                    <td>{order?.date}</td>
+                                    <td>{new Date(order?.date).toLocaleDateString()}</td>
                                     <td className='flex gap-4'>
-                                        <span onClick={() => openModal(user?._id)} className='text-lg text-[#2AA75F] cursor-pointer'><FaDownload /></span>
+                                        <span className='text-lg text-[#2AA75F] cursor-pointer'><FaDownload /></span>
                                         <span className='text-lg text-[#E32A46] cursor-pointer'><FaTrashCan /></span>
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
+
                     </table>
                 </div>
 
                 {/* Pagination */}
-                {/* <div className='flex justify-between items-center mt-6 px-2'>
-                    <p>Showing {limit} of {totalUsers} results</p>
+                <div className='flex justify-between items-center mt-6 px-2'>
+                    <p>Showing {paginatedOrders.length} of {filteredOrders.length} results</p>
                     <div className="join">
                         <button className="join-item btn" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Prev</button>
                         {[...Array(totalPages)].map((_, i) => (
@@ -288,10 +187,10 @@ const AllOrders = () => {
                         ))}
                         <button className="join-item btn" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
                     </div>
-                </div> */}
+                </div>
             </div>
         </div>
     )
 }
 
-export default AllOrders
+export default AllOrders;
