@@ -1,13 +1,15 @@
 'use client'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import UserStatusCard from '../components/UseStatsCard'
 import { FaDownload } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import OrderStatusBadge from '../components/OrderStatusBadge'
 import { getOrders } from '@/app/serverData/getOrders'
+import Loading from '@/app/(home)/components/Loading';
 
 const AllOrders = () => {
+    const [isLoading, setIsLoading] = useState(true)
     const [allorders, setAllOrders] = React.useState([]);
     const [limit, setLimit] = React.useState(10);
     const [currentPage, setCurrentPage] = React.useState(1);
@@ -16,9 +18,16 @@ const AllOrders = () => {
     const [filterStatus, setFilterStatus] = React.useState('');
 
     const getorders = async () => {
-        const allOrder = await getOrders();
-        setAllOrders(allOrder.orders);
-    };
+        setIsLoading(true)
+        try {
+            const allOrder = await getOrders()
+            setAllOrders(allOrder.orders)
+        } catch (error) {
+            console.error("Error fetching orders:", error)
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     React.useEffect(() => {
         getorders();
@@ -129,56 +138,61 @@ const AllOrders = () => {
 
                 {/* Table */}
                 <div className="overflow-x-auto">
-                    <table className="table border border-[#e3e3e3]">
-                        <thead className='bg-green-600 text-white'>
-                            <tr>
-                                <th>Number</th>
-                                <th>Customer</th>
-                                <th>Product</th>
-                                <th>Amount</th>
-                                <th>Payment</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {allorders.map((order, index) => (
-                                <tr key={order._id} className='border-b border-[#e3e3e3]'>
-                                    <th>#{index + 1}</th>
-                                    <td>
-                                        <div>
-                                            <div className="font-bold">{order.email || 'No Email'}</div>
-                                            <p>{order.transactionId || 'No Transaction ID'}</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <div className="font-bold">Item(s): {order?.gadgetId?.length || 0}</div>
-                                            <p>Cart ID(s): {order?.cartItemsId?.join(', ')}</p>
-                                        </div>
-                                    </td>
-                                    <td>${order?.totalRentValue || 0}</td>
-                                    <td>
-                                        <div className="font-bold">Online</div>
-                                    </td>
-                                    <td>
-                                        <OrderStatusBadge badgeText={order?.status || 'N/A'} />
-                                    </td>
-                                    <td>{new Date(order?.date).toLocaleDateString()}</td>
-                                    <td className='flex gap-4'>
-                                        <span className='text-lg text-[#2AA75F] cursor-pointer'><FaDownload /></span>
-                                        <span className='text-lg text-[#E32A46] cursor-pointer'><FaTrashCan /></span>
-                                    </td>
+                    {isLoading ?
+                        <Loading />
+                        :
+                        <table className="table border border-[#e3e3e3]">
+                            <thead className='bg-green-600 text-white'>
+                                <tr>
+                                    <th>Number</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Amount</th>
+                                    <th>Payment</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
+                            </thead>
+                            <tbody>
+                                {allorders.map((order, index) => (
+                                    <tr key={order._id} className='border-b border-[#e3e3e3]'>
+                                        <th>#{index + 1}</th>
+                                        <td>
+                                            <div>
+                                                <div className="font-bold">{order.email || 'No Email'}</div>
+                                                <p>{order.transactionId || 'No Transaction ID'}</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div>
+                                                <div className="font-bold">Item(s): {order?.gadgetId?.length || 0}</div>
+                                                <p>Cart ID(s): {order?.cartItemsId?.join(', ')}</p>
+                                            </div>
+                                        </td>
+                                        <td>${order?.totalRentValue || 0}</td>
+                                        <td>
+                                            <div className="font-bold">Online</div>
+                                        </td>
+                                        <td>
+                                            <OrderStatusBadge badgeText={order?.status || 'N/A'} />
+                                        </td>
+                                        <td>{new Date(order?.date).toLocaleDateString()}</td>
+                                        <td className='flex gap-4'>
+                                            <span className='text-lg text-[#2AA75F] cursor-pointer'><FaDownload /></span>
+                                            <span className='text-lg text-[#E32A46] cursor-pointer'><FaTrashCan /></span>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
 
-                    </table>
+                        </table>
+                    }
+
                 </div>
 
                 {/* Pagination */}
-                <div className='flex justify-between items-center mt-6 px-2'>
+                <div className='flex flex-col sm:flex-row gap-5 sm:gap-3 justify-between items-center mt-6 px-2'>
                     <p>Showing {paginatedOrders.length} of {filteredOrders.length} results</p>
                     <div className="join">
                         <button className="join-item btn" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>Prev</button>

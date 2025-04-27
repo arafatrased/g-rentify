@@ -87,6 +87,21 @@ export default function Sidebar() {
 
       <li>
         <Link
+          href="/dashboard/my-gadgets"
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/my-gadgets") ? activeClass : inactiveClass
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <SiEngadget className="text-sm" />
+            My Gadgets
+          </span>
+          <MdKeyboardArrowRight />
+        </Link>
+      </li>
+
+      <li>
+        <Link
           href="/dashboard/all-user"
           className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
             isActive("/dashboard/all-user") ? activeClass : inactiveClass
