@@ -79,7 +79,7 @@ const CartPage = () => {
         `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-cart?email=${userEmail}`
       );
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setGadgets(data);
 
       if (data.length === 0) {
@@ -96,8 +96,6 @@ const CartPage = () => {
     fetchMyOrder();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEmail]);
-
-  console.log(gadgets);
 
   const handleDelete = async (id) => {
     try {
