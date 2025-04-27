@@ -1,16 +1,63 @@
 "use client";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import Link from "next/link";
+import imageUrl from "@/lib/makeImageUrl";
+import { useRouter } from "next/navigation";
+
 
 export default function MyAccount() {
+  const router = useRouter();
   const session = useSession();
   const name = session?.data?.user?.name;
   const email = session?.data?.user?.email;
   const [activeTab, setActiveTab] = useState("dashboard");
   const [location, setLocation] = useState(null);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [bio, setBio] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [names, setNames] = useState("");
+
+   const handleSubmitUpdate = async(e) => {
+          e.preventDefault();
+
+          const govtId = await imageUrl(selectedImage);
+          const payload = {
+            email,
+            name:names,
+            phone,
+            address,
+            bio,
+            govtId,
+            role: "lender" 
+          }
+
+          console.log(payload);
+          try {
+            const res = await fetch("/api/auth/profile-update", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email, name:names, address, govtId, phone, bio, role: "lender" })
+            });
+      
+            if (res.ok) {
+              alert("Role updated Successfully!");
+              signOut({ callbackUrl: "/dashboard" });
+              router.push("/dashboard/view-profile");
+
+            } else {
+              alert("Failed to update profile.");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Something went wrong.");
+          }
+          
+      }
 
   const {
     register,
@@ -75,20 +122,25 @@ export default function MyAccount() {
               </div>
               <div className="divide">
                 <button
-                  className={`w-full text-left px-4 py-3 text-sm sm:text-base cursor-pointer ${
-                    activeTab === "dashboard" ? "bg-gray-100" : ""
-                  }`}
+                  className={`w-full text-left px-4 py-3 text-sm sm:text-base cursor-pointer ${activeTab === "dashboard" ? "bg-gray-100" : ""
+                    }`}
                   onClick={() => setActiveTab("dashboard")}
                 >
                   Account Dashboard
                 </button>
                 <button
-                  className={`w-full text-left px-4 py-3 text-sm sm:text-base cursor-pointer ${
-                    activeTab === "orders" ? "bg-gray-100" : ""
-                  }`}
+                  className={`w-full text-left px-4 py-3 text-sm sm:text-base cursor-pointer ${activeTab === "orders" ? "bg-gray-100" : ""
+                    }`}
                   onClick={() => setActiveTab("orders")}
                 >
                   My Orders
+                </button>
+                <button
+                  className={`w-full text-left px-4 py-3 text-sm sm:text-base cursor-pointer ${activeTab === "apply" ? "bg-gray-100" : ""
+                    }`}
+                  onClick={() => setActiveTab("apply")}
+                >
+                  Become a Lender
                 </button>
               </div>
             </div>
@@ -153,6 +205,82 @@ export default function MyAccount() {
                 </div>
                 <div className="p-4 text-sm sm:text-base">
                   <p>You have not placed any orders yet.</p>
+                </div>
+              </div>
+            )}
+            {activeTab === "apply" && (
+              <div className="border border-gray-200 rounded shadow-sm">
+                <div className="bg-[#03b00b] text-white px-4 py-3 font-semibold">
+                  Apply to Become a Lender
+                </div>
+                <div className="p-4 text-sm sm:text-base">
+                  <form className='w-10/12 md:w-9/12 lg:w-8/12 mx-auto'>
+
+                    <fieldset className="fieldset mb-3">
+                      <label className="block mb-2 text-sm font-medium">Full Name*:</label>
+                      <input
+                        value={names}
+                        onChange={(e) => setNames(e.target.value)}
+                        type="text"
+                        className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
+                        placeholder="Full Name *"
+                      />
+                    </fieldset>
+
+                    <fieldset className="fieldset mb-3">
+                      <label className="block mb-2 text-sm font-medium">Phone*:</label>
+                      <input
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        type="tel"
+                        className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
+                        placeholder="Phone Number *"
+                        required
+                      />
+                    </fieldset>
+
+                    <fieldset className="fieldset mb-3">
+                      <label className="block mb-2 text-sm font-medium">Address*:</label>
+                      <input
+
+                        type="text"
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
+                        placeholder="Address *"
+                      />
+                    </fieldset>
+
+                    <fieldset className="fieldset mb-3">
+                      <label className="block mb-2 text-sm font-medium">Upload Govt. ID*:</label>
+                      <input
+                        onChange={(e) => setSelectedImage(e.target.files[0])}
+                        type="file"
+                        className="file-input w-full focus:outline-none border-[#03b00b] bg-transparent rounded-[2px]"
+                        placeholder="Upload Govt. ID"
+                      />
+                    </fieldset>
+
+                    <fieldset className="fieldset mb-3 flex items-center gap-2">
+                      <label className="block mb-2 text-sm font-medium">Bio:</label>
+                      <textarea name="bio" value={bio} onChange={(e) => setBio(e.target.value)} id="" className='textarea w-full bg-transparent' placeholder='Anything you want to say? (optional)'></textarea>
+                    </fieldset>
+
+                    <fieldset className="fieldset mb-3 flex items-center gap-2">
+                      <input type="checkbox" className="checkbox checkbox-sm" />
+                      <label className="text-sm">I agree to the <Link className='underline text-green-600' href='/dashboard/settings/terms-and-conditions'>terms and conditions</Link> *</label>
+                    </fieldset>
+
+                    <fieldset className="fieldset mb-6">
+                      <input
+                        type="submit"
+                        onClick={handleSubmitUpdate}
+                        name="submit"
+                        value={'Submit Application'}
+                        className='bg-[#00B22C] text-white px-5 py-2 text-sm rounded active:scale-[0.95] transition-all duration-300 cursor-pointer w-full uppercase'
+                      />
+                    </fieldset>
+                  </form>
                 </div>
               </div>
             )}

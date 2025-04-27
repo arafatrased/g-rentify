@@ -1,9 +1,33 @@
 'use client'
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import BreadCrumbs from '../../components/BreadCrumbs';
+import imageUrl from './../../../../../lib/makeImageUrl';
 
 const ChangeRolePage = () => {
+
+    const [selectedImage, setSelectedImage] = useState("");
+    const [bio, setBio] = useState("");
+    const [phone, setPhone] = useState("");
+    const [address, setAddress] = useState("");
+    const [name, setName] = useState("");
+
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+
+        const govtId = await imageUrl(selectedImage);
+        const payload = {
+            name,
+            phone,
+            address,
+            bio,
+            govtId
+
+        }
+        console.log(payload);
+
+
+    }
     return (
         <div className='py-5 px-5'>
             {/* breadcrumb  */}
@@ -24,12 +48,15 @@ const ChangeRolePage = () => {
                     </li>
                 </ul>
             </div>
-            <div className="page-container py-16">
-                <h1 className='text-3xl md:text-3xl lg:text-4xl font-bold text-center mb-8'>Apply to Become a Lender</h1>
+            <div className="page-container py-16 min-h-[80vh] bg-white shadow-md rounded-xl">
+                <h1 className='text-xl md:text-xl lg:text-2xl font-bold text-center mb-8'>Apply to Become a Lender</h1>
                 <form className='w-10/12 md:w-8/12 lg:w-4/12 mx-auto'>
 
                     <fieldset className="fieldset mb-3">
+                    <label className="block mb-2 text-sm font-medium">Full Name*:</label>
                         <input
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
                             type="text"
                             className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                             placeholder="Full Name *"
@@ -37,22 +64,30 @@ const ChangeRolePage = () => {
                     </fieldset>
 
                     <fieldset className="fieldset mb-3">
+                    <label className="block mb-2 text-sm font-medium">Phone*:</label>
                         <input
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
                             type="tel"
                             className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                             placeholder="Phone Number *"
+                            required
                         />
                     </fieldset>
 
                     <fieldset className="fieldset mb-3">
+                    <label className="block mb-2 text-sm font-medium">Address*:</label>
                         <input
+
                             type="text"
+                            value={address}
+                            onChange={(e) => setAddress(e.target.value)}
                             className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                             placeholder="Address *"
                         />
                     </fieldset>
 
-                    <fieldset className="fieldset mb-3">
+                    {/* <fieldset className="fieldset mb-3">
                         <label className="block mb-2 text-sm font-medium">Gadget categories you want to lend (*):</label>
 
                         <div className="flex flex-col gap-2 text-sm">
@@ -81,11 +116,12 @@ const ChangeRolePage = () => {
                                 Other
                             </label>
                         </div>
-                    </fieldset>
+                    </fieldset> */}
 
                     <fieldset className="fieldset mb-3">
-                        <label className="block mb-2 text-sm font-medium">Upload Govt. ID (*):</label>
+                        <label className="block mb-2 text-sm font-medium">Upload Govt. ID*:</label>
                         <input
+                            onChange={(e) => setSelectedImage(e.target.files[0])}
                             type="file"
                             className="file-input w-full focus:outline-none border-[#03b00b] bg-transparent rounded-[2px]"
                             placeholder="Upload Govt. ID"
@@ -93,7 +129,8 @@ const ChangeRolePage = () => {
                     </fieldset>
 
                     <fieldset className="fieldset mb-3 flex items-center gap-2">
-                        <textarea name="" id="" className='textarea w-full bg-transparent' placeholder='Anything you want to say? (optional)'></textarea>
+                        <label className="block mb-2 text-sm font-medium">Bio:</label>
+                        <textarea name="bio" value={bio} onChange={(e) => setBio(e.target.value)} id="" className='textarea w-full bg-transparent' placeholder='Anything you want to say? (optional)'></textarea>
                     </fieldset>
 
                     <fieldset className="fieldset mb-3 flex items-center gap-2">
@@ -104,6 +141,8 @@ const ChangeRolePage = () => {
                     <fieldset className="fieldset mb-6">
                         <input
                             type="submit"
+                            onClick={handleSubmit}
+                            name="submit"
                             value={'Submit Application'}
                             className='bg-[#00B22C] text-white px-5 py-2 text-sm rounded active:scale-[0.95] transition-all duration-300 cursor-pointer w-full uppercase'
                         />

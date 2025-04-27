@@ -11,6 +11,8 @@ const SettingsPage = () => {
     const [name, setName] = useState(user?.name || "");
     const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
     const [address, setAddress] = useState(user?.address|| "");
+    const [phone, setPhone] = useState(user?.phone || "");
+    const [bio, setBio] = useState(user?.bio || "");
   
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -19,7 +21,7 @@ const SettingsPage = () => {
         const res = await fetch("/api/auth/profile-update", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user?.email ,name, address, photoURL }),
+          body: JSON.stringify({ email: user?.email ,name, address, photoURL, phone, bio })
         });
   
         if (res.ok) {
@@ -72,6 +74,28 @@ const SettingsPage = () => {
                 className="input w-full px-4 py-2 focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] border"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium">
+                Phone
+              </label>
+              <input
+                type="text"
+                className="input w-full px-4 py-2 focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] border"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 font-medium">
+                Bio
+              </label>
+              <input
+                type="text"
+                className="input w-full px-4 py-2 focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] border"
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
               />
             </div>
             <button

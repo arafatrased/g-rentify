@@ -17,7 +17,7 @@ export async function GET(req) {
 }
 
 export async function POST(req){
-    const {email, name, address, photoURL} = await req.json();
+    const {email, name, address, role, photoURL, phone, bio, govtId} = await req.json();
     const user = await dbConnect('users').findOne({email});
     if(!user) return NextResponse.json({error: 'User not found'}, {status: 404});
     await dbConnect('users').updateOne(
@@ -26,7 +26,13 @@ export async function POST(req){
             $set: {
                 name,
                 address,
-                photoURL
+                photoURL,
+                phone,
+                bio,
+                govtId,
+                role,
+                updatedAt: new Date()
+
             }
         },
         {upsert: true} // Create if not exists
