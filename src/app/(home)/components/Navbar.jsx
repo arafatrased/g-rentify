@@ -167,7 +167,7 @@ const Navbar = () => {
               className="indicator tooltip tooltip-right tooltip-success"
               data-tip="Shopping Cart"
             >
-              <li className="flex items-center mr-2 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative" data-tip="Notifications">
+              <li className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative" data-tip="Notifications">
                 <IoNotificationsSharp onClick={() => setNotificationClicked(!notificationClicked)} className="w-[30px] h-[30px]" />
                 <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">10</span>
 

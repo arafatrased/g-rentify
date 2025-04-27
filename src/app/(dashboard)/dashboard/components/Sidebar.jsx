@@ -13,7 +13,6 @@ import { SiEngadget } from "react-icons/si";
 import { FaUsers } from "react-icons/fa";
 import { RiCoupon4Line } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
-import MyAccount from './../../../(home)/my-account/page';
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false);
@@ -162,10 +161,9 @@ export default function Sidebar() {
         </Link>
       </li>
       <li>
-        <Link
-          href="/"
+        <button
           onClick={() => signOut()}
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+          className={`flex justify-between w-full items-center px-2 py-2 transition border-l-2 ${
             isActive("/") ? activeClass : inactiveClass
           }`}
         >
@@ -174,7 +172,7 @@ export default function Sidebar() {
             Logout
           </span>
           <MdKeyboardArrowRight />
-        </Link>
+        </button>
       </li>
     </>
   );
