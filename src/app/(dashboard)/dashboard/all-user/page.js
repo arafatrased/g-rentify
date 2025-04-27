@@ -9,8 +9,10 @@ import { FaTrashCan } from "react-icons/fa6";
 import UserStatusCard from "./../components/UseStatsCard";
 import UserModal from "../components/UserModal";
 import Image from "next/image";
+import Loading from "@/app/(home)/components/Loading";
 
 const AllUser = () => {
+  const [isLoading, setIsLoading] = useState(true)
   const [statusData, setStatusData] = useState([]);
   const [allUsers, setAllUsers] = useState([]);
   const [search, setSearch] = useState("");
@@ -35,6 +37,7 @@ const AllUser = () => {
 
   const fetchUsers = useCallback(
     async (page = 1, limitVal = 12) => {
+      setIsLoading(true)
       try {
         const res = await axios.get(
           `${process.env.NEXT_PUBLIC_SERVER_LINK}/alluser`,
@@ -52,6 +55,8 @@ const AllUser = () => {
         setTotalUsers(res.data.totalUsers);
       } catch (err) {
         console.error("Error fetching users:", err);
+      } finally{
+        setIsLoading(false)
       }
     },
     [filterRole, filterStatus, search]
@@ -74,6 +79,8 @@ const AllUser = () => {
       setCurrentPage(page);
     }
   };
+
+
 
   return (
     <div id="all-user" className="p-5">
@@ -102,7 +109,7 @@ const AllUser = () => {
       {/* Status Cards */}
       <div className="grid grid-cols-12 items-center gap-5 mb-6">
         {statusData.map((status, index) => (
-          <div key={index} className="col-span-2">
+          <div key={index} className="md:col-span-4 col-span-6">
             <UserStatusCard
               number={status.number}
               title={status.title}
@@ -174,66 +181,71 @@ const AllUser = () => {
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="table border border-[#e3e3e3]">
-            <thead>
-              <tr className="border-b border-[#e3e3e3]">
-                <th>Num</th>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {allUsers.map((user, index) => (
-                <tr key={user._id} className="border-b border-[#e3e3e3]">
-                  <th>#{(currentPage - 1) * limit + index + 1}</th>
-                  <td>
-                    <div className="flex items-center gap-3">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-12 w-12">
-                          <img
-                            src={user?.photoURL || "/default-user.png"}
-                            alt={user?.name}
-                            referrerPolicy="no-referrer"
-                          />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-bold">{user?.name}</div>
-                        <div className="text-sm opacity-50">
-                          {user?.address}
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                  <td>{user?.role}</td>
-                  <td>{user?.email}</td>
-                  <td>{user?.phone}</td>
-                  <td>{user?.status}</td>
-                  <td>{user?.created}</td>
-                  <td className="flex gap-4">
-                    <span
-                      onClick={() => openModal(user?._id)}
-                      className="text-lg text-[#2AA75F] cursor-pointer"
-                    >
-                      <FaEdit />
-                    </span>
-                    <span className="text-lg text-[#E32A46] cursor-pointer">
-                      <FaTrashCan />
-                    </span>
-                  </td>
+          {isLoading ?
+            <Loading />
+            :
+            <table className="table border border-[#e3e3e3]">
+              <thead>
+                <tr className="border-b border-[#e3e3e3]">
+                  <th>Num</th>
+                  <th>Name</th>
+                  <th>Role</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Status</th>
+                  <th>Created</th>
+                  <th>Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {allUsers.map((user, index) => (
+                  <tr key={user._id} className="border-b border-[#e3e3e3]">
+                    <th>#{(currentPage - 1) * limit + index + 1}</th>
+                    <td>
+                      <div className="flex items-center gap-3">
+                        <div className="avatar">
+                          <div className="mask mask-squircle h-12 w-12">
+                            <img
+                              src={user?.photoURL || "/default-user.png"}
+                              alt={user?.name}
+                              referrerPolicy="no-referrer"
+                            />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="font-bold">{user?.name}</div>
+                          <div className="text-sm opacity-50">
+                            {user?.address}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{user?.role}</td>
+                    <td>{user?.email}</td>
+                    <td>{user?.phone}</td>
+                    <td>{user?.status}</td>
+                    <td>{user?.created}</td>
+                    <td className="flex gap-4">
+                      <span
+                        onClick={() => openModal(user?._id)}
+                        className="text-lg text-[#2AA75F] cursor-pointer"
+                      >
+                        <FaEdit />
+                      </span>
+                      <span className="text-lg text-[#E32A46] cursor-pointer">
+                        <FaTrashCan />
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          }
+
         </div>
 
         {/* Pagination */}
-        <div className="flex justify-between items-center mt-6 px-2">
+        <div className="flex flex-col sm:flex-row justify-between items-center mt-6 px-2 gap-4 sm:gap-3">
           <p>
             Showing {limit} of {totalUsers} results
           </p>
@@ -248,9 +260,8 @@ const AllUser = () => {
             {[...Array(totalPages)].map((_, i) => (
               <button
                 key={i}
-                className={`join-item btn ${
-                  currentPage === i + 1 ? "btn-active" : ""
-                }`}
+                className={`join-item btn ${currentPage === i + 1 ? "btn-active" : ""
+                  }`}
                 onClick={() => handlePageChange(i + 1)}
               >
                 {i + 1}

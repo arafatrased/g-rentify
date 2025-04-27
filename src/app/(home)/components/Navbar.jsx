@@ -162,9 +162,9 @@ const Navbar = () => {
           </ul>
 
           {/* Account Menu for navbar */}
-          <div className="relative flex gap-4 items-center mt-[-10px]">
+          <div className="relative flex gap-4 items-center">
             <div
-              className="indicator tooltip tooltip-right tooltip-success"
+              className="indicator tooltip tooltip-right tooltip-success flex items-center gap-3"
               data-tip="Shopping Cart"
             >
               <li className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative" data-tip="Notifications">
