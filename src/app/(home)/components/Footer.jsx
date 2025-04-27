@@ -15,8 +15,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 xl:gap-5 xl:justify-items-center">
           {/* card 1 */}
           <div>
-            <Image src={logo} alt="footer logo" className="w-52" priority={true}/>
-            <p >
+            <Image
+              src={logo}
+              alt="footer logo"
+              className="w-52"
+              priority={true}
+            />
+            <p>
               We envision a future where everyone can experience cutting-edge
               technology without financial barriers. By promoting gadget
               rentals, we aim to reduce e-waste and create a smarter, more
@@ -28,16 +33,16 @@ export default function Footer() {
             <h3 className="text-2xl font-semibold mb-5">Useful Links</h3>
             <ul className="flex flex-col gap-3 font-medium">
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>About Renity</Link>
+                <Link href={"/"}>Home</Link>
               </li>
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>How It Works</Link>
+                <Link href={"/about"}>About Us</Link>
               </li>
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>Latest News</Link>
+                <Link href={"/login"}>Login Page</Link>
               </li>
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>Terms & Conditions</Link>
+                <Link href={"/register"}>Register Page</Link>
               </li>
             </ul>
           </div>
@@ -46,16 +51,16 @@ export default function Footer() {
             <h3 className="text-2xl font-semibold mb-5">Explore Renity</h3>
             <ul className="flex flex-col gap-3 font-medium">
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>Read FAQ’s</Link>
+                <Link href={"/about"}>About Renity</Link>
               </li>
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>Recent Rentals</Link>
+                <Link href={"/faq"}>Read FAQ’s</Link>
               </li>
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>Latest Equipments</Link>
+                <Link href={"agrement"}>Rental Agrements</Link>
               </li>
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={""}>Browse Tools</Link>
+                <Link href={"/terms"}>Terms & Conditions</Link>
               </li>
             </ul>
           </div>
