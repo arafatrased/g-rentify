@@ -24,6 +24,11 @@ export const middleware = async (req, res) => {
         return NextResponse.redirect(new URL('/my-account', req.url));
     }
 
+    if(isNormalUser && isDashBoardPath) {
+        return NextResponse.redirect(new URL('/my-account', req.url));
+    };
+ 
+
     if(!isNormalUser && isMyAccountPath) {
         return NextResponse.redirect(new URL('/login', req.url));
     }

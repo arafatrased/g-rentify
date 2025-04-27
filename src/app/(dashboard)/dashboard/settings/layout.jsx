@@ -15,10 +15,7 @@ const SettingLayout = ({children}) => {
                 <ul className='flex space-x-4'>
                     <Link href={'/dashboard/settings'}><li className='cursor-pointer'><span className={`${
             isActive("/dashboard/settings") ? activeClass : inactiveClass
-          }`}>Update Profile</span></li></Link>
-                    <Link href={'/dashboard/settings/change-role'}><li className='cursor-pointer'><span className={`${
-            isActive("/dashboard/settings/change-role") ? activeClass : inactiveClass
-          }`}>Become Lender</span></li></Link>   
+          }`}>Update Profile</span></li></Link>  
                     <Link href={'/dashboard/settings/change-password'}><li className='cursor-pointer'><span className={`${
             isActive("/dashboard/settings/change-password") ? activeClass : inactiveClass
           }`}>Change Password</span></li></Link>

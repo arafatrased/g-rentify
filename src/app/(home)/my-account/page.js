@@ -21,6 +21,7 @@ export default function MyAccount() {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [names, setNames] = useState("");
+  const [user, setUser] = useState(null);
 
    const handleSubmitUpdate = async(e) => {
           e.preventDefault();
@@ -96,7 +97,7 @@ export default function MyAccount() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-info/${email}`
+          `/api/auth/profile-update?email=${email}`
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -177,13 +178,16 @@ export default function MyAccount() {
                     Default Billing Address
                   </div>
                   <div className="p-4 space-y-2 text-sm sm:text-base">
-                    <p className="font-medium">{session?.data?.user?.name}</p>
+                    <p className="font-medium">{user?.name}</p>
+                    <p>
+                      <span>Address: </span> {user?.address || "Not Provided"}
+                    </p>
 
                     <p>
-                      <span>City: </span>Dhaka, {location?.country_name}
+                      <span>City: </span>Dhaka, {location?.country_name || "Bangladesh"}
                     </p>
                     <p>
-                      <span>Phone: </span>0140090252
+                      <span>Phone: </span>{user?.phone || "Not Provided"}
                     </p>
                     <button
                       onClick={() =>
