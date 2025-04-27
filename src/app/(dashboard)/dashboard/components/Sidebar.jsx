@@ -86,6 +86,21 @@ export default function Sidebar() {
 
       <li>
         <Link
+          href="/dashboard/my-gadgets"
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/my-gadgets") ? activeClass : inactiveClass
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <SiEngadget className="text-sm" />
+            My Gadgets
+          </span>
+          <MdKeyboardArrowRight />
+        </Link>
+      </li>
+
+      <li>
+        <Link
           href="/dashboard/all-user"
           className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
             isActive("/dashboard/all-user") ? activeClass : inactiveClass
@@ -108,6 +123,21 @@ export default function Sidebar() {
           <span className="flex items-center gap-1">
             <TbTruckDelivery />
             All Orders
+          </span>
+          <MdKeyboardArrowRight />
+        </Link>
+      </li>
+
+      <li>
+        <Link
+          href="/dashboard/my-orders"
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+            isActive("/dashboard/my-orders") ? activeClass : inactiveClass
+          }`}
+        >
+          <span className="flex items-center gap-1">
+            <TbTruckDelivery />
+            My Orders
           </span>
           <MdKeyboardArrowRight />
         </Link>
@@ -146,10 +176,9 @@ export default function Sidebar() {
         </Link>
       </li>
       <li>
-        <Link
-          href="/"
+        <button
           onClick={() => signOut()}
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
+          className={`flex justify-between w-full items-center px-2 py-2 transition border-l-2 ${
             isActive("/") ? activeClass : inactiveClass
           }`}
         >
@@ -158,7 +187,7 @@ export default function Sidebar() {
             Logout
           </span>
           <MdKeyboardArrowRight />
-        </Link>
+        </button>
       </li>
     </>
   );

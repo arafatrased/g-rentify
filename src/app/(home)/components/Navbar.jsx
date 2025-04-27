@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // react icons
+import { IoNotificationsSharp } from "react-icons/io5";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
 import { HiOutlineShoppingBag } from "react-icons/hi";
@@ -16,6 +17,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useOrders } from "../context/OrderContext";
+import NotificationListItem from "./NotificationListItem";
 
 const Navbar = () => {
   const session = useSession();
@@ -25,6 +27,7 @@ const Navbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { loading, total } = useOrders();
   const [dbUser, setDbUser] = useState(null);
+  const [notificationClicked, setNotificationClicked] = useState(false)
 
 
   useEffect(() => {
@@ -49,7 +52,6 @@ const Navbar = () => {
     fetchUser()
   }, [userSession?.user?.email]);
 
-  console.log("dbUser", dbUser);
 
   return (
     <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
@@ -140,13 +142,13 @@ const Navbar = () => {
             </li>
             {dbUser?.role === "borrower" && (
               <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-              <Link href="/my-account" className="flex items-center">
-                <MdOutlineAccountCircle className="text-[1.1rem]" />
-                My Account
-              </Link>
-            </li>
+                <Link href="/my-account" className="flex items-center">
+                  <MdOutlineAccountCircle className="text-[1.1rem]" />
+                  My Account
+                </Link>
+              </li>
             )}
-            
+
             {(dbUser?.role === "admin" || dbUser?.role === "lender") ? (
               <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
                 <Link href="/dashboard" className="flex items-center">
@@ -154,19 +156,35 @@ const Navbar = () => {
                   Dashboard
                 </Link>
               </li>
-            ): null}
+            ) : null}
+
+
           </ul>
 
           {/* Account Menu for navbar */}
           <div className="relative flex gap-4 items-center">
             <div
-              className="indicator tooltip tooltip-right tooltip-success"
+              className="indicator tooltip tooltip-right tooltip-success flex items-center gap-3"
               data-tip="Shopping Cart"
             >
+              <li className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative" data-tip="Notifications">
+                <IoNotificationsSharp onClick={() => setNotificationClicked(!notificationClicked)} className="w-[30px] h-[30px]" />
+                <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">10</span>
+
+                <div className={`${notificationClicked ? 'block' : 'hidden'} bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}>
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                </div>
+              </li>
               {loading ? (
                 <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
               ) : (
-                <span className="indicator-item w-4 h-4 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
+                <span className="indicator-item w-5 h-5 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
                   {total || 0}
                 </span>
               )}
@@ -225,7 +243,7 @@ const Navbar = () => {
                     {userSession?.user?.name}
                   </p>
                 )}
-                {( dbUser?.role == "admin" || dbUser?.role == "lender") ? (<Link href={"/dashboard/view-profile"}>
+                {(dbUser?.role == "admin" || dbUser?.role == "lender") ? (<Link href={"/dashboard/view-profile"}>
                   <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
                     <FiUser /> View Profile
                   </p>
@@ -233,14 +251,14 @@ const Navbar = () => {
                   <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
                     <FiUser /> My Account
                   </p>
-                </Link>) }
-                
-                {( dbUser?.role == "admin" || dbUser?.role == "lender") && (<Link href={"/dashboard/settings"}>
+                </Link>)}
+
+                {(dbUser?.role == "admin" || dbUser?.role == "lender") && (<Link href={"/dashboard/settings"}>
                   <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
                     <IoSettingsOutline /> Settings
                   </p>
                 </Link>)}
-                               
+
                 {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
                  <IoSettingsOutline /> Settings
                 </p> */}

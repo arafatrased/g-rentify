@@ -81,7 +81,7 @@ const ViewProfile = () => {
           </div>
         </div>
         {/* Banner */}
-        <div className="rounded-xl  shadow-lg">
+        <div className="rounded-xl shadow-lg">
           <div className="relative">
             {/* Banner Image */}
             <img
@@ -115,7 +115,7 @@ const ViewProfile = () => {
                       {currentCity || "Dhaka"}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {currentCountry || "USA"}
+                      {currentCountry || "Bangladesh"}
                     </p>
                   </div>
                 </div>
@@ -132,19 +132,46 @@ const ViewProfile = () => {
                 <a href="#" className="text-sky-500 text-xl">
                   <FaTwitter />
                 </a>
-                <button className="bg-[#6C63FF] text-white px-4 py-2 rounded-md font-medium hover:bg-indigo-700 transition">
+                <button className="bg-green-500 text-white px-4 py-2 rounded-md font-medium hover:bg-green-700 transition">
                   Follow
                 </button>
               </div>
             </div>
           </div>
+          <div className="bg-white h-[15rem] my-[60px] mb-6 shadow-lg rounded-2xl flex flex-col md:flex-row justify-between items-center gap-6 p-4">
+            <div className="h-full bg-white rounded-2xl w-full">
+              <div className="flex flex-col gap-4 p-4">
+                <h2 className="text-xl font-semibold">About Me</h2>
+                <p className="text-gray-600 text-sm">
+                  {dbUser?.bio ||
+                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}
+                </p>
+              </div>
+            </div>
+            <div className="h-full bg-green-50 rounded-2xl w-full">
+              <div className="flex flex-col gap-4 p-4">
+                <h2 className="text-xl font-semibold">Address</h2>
+                <p className="text-gray-600 text-sm">
+                  {dbUser?.address ||
+                    "123 Main St, Springfield, USA"}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  {dbUser?.email || "default@email.com"}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  {dbUser?.phone || "+1 234 567 890"}
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         {/* Edit Profile */}
         <div className="mt-24 text-center">
-          <Link href="/dashboard/update">
-            <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition">
-              Edit Profile
+          <Link href="/dashboard/settings">
+            <button className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">
+              Update Profile
             </button>
           </Link>
         </div>

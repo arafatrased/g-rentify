@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 
+
+
 export const middleware = async (req, res) => {
 
     const token = await getToken({ req });
@@ -8,22 +10,29 @@ export const middleware = async (req, res) => {
     const isTokenOk = !!token;
     const isAdmin = token?.role === 'admin';
     const isLender = token?.role === 'lender';
-    const isRenter = token?.role === 'borrower';
+    const isBorrower = token?.role === 'borrower';
 
-    const isAuthenticated = isTokenOk && (isAdmin || isLender || isRenter);
+    const isAuthenticated = isTokenOk && (isAdmin || isLender);
+    const isNormalUser = isTokenOk && (isBorrower);
     // const isLoginPath = req.nextUrl.pathname.startsWith('/login');
     // const isRegisterPath = req.nextUrl.pathname.startsWith('/register');
     const isDashBoardPath = req.nextUrl.pathname.startsWith('/dashboard');
     const isMyAccountPath = req.nextUrl.pathname.startsWith('/my-account');
     const isPaymentPath = req.nextUrl.pathname.startsWith('/payment');
     if(!isAuthenticated && isDashBoardPath) {
-        return NextResponse.redirect(new URL('/login', req.url));
+        // signOut({ callbackUrl: '/my-account' });
+        return NextResponse.redirect(new URL('/my-account', req.url));
     }
 
-    if(!isAuthenticated && isMyAccountPath) {
+    if(isNormalUser && isDashBoardPath) {
+        return NextResponse.redirect(new URL('/my-account', req.url));
+    };
+ 
+
+    if(!isNormalUser && isMyAccountPath) {
         return NextResponse.redirect(new URL('/login', req.url));
     }
-    if(!isAuthenticated && isPaymentPath) {
+    if(!isNormalUser && isPaymentPath) {
         return NextResponse.redirect(new URL('/login', req.url));
     }
 
