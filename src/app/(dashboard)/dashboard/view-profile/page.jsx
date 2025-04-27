@@ -115,7 +115,7 @@ const ViewProfile = () => {
                       {currentCity || "Dhaka"}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {currentCountry || "USA"}
+                      {currentCountry || "Bangladesh"}
                     </p>
                   </div>
                 </div>

@@ -39,15 +39,15 @@ export default function MyAccount() {
           console.log(payload);
           try {
             const res = await fetch("/api/auth/profile-update", {
-              method: "POST",
+              method: "PATCH",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ email, name:names, address, govtId, phone, bio, role: "lender" })
             });
       
             if (res.ok) {
               alert("Role updated Successfully!");
-              signOut({ callbackUrl: "/dashboard" });
-              router.push("/dashboard/view-profile");
+              signOut({ callbackUrl: "/login" });
+              router.push("/login");
 
             } else {
               alert("Failed to update profile.");
