@@ -183,9 +183,9 @@ export default function MyAccount() {
                       <span>Address: </span> {user?.address || "Not Provided"}
                     </p>
 
-                    <p>
+                    {/* <p>
                       <span>City: </span>Dhaka, {location?.country_name || "Bangladesh"}
-                    </p>
+                    </p> */}
                     <p>
                       <span>Phone: </span>{user?.phone || "Not Provided"}
                     </p>
