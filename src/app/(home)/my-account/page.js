@@ -321,18 +321,18 @@ export default function MyAccount() {
               )}
             </div>
             <div className="flex flex-col">
-              <label className="mb-2 font-semibold text-gray-700">City</label>
+              <label className="mb-2 font-semibold text-gray-700">Address</label>
               <input
-                {...register("city", {
-                  required: "City is required",
+                {...register("address", {
+                  required: "Address is required",
                 })}
                 type="text"
-                placeholder="Enter your city"
+                placeholder="Enter your Address"
                 className="px-2 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#03b00b]"
               />
-              {errors.city && (
+              {errors.adress && (
                 <p className="text-sm text-red-500 mt-2">
-                  {errors.city.message}
+                  {errors.adress.message}
                 </p>
               )}
             </div>
@@ -343,10 +343,10 @@ export default function MyAccount() {
               <input
                 {...register("country", {
                   required: "Country is required",
-                  maxLength: {
-                    value: 2,
-                    message: "Maximum 99 allowed",
-                  },
+                  // maxLength: {
+                  //   value: 2,
+                  //   message: "Maximum 99 allowed",
+                  // },
                 })}
                 type="text"
                 placeholder="Enter your country"
@@ -365,7 +365,7 @@ export default function MyAccount() {
                   required: "Phone is required",
                 })}
                 type="text"
-                placeholder="Enter your discount value"
+                placeholder="Enter Phone Number"
                 className="px-2 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#03b00b]"
               />
               {errors.phone && (
