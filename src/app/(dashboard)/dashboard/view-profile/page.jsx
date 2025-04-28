@@ -8,26 +8,26 @@ import React, { useEffect, useState } from "react";
 const ViewProfile = () => {
   const { data: session, status } = useSession();
   const user = session?.user;
-  const [currentCountry, setCurrentCountry] = useState("");
-  const [currentCity, setCurrentCity] = useState("");
+  // const [currentCountry, setCurrentCountry] = useState("");
+  // const [currentCity, setCurrentCity] = useState("");
   const [dbUser, setDbUser] = useState(null);
 
-  useEffect(() => {
-    const fetchLocation = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/api/location`
-        );
-        const data = await res.json();
-        setCurrentCountry(data.country_name);
-        setCurrentCity(data.city);
-      } catch (error) {
-        console.error("Location fetch failed:", error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchLocation = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `${process.env.NEXT_PUBLIC_SERVER_LINK}/api/location`
+  //       );
+  //       const data = await res.json();
+  //       setCurrentCountry(data.country_name);
+  //       setCurrentCity(data.city);
+  //     } catch (error) {
+  //       console.error("Location fetch failed:", error);
+  //     }
+  //   };
 
-    fetchLocation();
-  }, []);
+  //   fetchLocation();
+  // }, []);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -111,12 +111,7 @@ const ViewProfile = () => {
                     <p className="text-sm mt-1 bg-blue-100 text-[#00B22C] px-2 py-1 rounded-xl capitalize">
                       {user.role || "user"}
                     </p>
-                    <p className="text-sm text-gray-500">
-                      {currentCity || "Dhaka"}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {currentCountry || "Bangladesh"}
-                    </p>
+                    
                   </div>
                 </div>
               </div>

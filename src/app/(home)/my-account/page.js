@@ -15,7 +15,7 @@ export default function MyAccount() {
   const name = session?.data?.user?.name;
   const email = session?.data?.user?.email;
   const [activeTab, setActiveTab] = useState("dashboard");
-  const [location, setLocation] = useState(null);
+  // const [location, setLocation] = useState(null);
   const [selectedImage, setSelectedImage] = useState("");
   const [bio, setBio] = useState("");
   const [phone, setPhone] = useState("");
@@ -76,20 +76,20 @@ export default function MyAccount() {
   };
 
   // get location
-  useEffect(() => {
-    const fetchUserLocation = async () => {
-      try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER_LINK}/api/location`
-        );
-        const data = await res.json();
-        setLocation(data);
-      } catch (error) {
-        console.error("Failed to fetch location:", error);
-      }
-    };
-    fetchUserLocation();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUserLocation = async () => {
+  //     try {
+  //       const res = await fetch(
+  //         `${process.env.NEXT_PUBLIC_SERVER_LINK}/api/location`
+  //       );
+  //       const data = await res.json();
+  //       setLocation(data);
+  //     } catch (error) {
+  //       console.error("Failed to fetch location:", error);
+  //     }
+  //   };
+  //   fetchUserLocation();
+  // }, []);
 
   // get user
 
@@ -163,9 +163,9 @@ export default function MyAccount() {
                     <p>
                       <span>Email: </span> {email}
                     </p>
-                    <p>
+                    {/* <p>
                       <span>Ip: </span> {location?.ip}
-                    </p>
+                    </p> */}
                     <button className="mt-2 bg-[#03b00b] text-white px-4 py-2 rounded hover:bg-[#03b00cdb] cursor-pointer text-sm sm:text-base">
                       Change Password
                     </button>
