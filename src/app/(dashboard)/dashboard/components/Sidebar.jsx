@@ -28,26 +28,26 @@ export default function Sidebar() {
 
   const links = (
     <>
-      <li>
-        <Link
-          href="/dashboard"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard") ? activeClass : inactiveClass
-          }`}
-        >
-          <span className="flex items-center gap-1">
-            <FiHome />
-            Admin
-          </span>
-          <MdKeyboardArrowRight />
-        </Link>
-      </li>
+      {sessionUser?.user?.role === "admin" && (
+        <li>
+          <Link
+            href="/dashboard"
+            className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard") ? activeClass : inactiveClass
+              }`}
+          >
+            <span className="flex items-center gap-1">
+              <FiHome />
+              Admin
+            </span>
+            <MdKeyboardArrowRight />
+          </Link>
+        </li>
+      )}
       <li>
         <Link
           href="/dashboard/add-gadget"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/add-gadget") ? activeClass : inactiveClass
-          }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/add-gadget") ? activeClass : inactiveClass
+            }`}
         >
           <span className="flex items-center gap-1">
             <TbPlaylistAdd />
@@ -59,9 +59,8 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard/add-coupon"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/add-coupon") ? activeClass : inactiveClass
-          }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/add-coupon") ? activeClass : inactiveClass
+            }`}
         >
           <span className="flex items-center gap-1">
             <RiCoupon4Line />
@@ -70,27 +69,28 @@ export default function Sidebar() {
           <MdKeyboardArrowRight />
         </Link>
       </li>
-      <li>
-        <Link
-          href="/dashboard/all-gadgets"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/all-gadgets") ? activeClass : inactiveClass
-          }`}
-        >
-          <span className="flex items-center gap-1">
-            <SiEngadget className="text-sm" />
-            All Gadgets
-          </span>
-          <MdKeyboardArrowRight />
-        </Link>
-      </li>
+      {sessionUser?.user?.role === "admin" && (
+        <li>
+          <Link
+            href="/dashboard/all-gadgets"
+            className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/all-gadgets") ? activeClass : inactiveClass
+              }`}
+          >
+            <span className="flex items-center gap-1">
+              <SiEngadget className="text-sm" />
+              All Gadgets
+            </span>
+            <MdKeyboardArrowRight />
+          </Link>
+        </li>
+      )}
 
-      <li>
+      {sessionUser?.user?.role === "lender" && (
+        <li>
         <Link
           href="/dashboard/my-gadgets"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/my-gadgets") ? activeClass : inactiveClass
-          }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/my-gadgets") ? activeClass : inactiveClass
+            }`}
         >
           <span className="flex items-center gap-1">
             <SiEngadget className="text-sm" />
@@ -99,50 +99,55 @@ export default function Sidebar() {
           <MdKeyboardArrowRight />
         </Link>
       </li>
+      )}
 
-      <li>
-        <Link
-          href="/dashboard/all-user"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/all-user") ? activeClass : inactiveClass
-          }`}
-        >
-          <span className="flex items-center gap-1">
-            <FaUsers />
-            All Users
-          </span>
-          <MdKeyboardArrowRight />
-        </Link>
-      </li>
-      <li>
-        <Link
-          href="/dashboard/all-orders"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/all-orders") ? activeClass : inactiveClass
-          }`}
-        >
-          <span className="flex items-center gap-1">
-            <TbTruckDelivery />
-            All Orders
-          </span>
-          <MdKeyboardArrowRight />
-        </Link>
-      </li>
+      {
+        sessionUser?.user?.role === "admin" && (
+          <>
+            <li>
+              <Link
+                href="/dashboard/all-user"
+                className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/all-user") ? activeClass : inactiveClass
+                  }`}
+              >
+                <span className="flex items-center gap-1">
+                  <FaUsers />
+                  All Users
+                </span>
+                <MdKeyboardArrowRight />
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/dashboard/all-orders"
+                className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/all-orders") ? activeClass : inactiveClass
+                  }`}
+              >
+                <span className="flex items-center gap-1">
+                  <TbTruckDelivery />
+                  All Orders
+                </span>
+                <MdKeyboardArrowRight />
+              </Link>
+            </li></>
+        )}
+      {sessionUser?.user?.role === "lender" && (
+        <li>
+          <Link
+            href="/dashboard/my-orders"
+            className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/my-orders") ? activeClass : inactiveClass
+              }`}
+          >
+            <span className="flex items-center gap-1">
+              <TbTruckDelivery />
+              My Orders
+            </span>
+            <MdKeyboardArrowRight />
+          </Link>
+        </li>
+      )}
 
-      <li>
-        <Link
-          href="/dashboard/my-orders"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/my-orders") ? activeClass : inactiveClass
-          }`}
-        >
-          <span className="flex items-center gap-1">
-            <TbTruckDelivery />
-            My Orders
-          </span>
-          <MdKeyboardArrowRight />
-        </Link>
-      </li>
+
     </>
   );
 
@@ -151,9 +156,8 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard/view-profile"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/view-profile") ? activeClass : inactiveClass
-          }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/view-profile") ? activeClass : inactiveClass
+            }`}
         >
           <span className="flex items-center gap-1">
             <FiUser />
@@ -165,9 +169,8 @@ export default function Sidebar() {
       <li>
         <Link
           href="/dashboard/settings"
-          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${
-            isActive("/dashboard/settings") ? activeClass : inactiveClass
-          }`}
+          className={`flex justify-between items-center px-2 py-2 transition border-l-2 ${isActive("/dashboard/settings") ? activeClass : inactiveClass
+            }`}
         >
           <span className="flex items-center gap-1">
             <IoSettingsOutline />
@@ -179,9 +182,8 @@ export default function Sidebar() {
       <li>
         <button
           onClick={() => signOut()}
-          className={`flex justify-between w-full items-center px-2 py-2 transition border-l-2 ${
-            isActive("/") ? activeClass : inactiveClass
-          }`}
+          className={`flex justify-between w-full items-center px-2 py-2 transition border-l-2 ${isActive("/") ? activeClass : inactiveClass
+            }`}
         >
           <span className="flex items-center gap-1">
             <TbLogout2 />

@@ -94,7 +94,7 @@ export default function AddGadget() {
       setLoading(false);
       reset();
       toast.success("Gadget added successfully!");
-      redirect("/dashboard/all-gadgets");
+      redirect("/dashboard/my-gadgets");
     } else {
       setLoading(false);
       toast.error("Faild to added gadget!");

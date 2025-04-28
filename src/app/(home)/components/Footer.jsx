@@ -26,7 +26,7 @@ export default function Footer() {
           </div>
           {/* card 2 */}
           <div className="max-w-fit">
-            <h3 className="text-2xl font-semibold mb-5">Useful Links</h3>
+            <h3 className="text-2xl font-semibold mb-5">Front Desk</h3>
             <ul className="flex flex-col gap-3 font-medium">
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={"/"}>Home</Link>
@@ -44,7 +44,7 @@ export default function Footer() {
           </div>
           {/* card 3 */}
           <div className="max-w-fit">
-            <h3 className="text-2xl font-semibold mb-5">Explore Renity</h3>
+            <h3 className="text-2xl font-semibold mb-5">Explore G-rentify</h3>
             <ul className="flex flex-col gap-3 font-medium">
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={"/about"}>About G-Rentify</Link>
