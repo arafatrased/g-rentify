@@ -34,7 +34,7 @@ export default function AddGadget() {
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const session = useSession();
-  const gadgetAddedPerson = {
+  const lender = {
     itemAddedUser: session?.data?.user?.name,
     itemAddedEmail: session?.data?.user?.email,
   };
@@ -83,7 +83,7 @@ export default function AddGadget() {
     );
 
     // get all data
-    const gadgetInfo = { ...data, images: imageUrls, gadgetAddedPerson, date };
+    const gadgetInfo = { ...data, images: imageUrls, lender, date };
 
     // post all data in mongoDB
     const response = await axios.post(
@@ -94,7 +94,7 @@ export default function AddGadget() {
       setLoading(false);
       reset();
       toast.success("Gadget added successfully!");
-      redirect("/dashboard/all-gadgets");
+      redirect("/dashboard/my-gadgets");
     } else {
       setLoading(false);
       toast.error("Faild to added gadget!");
