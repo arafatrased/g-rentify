@@ -14,7 +14,7 @@ export default function MyGadgets() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [limit, setLimit] = useState(3); // Items per page
+  const [limit, setLimit] = useState(8); // Items per page
 
   // make it reusable
   const fetchGadgets = async (page = currentPage) => {
@@ -34,6 +34,7 @@ export default function MyGadgets() {
   // load data once on mount
   useEffect(() => {
     fetchGadgets(1); // Reset to page 1 when filters change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryParams, search, limit]);
 
   const handlePageChange = (newPage) => {
@@ -133,7 +134,6 @@ export default function MyGadgets() {
               className="select focus:border-[#03b00b] rounded focus:outline-none transition-all duration-100 w-full"
               onChange={(e) => setLimit(Number(e.target.value))}
             >
-              <option value={3}>3 / page</option>
               <option value={10}>10 / page</option>
               <option value={20}>20 / page</option>
               <option value={50}>50 / page</option>
@@ -240,9 +240,6 @@ export default function MyGadgets() {
           </tbody>
         </table>
       </div>
-
-
-      
 
       {/* Pagination Controls */}
       <div className="flex justify-between items-center mt-6">

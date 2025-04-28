@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Dropzone from "react-dropzone";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import makeAnimated from "react-select/animated";
 import Select from "react-select";
 import axios from "axios";
-import { redirect } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -30,7 +30,8 @@ const categoryOption = [
   { value: "drone", label: "Drone" },
 ];
 
-export default function AddGadget() {
+export default function UpdateGadget() {
+  const { id } = useParams();
   const [selectedImages, setSelectedImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const session = useSession();
@@ -38,28 +39,79 @@ export default function AddGadget() {
     itemAddedUser: session?.data?.user?.name,
     itemAddedEmail: session?.data?.user?.email,
   };
-  const date = new Date();
+
+  const [gadget, setGadget] = useState(null);
+
+  // get data by id
+  useEffect(() => {
+    if (!id) return;
+
+    const fetchGadgetDetails = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_LINK}/gadgets/${id}`
+        );
+        const data = await res.json();
+        setGadget(data);
+      } catch (error) {
+        // console.log("Failed to fetch gadget.", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchGadgetDetails();
+  }, [id]);
 
   // react hook form function
   const {
     register,
     handleSubmit,
     control,
-    reset,
+    setValue,
     formState: { errors },
   } = useForm();
+
+  // set default value for hook form
+  useEffect(() => {
+    if (gadget) {
+      setValue("title", gadget.title);
+      setValue("sensor", gadget.sensor);
+      setValue("iso_range", gadget.iso_range);
+      setValue("color_mode", gadget.color_mode);
+      setValue("supported_file_system", gadget.supported_file_system);
+      setValue("still_image_size", gadget.still_image_size);
+      setValue("video_resolution", gadget.video_resolution);
+      setValue("max_video_bitrate", gadget.max_video_bitrate);
+      setValue("photo_format", gadget.photo_format);
+      setValue("video_format", gadget.video_format);
+      setValue("price", gadget.price);
+      setValue("description", gadget.description);
+      setValue("capacity", gadget.capacity);
+      setValue("voltage", gadget.voltage);
+      setValue("max_charging_voltage", gadget.max_charging_voltage);
+      setValue("battery_type", gadget.battery_type);
+      setValue("energy", gadget.energy);
+      setValue("net_weight", gadget.net_weight);
+      setValue("charging_temperature_range", gadget.charging_temperature_range);
+      setValue("max_charging_power", gadget.max_charging_power);
+      setValue("includes", gadget.includes);
+      setValue("category", gadget.category);
+      setValue("images", gadget.images);
+      setValue("lender", gadget.lender);
+    }
+  }, [gadget, setValue]);
 
   // submit form function
   const onSubmit = async (data) => {
     setLoading(true);
     if (selectedImages.length === 0)
-      return toast.error("You need to add gadgets image!");
+      return toast.error("You need to update gadgets image!");
     if (selectedImages.length > 3)
       return toast.error("You can add maximum three images!");
     if (selectedImages.length === 1)
       return toast.error("Add minimum two images!");
     const api_key = process.env.NEXT_PUBLIC_IMGBB_API_KEY;
-
     // upload image imgbb hostion server
     const imageUrls = await Promise.all(
       selectedImages.map(async (file) => {
@@ -73,7 +125,6 @@ export default function AddGadget() {
             reader.onload = () => res(reader.result.split(",")[1]);
           })
         );
-
         const res = await fetch("https://api.imgbb.com/1/upload", {
           method: "POST",
           body: formData,
@@ -81,29 +132,25 @@ export default function AddGadget() {
         return (await res.json()).data.url;
       })
     );
-
     // get all data
-    const gadgetInfo = { ...data, images: imageUrls, lender, date };
+    const gadgetInfo = { ...data, images: imageUrls };
 
-    // post all data in mongoDB
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_SERVER_LINK}/gadget`,
+    // update all data in mongoDB
+    const response = await axios.patch(
+      `${process.env.NEXT_PUBLIC_SERVER_LINK}/update-gadget/${id}`,
       gadgetInfo
     );
-    if (response.data.insertedId) {
-      setLoading(false);
-      reset();
-      toast.success("Gadget added successfully!");
+    if (response.data.modifiedCount === 1) {
+      toast.success("Update successfully!");
       redirect("/dashboard/all-gadgets");
     } else {
-      setLoading(false);
-      toast.error("Faild to added gadget!");
+      toast.error("Failed to update data");
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
-      <h3 className="text-2xl font-medium">Add Product</h3>
+      <h3 className="text-2xl font-medium">Update Product</h3>
 
       {/* Breadcrumbs */}
       <div className="breadcrumbs text-sm mb-5">
@@ -114,7 +161,7 @@ export default function AddGadget() {
             </Link>
           </li>
           <li>
-            <span className="text-[#03b00b] !no-underline">Add Product</span>
+            <span className="text-[#03b00b] !no-underline">Update Product</span>
           </li>
         </ul>
       </div>
@@ -185,6 +232,7 @@ export default function AddGadget() {
                 <input
                   {...register("title", { required: true })}
                   type="text"
+                  defaultValue={gadget?.title}
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Title (Rent a DJI Mavic 2 Pro Drone)"
                 />
@@ -198,6 +246,7 @@ export default function AddGadget() {
                 <input
                   {...register("sensor", { required: true })}
                   type="text"
+                  defaultValue={gadget?.sensor}
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Sensor (	1” CMOS Effective Pixels: 20 million)"
                 />
@@ -211,6 +260,7 @@ export default function AddGadget() {
                 <input
                   {...register("iso_range", { required: true })}
                   type="text"
+                  defaultValue={gadget?.iso_range}
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="ISO Range (	Video:100-6400 Photo: 100-320(auto)100-12800 (manual))"
                 />
@@ -224,6 +274,7 @@ export default function AddGadget() {
                 <input
                   {...register("color_mode", { required: true })}
                   type="text"
+                  defaultValue={gadget?.color_mode}
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Color Mode (	Dlog-M (10bit), support HDR video (HLG 10bit))"
                 />
@@ -239,6 +290,7 @@ export default function AddGadget() {
                 <input
                   {...register("supported_file_system", { required: true })}
                   type="text"
+                  defaultValue={gadget?.supported_file_system}
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Supported File System (FAT32 (≤ 32 GB) exFAT (> 32 GB))"
                 />
@@ -253,6 +305,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("still_image_size", { required: true })}
+                  defaultValue={gadget?.still_image_size}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Still Image Size (5472×3648)"
@@ -268,6 +321,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("video_resolution", { required: true })}
+                  defaultValue={gadget?.video_resolution}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Video Resolution (	4K: 3840×2160 24/25/30p 2.7K 2688x1512 24/25/30/48/50/60p)"
@@ -283,6 +337,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("max_video_bitrate", { required: true })}
+                  defaultValue={gadget?.max_video_bitrate}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Max Video Bitrate (100Mbps)"
@@ -298,6 +353,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("photo_format", { required: true })}
+                  defaultValue={gadget?.photo_format}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Photo Format (JPEG / DNG (RAW))"
@@ -313,6 +369,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("video_format", { required: true })}
+                  defaultValue={gadget?.video_format}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Video Format (	MP4 / MOV (MPEG-4 AVC/H.264, HEVC/H.265))"
@@ -430,6 +487,7 @@ export default function AddGadget() {
 
                 <input
                   {...register("price", { required: true })}
+                  defaultValue={gadget?.price}
                   type="number"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] "
                   placeholder="Price"
@@ -448,6 +506,7 @@ export default function AddGadget() {
 
                 <textarea
                   {...register("description", { required: true })}
+                  defaultValue={gadget?.description}
                   className="textarea h-40 w-full input focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] px-3 resize-none break-words"
                   placeholder="Description"
                   style={{
@@ -458,11 +517,11 @@ export default function AddGadget() {
                 ></textarea>
 
                 {/* Error Message */}
-                {errors.description && (
+                {/* {errors.description && (
                   <span className="text-red-500">
                     {errors.includes.message}
                   </span>
-                )}
+                )} */}
               </fieldset>
 
               {/* BATTARY INFO */}
@@ -478,6 +537,7 @@ export default function AddGadget() {
                 <legend className="fieldset-legend text-sm">Capacity*</legend>
                 <input
                   {...register("capacity", { required: true })}
+                  defaultValue={gadget?.capacity}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] "
                   placeholder="Capacity (3850 mAh)"
@@ -491,6 +551,7 @@ export default function AddGadget() {
                 <legend className="fieldset-legend text-sm">Voltage*</legend>
                 <input
                   {...register("voltage", { required: true })}
+                  defaultValue={gadget?.voltage}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px] "
                   placeholder="Voltage (15.4 V)"
@@ -506,6 +567,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("max_charging_voltage", { required: true })}
+                  defaultValue={gadget?.max_charging_voltage}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Max Charging Voltage (17.6 V)"
@@ -521,6 +583,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("battery_type", { required: true })}
+                  defaultValue={gadget?.battery_type}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Battery Type (LiPo 4S)"
@@ -534,6 +597,7 @@ export default function AddGadget() {
                 <legend className="fieldset-legend text-sm">Energy*</legend>
                 <input
                   {...register("energy", { required: true })}
+                  defaultValue={gadget?.energy}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Energy (59.29 Wh)"
@@ -547,6 +611,7 @@ export default function AddGadget() {
                 <legend className="fieldset-legend text-sm">Net Weight*</legend>
                 <input
                   {...register("net_weight", { required: true })}
+                  defaultValue={gadget?.net_weight}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Net Weight (297 g)"
@@ -564,6 +629,7 @@ export default function AddGadget() {
                   {...register("charging_temperature_range", {
                     required: true,
                   })}
+                  defaultValue={gadget?.charging_temperature_range}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder=" Charging Temperature Range (5℃ - 40℃)"
@@ -579,6 +645,7 @@ export default function AddGadget() {
                 </legend>
                 <input
                   {...register("max_charging_power", { required: true })}
+                  defaultValue={gadget?.max_charging_power}
                   type="text"
                   className="input w-full focus:outline-none focus:border-[#03b00b] bg-transparent rounded-[2px]"
                   placeholder="Max Charging Power (80 W)"
@@ -590,13 +657,13 @@ export default function AddGadget() {
             </div>
 
             <button
-              className="bg-[#03b00b] cursor-pointer text-white py-2 w-32 mt-5 rounded"
+              className="bg-[#03b00b] cursor-pointer text-white py-2 w-36 mt-5 rounded"
               type="submit"
             >
               {loading ? (
                 <span className="loading loading-dots loading-sm"></span>
               ) : (
-                <span>Add Gadget</span>
+                <span>Update Gadget</span>
               )}
             </button>
           </div>

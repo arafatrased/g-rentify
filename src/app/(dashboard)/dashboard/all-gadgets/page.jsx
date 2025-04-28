@@ -14,7 +14,7 @@ export default function AllGadgets() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const [limit, setLimit] = useState(3); // Items per page
+  const [limit, setLimit] = useState(8); // Items per page
 
   // make it reusable
   const fetchGadgets = async (page = currentPage) => {
@@ -88,7 +88,7 @@ export default function AllGadgets() {
   };
 
   return (
-    <div className="p-2 md:p-6">
+    <div className="p-2 md:p-6 bg-gray-100">
       <div className="flex justify-between items-center">
         <h3 className="text-2xl font-medium">Products</h3>
         <p className="text-[#03b00b] border rounded border-[#03b00b] py-1.5 px-4 text-sm">
@@ -133,7 +133,6 @@ export default function AllGadgets() {
               className="select focus:border-[#03b00b] rounded focus:outline-none transition-all duration-100 w-full"
               onChange={(e) => setLimit(Number(e.target.value))}
             >
-              <option value={3}>3 / page</option>
               <option value={10}>10 / page</option>
               <option value={20}>20 / page</option>
               <option value={50}>50 / page</option>
@@ -227,9 +226,11 @@ export default function AllGadgets() {
                 </td>
                 <td>
                   <div className="flex gap-2 items-center">
-                    <span className="text-gray-500 text-lg cursor-pointer">
-                      <PiPencil />
-                    </span>
+                    <Link href={`/dashboard/all-gadgets/${item?._id}`}>
+                      <span className="text-gray-500 text-lg cursor-pointer">
+                        <PiPencil />
+                      </span>
+                    </Link>
                     <span className="text-red-500 text-lg cursor-pointer">
                       <GoTrash onClick={() => handleDelete(item?._id)} />
                     </span>
@@ -240,9 +241,6 @@ export default function AllGadgets() {
           </tbody>
         </table>
       </div>
-
-
-      
 
       {/* Pagination Controls */}
       <div className="flex justify-between items-center mt-6">

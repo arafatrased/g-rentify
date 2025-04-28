@@ -13,6 +13,7 @@ import { SiEngadget } from "react-icons/si";
 import { FaUsers } from "react-icons/fa";
 import { RiCoupon4Line } from "react-icons/ri";
 import { TbTruckDelivery } from "react-icons/tb";
+import Logo from "@/app/(home)/components/Logo";
 
 export default function Sidebar() {
   const [isOpen, setOpen] = useState(false);
@@ -202,20 +203,18 @@ export default function Sidebar() {
       {/* Sidebar */}
       <div
         className={`
-          bg-[#f4f4f4] fixed lg:static top-[70px] left-0 w-[250px] min-h-screen z-50
+          bg-slate-50 fixed lg:static top-[70px] left-0 w-[250px] min-h-screen z-50
           transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full"}
           lg:translate-x-0 lg:block
         `}
       >
         <div className="p-3 sticky top-0">
-          <Link href="/">
-            <h1 className="italic text-center text-2xl font-medium text-[#03b00b] hidden lg:block">
-              G-Rentify
-            </h1>
-          </Link>
+          <div className="w-40">
+            <Logo />
+          </div>
 
-          <div className="w-full h-[1px] bg-[#dddddd] mt-6 mb-3 hidden lg:block"></div>
+          <div className="w-full h-[1px] -mt-1 bg-[#dddddd] mb-3 hidden lg:block"></div>
           <p className="text-[12px] text-[#2c2c2c]">Dashboard & App</p>
           <div className="flex flex-col gap-2 mt-2 justify-between min-h-[80vh]">
             <ul className="text-[#2c2c2c] mt-5 space-y-1">{links}</ul>

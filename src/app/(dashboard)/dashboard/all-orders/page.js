@@ -59,7 +59,7 @@ const AllOrders = () => {
     };
 
     return (
-        <div id='all-orders' className='p-5'>
+        <div id='all-orders' className='p-2 sm:p-5 bg-gray-100'>
             {/* Breadcrumb */}
             <div className='mb-5'>
                 <div className="breadcrumbs text-sm mb-6">
