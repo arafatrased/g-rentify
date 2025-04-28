@@ -18,6 +18,7 @@ import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useOrders } from "../context/OrderContext";
 import NotificationListItem from "./NotificationListItem";
+import Logo from "./Logo";
 
 const Navbar = () => {
   const session = useSession();
@@ -27,8 +28,7 @@ const Navbar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { loading, total } = useOrders();
   const [dbUser, setDbUser] = useState(null);
-  const [notificationClicked, setNotificationClicked] = useState(false)
-
+  const [notificationClicked, setNotificationClicked] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -48,23 +48,17 @@ const Navbar = () => {
       } catch (error) {
         // console.error("User fetch failed:", error);
       }
-    }
-    fetchUser()
+    };
+    fetchUser();
   }, [userSession?.user?.email]);
-
 
   return (
     <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
-      <nav className="flex items-center justify-between w-full py-4 container mx-auto px-2">
+      <nav className="flex items-center justify-between w-full container mx-auto px-2">
         {/* Logo */}
-        <Link href="/">
-          <img
-            src="https://i.ibb.co.com/rK6KHcNd/g-rentify.png"
-            alt="logo"
-            className="w-[155px]"
-            loading="eager"
-          />
-        </Link>
+        <div className="w-40 sm:w-52">
+          <Logo />
+        </div>
         {/* Search Bar */}
         <div className="">
           <div className="hidden lg:flex flex-1 relative justify-center w-full items-center">
@@ -82,8 +76,9 @@ const Navbar = () => {
             {/* Product Mega Menu */}
             <Link href={"/gadgets"}>
               <li
-                className={`${isProductHover ? "text-[#03b00b]" : " text-gray-600"
-                  } flex items-center gap-[5px] cursor-pointer relative`}
+                className={`${
+                  isProductHover ? "text-[#03b00b]" : " text-gray-600"
+                } flex items-center gap-[5px] cursor-pointer relative`}
                 onMouseEnter={() => setIsProductHover(true)}
                 onMouseLeave={() => setIsProductHover(false)}
               >
@@ -149,7 +144,7 @@ const Navbar = () => {
               </li>
             )}
 
-            {(dbUser?.role === "admin" || dbUser?.role === "lender") ? (
+            {dbUser?.role === "admin" || dbUser?.role === "lender" ? (
               <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
                 <Link href="/dashboard" className="flex items-center">
                   <MdDashboard className="text-[1.1rem]" />
@@ -157,8 +152,6 @@ const Navbar = () => {
                 </Link>
               </li>
             ) : null}
-
-
           </ul>
 
           {/* Account Menu for navbar */}
@@ -167,18 +160,51 @@ const Navbar = () => {
               className="indicator tooltip tooltip-right tooltip-success flex items-center gap-3"
               data-tip="Shopping Cart"
             >
-              <li className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative" data-tip="Notifications">
-                <IoNotificationsSharp onClick={() => setNotificationClicked(!notificationClicked)} className="w-[30px] h-[30px]" />
-                <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">10</span>
+              <li
+                className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative"
+                data-tip="Notifications"
+              >
+                <IoNotificationsSharp
+                  onClick={() => setNotificationClicked(!notificationClicked)}
+                  className="w-[30px] h-[30px]"
+                />
+                <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">
+                  10
+                </span>
 
-                <div className={`${notificationClicked ? 'block' : 'hidden'} bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}>
-                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
-                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
-                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
-                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
-                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
-                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
-                  <NotificationListItem title='Lenovo Laptop added to the cart' time='2 hours ago' />
+                <div
+                  className={`${
+                    notificationClicked ? "block" : "hidden"
+                  } bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}
+                >
+                  <NotificationListItem
+                    title="Lenovo Laptop added to the cart"
+                    time="2 hours ago"
+                  />
+                  <NotificationListItem
+                    title="Lenovo Laptop added to the cart"
+                    time="2 hours ago"
+                  />
+                  <NotificationListItem
+                    title="Lenovo Laptop added to the cart"
+                    time="2 hours ago"
+                  />
+                  <NotificationListItem
+                    title="Lenovo Laptop added to the cart"
+                    time="2 hours ago"
+                  />
+                  <NotificationListItem
+                    title="Lenovo Laptop added to the cart"
+                    time="2 hours ago"
+                  />
+                  <NotificationListItem
+                    title="Lenovo Laptop added to the cart"
+                    time="2 hours ago"
+                  />
+                  <NotificationListItem
+                    title="Lenovo Laptop added to the cart"
+                    time="2 hours ago"
+                  />
                 </div>
               </li>
               {loading ? (
@@ -206,9 +232,11 @@ const Navbar = () => {
                 {/* <button className="cursor-pointer hover:text-[#03b00b]">
                   <Link href="/registrar">Sing up</Link>
                 </button> */}
-                <Link href="/login"><button className="cursor-pointer ml-4 py-1 px-6 rounded-md border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
-                  Log In
-                </button></Link>
+                <Link href="/login">
+                  <button className="cursor-pointer ml-4 py-1 px-6 rounded-md border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
+                    Log In
+                  </button>
+                </Link>
               </div>
             )}
 
@@ -243,21 +271,27 @@ const Navbar = () => {
                     {userSession?.user?.name}
                   </p>
                 )}
-                {(dbUser?.role == "admin" || dbUser?.role == "lender") ? (<Link href={"/dashboard/view-profile"}>
-                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                    <FiUser /> View Profile
-                  </p>
-                </Link>) : (<Link href={"/my-account"}>
-                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                    <FiUser /> My Account
-                  </p>
-                </Link>)}
+                {dbUser?.role == "admin" || dbUser?.role == "lender" ? (
+                  <Link href={"/dashboard/view-profile"}>
+                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                      <FiUser /> View Profile
+                    </p>
+                  </Link>
+                ) : (
+                  <Link href={"/my-account"}>
+                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                      <FiUser /> My Account
+                    </p>
+                  </Link>
+                )}
 
-                {(dbUser?.role == "admin" || dbUser?.role == "lender") && (<Link href={"/dashboard/settings"}>
-                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                    <IoSettingsOutline /> Settings
-                  </p>
-                </Link>)}
+                {(dbUser?.role == "admin" || dbUser?.role == "lender") && (
+                  <Link href={"/dashboard/settings"}>
+                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                      <IoSettingsOutline /> Settings
+                    </p>
+                  </Link>
+                )}
 
                 {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
                  <IoSettingsOutline /> Settings
@@ -269,12 +303,13 @@ const Navbar = () => {
                   <TbLogout2 />
                   Logout
                 </button>
-                {dbUser?.role == "borrower" && (<Link href={"/how-this-works"}>
-                  <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                    <TbListDetails /> How this works?
-                  </p>
-                </Link>)}
-
+                {dbUser?.role == "borrower" && (
+                  <Link href={"/how-this-works"}>
+                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                      <TbListDetails /> How this works?
+                    </p>
+                  </Link>
+                )}
               </div>
             )}
           </div>

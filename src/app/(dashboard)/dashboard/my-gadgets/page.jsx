@@ -126,7 +126,6 @@ export default function MyGadgets() {
               className="select focus:border-[#03b00b] rounded focus:outline-none transition-all duration-100 w-full"
               onChange={(e) => setLimit(Number(e.target.value))}
             >
-              <option value={3}>3 / page</option>
               <option value={10}>10 / page</option>
               <option value={20}>20 / page</option>
               <option value={50}>50 / page</option>
@@ -233,9 +232,6 @@ export default function MyGadgets() {
           </tbody>
         </table>
       </div>
-
-
-      
 
       {/* Pagination Controls */}
       <div className="flex justify-between items-center mt-6">

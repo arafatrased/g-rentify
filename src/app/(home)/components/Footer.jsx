@@ -1,26 +1,22 @@
-import logo from "@/images/logo.png";
-import Image from "next/image";
 import Link from "next/link";
 import { FaFacebookF, FaGoogle, FaTwitter } from "react-icons/fa";
 import { GrMapLocation } from "react-icons/gr";
 import { IoShareSocial } from "react-icons/io5";
 import { MdAttachEmail, MdPhoneInTalk } from "react-icons/md";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
-    <footer className="pt-14 md:pt-20 pb-5 border-t border-slate-200">
+    <footer className="pt-14 md:pt-20 pb-5 bg-slate-50">
       {/* wrapper container  */}
       <div className="container mx-auto px-2 mb-10">
         {/* wrapper gird  */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 xl:gap-5 xl:justify-items-center">
           {/* card 1 */}
           <div>
-            <Image
-              src={logo}
-              alt="footer logo"
-              className="w-52"
-              priority={true}
-            />
+            <div className="w-40 sm:w-52">
+              <Logo />
+            </div>
             <p>
               We envision a future where everyone can experience cutting-edge
               technology without financial barriers. By promoting gadget
@@ -51,7 +47,7 @@ export default function Footer() {
             <h3 className="text-2xl font-semibold mb-5">Explore G-rentify</h3>
             <ul className="flex flex-col gap-3 font-medium">
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
-                <Link href={"/about"}>About Renity</Link>
+                <Link href={"/about"}>About G-Rentify</Link>
               </li>
               <li className="list-disc ml-4 hover:text-[#03b00b] transition-all">
                 <Link href={"/faq"}>Read FAQ’s</Link>
