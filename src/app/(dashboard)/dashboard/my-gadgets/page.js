@@ -7,20 +7,25 @@ import Image from "next/image";
 import { format } from "date-fns";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 export default function MyGadgets() {
+  const session = useSession();
+  const { data: sessionUser } = session;
+  const userEmail = sessionUser?.user?.email; // Get the email from session;
+  console.log(userEmail);
   const [gadgets, setGadgets] = useState([]);
-  const [categoryParams, setCategoryParams] = useState("");
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
   const [limit, setLimit] = useState(3); // Items per page
 
   // make it reusable
   const fetchGadgets = async (page = currentPage) => {
+    
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_LINK}/dashboard-gadgets?category=${categoryParams}&search=${search}&page=${page}&limit=${limit}`
+        `${process.env.NEXT_PUBLIC_SERVER_LINK}/dashboard-mygadgets?search=${search}&page=${page}&limit=${limit}&email=${userEmail}`
       );
       const data = await res.json();
       setGadgets(data.gadgets);
@@ -34,7 +39,7 @@ export default function MyGadgets() {
   // load data once on mount
   useEffect(() => {
     fetchGadgets(1); // Reset to page 1 when filters change
-  }, [categoryParams, search, limit]);
+  }, [search, limit]);
 
   const handlePageChange = (newPage) => {
     if (newPage >= 1 && newPage <= totalPages) {
@@ -113,18 +118,6 @@ export default function MyGadgets() {
       {/* filtering section */}
       <div className="xl:flex justify-between items-center mb-5">
         <div className="md:flex items-center gap-4">
-          <fieldset className="fieldset w-full sm:w-[220px]">
-            <select
-              name="category"
-              value={categoryParams}
-              className="select focus:border-[#03b00b] rounded focus:outline-none transition-all duration-100 w-full"
-              onChange={(e) => setCategoryParams(e.target.value)}
-            >
-              <option value={""}>All Category</option>
-              <option value={"camera"}>Camera</option>
-              <option value={"drone"}>Drone</option>
-            </select>
-          </fieldset>
 
           <fieldset className="fieldset w-full sm:w-[220px] mb-1 sm:mb-0">
             <select
@@ -200,14 +193,14 @@ export default function MyGadgets() {
                 className="border-b border-dashed last:border-none border-slate-200"
               >
                 <td className="flex items-center gap-2 w-[300px] md:w-auto">
-                  <Image
+                  {/* <Image
                     width={100}
                     height={100}
                     src={item?.images[0]}
                     alt={item?.title}
                     quality={10}
                     className="w-10 h-10"
-                  />
+                  /> */}
                   {item?.title}
                 </td>
                 <td className="capitalize text-gray-500">
@@ -223,7 +216,7 @@ export default function MyGadgets() {
                   {item?.date ? format(new Date(item.date), "PP") : "N/A"}
                 </td>
                 <td className="text-gray-500 min-w-44 md:w-auto">
-                  {item?.gadgetAddedPerson?.itemAddedUser || "Anonymous"}
+                  {item?.lender?.itemAddedEmail || "Anonymous"}
                 </td>
                 <td>
                   <div className="flex gap-2 items-center">
