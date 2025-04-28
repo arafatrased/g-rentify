@@ -16,6 +16,7 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [cart, setCart] = useState([]);
+  const [dbUser, setDbUser] = useState(null);
 
   const fetchMyOrder = async () => {
     try {
@@ -38,7 +39,31 @@ const CheckoutForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.email]);
 
+  useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const res = await fetch(
+            `/api/auth/profile-update?email=${user?.email}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization: `Bearer ${session.accessToken}`,
+              },
+            }
+          );
+          const data = await res.json();
+          setDbUser(data);
+        } catch (error) {
+          console.error("User fetch failed:", error);
+        }
+      }
+      fetchUser()
+    }, [user?.email]);
+
   const totalPrice = cart?.reduce((acc, item) => acc + item.totalRentValue, 0);
+
+  console.log('my cart:', cart);
 
 
   const fetchClientSecret = async () => {
@@ -67,6 +92,12 @@ const CheckoutForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if(!dbUser?.phone) {
+      toast.error("Please provide your address and phone to proceed with the payment.");
+      router.push('/my-account');
+      return;
+    }
 
     if (!stripe || !elements) {
       return;
@@ -121,6 +152,8 @@ const CheckoutForm = () => {
           date: new Date(), //should be in ISO format(moment.js)
           gadgetId: cart.map(item => item.gadgetId),
           status: 'pending',
+          lender: cart[0]?.lender,
+          address: dbUser?.address
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/payment`, {
           method: 'POST',
