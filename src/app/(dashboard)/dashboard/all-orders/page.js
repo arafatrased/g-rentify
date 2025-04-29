@@ -55,7 +55,7 @@ const AllOrders = () => {
     };
 
     const openModal = (id) => {
-        console.log("Open modal for ID:", id);
+        // console.log("Open modal for ID:", id);
     };
 
     return (

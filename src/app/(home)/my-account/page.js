@@ -22,43 +22,62 @@ export default function MyAccount() {
   const [address, setAddress] = useState("");
   const [names, setNames] = useState("");
   const [user, setUser] = useState(null);
+  const [myOrder, setMyOrder] = useState([]);
 
-   const handleSubmitUpdate = async(e) => {
-          e.preventDefault();
+  const fetchmyOrder = async () => {
+    try {
+      const res = await fetch(`/api/myorders?email=${email}`);
+      const data = await res.json();
+      // console.log(data);
+      setMyOrder(data);
+    }
+    catch (error) {
+      console.error("Error fetching my orders:", error);
+    } 
+  }
 
-          const govtId = await imageUrl(selectedImage);
-          const payload = {
-            email,
-            name:names,
-            phone,
-            address,
-            bio,
-            govtId,
-            role: "lender" 
-          }
+  useEffect(() => {
+    if (email) {
+      fetchmyOrder();
+    }
+  }, [email]);
 
-          console.log(payload);
-          try {
-            const res = await fetch("/api/auth/profile-update", {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ email, name:names, address, govtId, phone, bio, role: "lender" })
-            });
-      
-            if (res.ok) {
-              alert("Role updated Successfully!");
-              signOut({ callbackUrl: "/login" });
-              router.push("/login");
+  const handleSubmitUpdate = async (e) => {
+    e.preventDefault();
 
-            } else {
-              alert("Failed to update profile.");
-            }
-          } catch (err) {
-            console.error(err);
-            alert("Something went wrong.");
-          }
-          
+    const govtId = await imageUrl(selectedImage);
+    const payload = {
+      email,
+      name: names,
+      phone,
+      address,
+      bio,
+      govtId,
+      role: "lender"
+    }
+
+    console.log(payload);
+    try {
+      const res = await fetch("/api/auth/profile-update", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, name: names, address, govtId, phone, bio, role: "lender" })
+      });
+
+      if (res.ok) {
+        alert("Role updated Successfully!");
+        signOut({ callbackUrl: "/login" });
+        router.push("/login");
+
+      } else {
+        alert("Failed to update profile.");
       }
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong.");
+    }
+
+  }
 
   const {
     register,
@@ -67,11 +86,26 @@ export default function MyAccount() {
     formState: { errors },
   } = useForm();
 
+
+  //user update functionality...
+
   const onSubmit = async (data) => {
+    const { address, country, phone } = data;
     try {
-      console.log(data);
-    } catch (error) {
-      toast.error(error.message);
+      const res = await fetch("/api/auth/profile-update", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, address, phone, country }),
+      });
+
+      if (res.ok) {
+        toast.success("Profile updated!");
+        router.push("/my-account");
+      } else {
+        toast.error("Failed to update profile.");
+      }
+    } catch (err) {
+      toast.error("Something went wrong.");
     }
   };
 
@@ -201,14 +235,38 @@ export default function MyAccount() {
                 </div>
               </>
             )}
-
+            {/* My Orders */}
             {activeTab === "orders" && (
               <div className="border border-gray-200 rounded shadow-sm">
                 <div className="bg-[#03b00b] text-white px-4 py-3 font-semibold">
                   My Orders
                 </div>
                 <div className="p-4 text-sm sm:text-base">
-                  <p>You have not placed any orders yet.</p>
+                  <table className="min-w-full table-auto border border-gray-200 text-sm">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="border px-4 py-2 text-left">Title</th>
+                        <th className="border px-4 py-2 text-left">Price</th>
+                        <th className="border px-4 py-2 text-left">Status</th>
+                        <th className="border px-4 py-2 text-left">Date</th>
+                        <th className="border px-4 py-2 text-left">Edit</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {myOrder?.map((order, idx) => (
+                        <tr key={idx}>
+                          <td className="border px-4 py-2">{order.title}</td>
+                          <td  className="border px-4 py-2">${order.price}</td>
+                          <td  className="border px-4 py-2">{order.status}</td>
+                          <td  className="border px-4 py-2">{order.date}</td>
+                          <td  className="border px-4 py-2">
+                            <Link href={`/my-account/edit/${order._id}`} className='text-[#03b00b]'>Edit</Link>
+                          </td>
+                        </tr> 
+                      ))}
+                     
+                    </tbody>
+                  </table>
                 </div>
               </div>
             )}
@@ -301,25 +359,6 @@ export default function MyAccount() {
             </button>
           </form>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-            <div className="flex flex-col">
-              <label className="mb-2 font-semibold text-gray-700">Name</label>
-              <input
-                {...register("name", {
-                  required: "Name is required",
-                  maxLength: {
-                    value: 20,
-                    message: "Maximum 20 characters allowed",
-                  },
-                })}
-                placeholder="Enter your name"
-                className="px-2 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#03b00b]"
-              />
-              {errors.name && (
-                <p className="text-sm text-red-500 mt-2">
-                  {errors.name.message}
-                </p>
-              )}
-            </div>
             <div className="flex flex-col">
               <label className="mb-2 font-semibold text-gray-700">Address</label>
               <input

@@ -63,7 +63,7 @@ const CheckoutForm = () => {
 
   const totalPrice = cart?.reduce((acc, item) => acc + item.totalRentValue, 0);
 
-  console.log('my cart:', cart);
+  // console.log('my cart:', cart);
 
 
   const fetchClientSecret = async () => {
@@ -190,9 +190,8 @@ const CheckoutForm = () => {
             <h1 className='font-semibold'>Shipping Address</h1>
             <h1>Name: {user?.name}</h1>
             <h1>Email: {user?.email}</h1>
-            <h1>Address: {cart[0]?.address}</h1>
-            <h1>City: {cart[0]?.city}</h1>
-            <h1>Phone: {cart[0]?.state}</h1>
+            <h1>Address: {dbUser?.address}</h1>
+            <h1>Phone: {dbUser?.phone}</h1>
           </div>
         </div>
         <div className="border w-full md:w-8/12 border-gray-300 pt-4 px-4 rounded-md shadow-sm">

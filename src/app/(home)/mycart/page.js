@@ -130,7 +130,7 @@ const CartPage = () => {
 
     // check valid couponCode
     if (data.message === "ok") {
-      console.log("ok");
+      // console.log("ok");
     } else {
       Swal.fire({
         position: "top-center",

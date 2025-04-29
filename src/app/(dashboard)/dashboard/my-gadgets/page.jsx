@@ -13,7 +13,7 @@ export default function MyGadgets() {
   const session = useSession();
   const { data: sessionUser } = session;
   const userEmail = sessionUser?.user?.email; // Get the email from session;
-  console.log(userEmail);
+  // console.log(userEmail);
   const [gadgets, setGadgets] = useState([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
