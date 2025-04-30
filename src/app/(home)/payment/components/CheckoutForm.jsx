@@ -17,6 +17,7 @@ const CheckoutForm = () => {
   const elements = useElements();
   const [cart, setCart] = useState([]);
   const [dbUser, setDbUser] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const fetchMyOrder = async () => {
     try {
@@ -61,7 +62,15 @@ const CheckoutForm = () => {
       fetchUser()
     }, [user?.email]);
 
-  const totalPrice = cart?.reduce((acc, item) => acc + item.totalRentValue, 0);
+    useEffect(() => {
+      const getPriceFromLocalStorage = localStorage.getItem("grandTotal");
+      if (getPriceFromLocalStorage) {
+        setTotalPrice(parseFloat(getPriceFromLocalStorage));
+      }
+    }, []);
+
+  
+
 
   // console.log('my cart:', cart);
 
@@ -155,6 +164,12 @@ const CheckoutForm = () => {
           lender: cart[0]?.lender,
           address: dbUser?.address
         }
+        const notification = {
+          email: user?.email,
+          transactionId: paymentIntent.id,
+          title: cart.map(item => item.productTitle).join(', '),
+          message: `Your payment of $${totalPrice} has been successfully processed. Thank you for your order!`,    
+        }
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/payment`, {
           method: 'POST',
           headers: {
@@ -166,6 +181,18 @@ const CheckoutForm = () => {
         if (data) {
           // console.log('Payment successful!', data);
           toast.success(`Payment successful! Transaction Id: ${paymentIntent.id}`);
+          console.log(notification);
+          const res = await fetch('api/notification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notification),
+          });
+          const data = await res.json();
+          if (data) {
+            console.log('Notification sent successfully!', data);
+          }
           setCart([])
           router.push('/my-account')
           // Here you can update the order status in your application state

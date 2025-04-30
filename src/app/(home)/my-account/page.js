@@ -24,6 +24,10 @@ export default function MyAccount() {
   const [user, setUser] = useState(null);
   const [myOrder, setMyOrder] = useState([]);
 
+  if (session?.status === "loading") {
+    return <div>Loading...</div>;
+  }
+
   const fetchmyOrder = async () => {
     try {
       const res = await fetch(`/api/myorders?email=${email}`);
@@ -37,7 +41,7 @@ export default function MyAccount() {
   }
 
   useEffect(() => {
-    if (email) {
+     {
       fetchmyOrder();
     }
   }, [email]);

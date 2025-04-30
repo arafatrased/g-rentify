@@ -15,12 +15,15 @@ import CartModals from "./components/CartModals";
 import { LuMinus } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
 import Swal from "sweetalert2";
+import { to } from './../../../../.next/server/chunks/ssr/[turbopack]_browser_dev_hmr-client_hmr-client_ts_59fa4ecd._';
+import { set } from "date-fns";
 
 const CartPage = () => {
   const session = useSession();
   const userEmail = session?.data?.user?.email;
   const [gadgets, setGadgets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [discountPrice, setDiscountPrice] = useState(0);
   const { setTotalCart } = useOrders();
   const allGadgetsPrice = gadgets.reduce(
     (total, item) => total + item.totalRentValue,
@@ -29,7 +32,7 @@ const CartPage = () => {
   const [couponCode, setCouponCode] = useState("");
 
   const shippingCharge = 5; // Default shipping charge 5
-  const discountPrice = 30; // Default discount charge 30
+ // Default discount charge 30
   const taxRate = 2 / 100; // Default tax charge 2%
   const taxAmount = allGadgetsPrice * taxRate;
   const amountWithTax = allGadgetsPrice + taxAmount;
@@ -127,15 +130,22 @@ const CartPage = () => {
     );
 
     const data = await res.json();
+    console.log(data);
 
     // check valid couponCode
-    if (data.message === "ok") {
-      // console.log("ok");
+    if (data) {
+      setDiscountPrice(data?.coupon?.discountValue);
+      localStorage.removeItem("grandTotal");
+      localStorage.setItem(
+        "grandTotal",
+        JSON.stringify(grandTotal - data?.coupon?.discountValue)
+      );
+
     } else {
       Swal.fire({
         position: "top-center",
         icon: "error",
-        title: `${data.message}`,
+        title: `${data.code}`,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -279,6 +289,7 @@ const CartPage = () => {
                           Apply Coupon
                         </button>
                       </form>
+                      <p>Available Coupon: abc</p>
                     </div>
                   </div>
 
@@ -367,7 +378,7 @@ const CartPage = () => {
                           </p>
                           <p>
                             <strong className="text-[#1c1c1c]">
-                              ${discountPrice.toFixed(2)}
+                              ${discountPrice}
                             </strong>
                           </p>
                         </div>

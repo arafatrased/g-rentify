@@ -19,6 +19,7 @@ import Image from "next/image";
 import { useOrders } from "../context/OrderContext";
 import NotificationListItem from "./NotificationListItem";
 import Logo from "./Logo";
+import { getNotificationData } from "@/app/actions/getData/notification";
 
 const Navbar = () => {
   const session = useSession();
@@ -29,6 +30,16 @@ const Navbar = () => {
   const { loading, total } = useOrders();
   const [dbUser, setDbUser] = useState(null);
   const [notificationClicked, setNotificationClicked] = useState(false);
+  const [notiData, setNotiData] = useState([])
+
+  // if (status === "loading") {
+  //   return (
+  //     <div className="flex items-center justify-center h-screen">
+  //       <p className="text-gray-600 text-[1.2rem]">Loading...</p>
+  //     </div>
+  //   );
+  // }
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -51,6 +62,15 @@ const Navbar = () => {
     };
     fetchUser();
   }, [userSession?.user?.email]);
+
+  const notiDatafunc = async () =>{
+    const result = await getNotificationData(userSession?.user?.email);
+    setNotiData(result)
+  }
+  useEffect(() => {
+    notiDatafunc()
+  }, [userSession?.user?.email])
+  console.log("notiData", notiData)
 
   return (
     <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
@@ -169,7 +189,7 @@ const Navbar = () => {
                   className="w-[30px] h-[30px]"
                 />
                 <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">
-                  10
+                  {notiData?.length || 0}
                 </span>
 
                 <div
@@ -177,34 +197,14 @@ const Navbar = () => {
                     notificationClicked ? "block" : "hidden"
                   } bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}
                 >
-                  <NotificationListItem
-                    title="Lenovo Laptop added to the cart"
-                    time="2 hours ago"
-                  />
-                  <NotificationListItem
-                    title="Lenovo Laptop added to the cart"
-                    time="2 hours ago"
-                  />
-                  <NotificationListItem
-                    title="Lenovo Laptop added to the cart"
-                    time="2 hours ago"
-                  />
-                  <NotificationListItem
-                    title="Lenovo Laptop added to the cart"
-                    time="2 hours ago"
-                  />
-                  <NotificationListItem
-                    title="Lenovo Laptop added to the cart"
-                    time="2 hours ago"
-                  />
-                  <NotificationListItem
-                    title="Lenovo Laptop added to the cart"
-                    time="2 hours ago"
-                  />
-                  <NotificationListItem
-                    title="Lenovo Laptop added to the cart"
-                    time="2 hours ago"
-                  />
+                  {notiData?.length > 0 ? (
+                    notiData?.map((item,idx) => (<NotificationListItem key={idx}
+                      title={item.title}
+                      time={item.message}
+                    />))
+                  ) : ("")}
+                  
+                 
                 </div>
               </li>
               {loading ? (
