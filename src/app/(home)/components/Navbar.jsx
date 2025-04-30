@@ -70,7 +70,6 @@ const Navbar = () => {
   useEffect(() => {
     notiDatafunc()
   }, [userSession?.user?.email])
-  console.log("notiData", notiData)
 
   return (
     <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
