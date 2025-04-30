@@ -7,27 +7,36 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { registrarUser } from "../../../../actions/auth/registrarUser";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-const RegistrarForm = ({ regiTitle, role }) => {
+const RegistrarForm = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   // const [photoUrl, setPhotoUrl] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match");
+      return;
+    }
+    if (password.length < 6) {
+      setPasswordError("Password must be at least 6 characters long"); 
+      return; 
+    }
 
     const payload = {
       name,
       email,
       password,
-      role: role,
+      role: "borrower",
     };
     
     const registrarSingleUser = await registrarUser(payload);
@@ -46,7 +55,7 @@ const RegistrarForm = ({ regiTitle, role }) => {
     <div className="w-10/12 mx-auto flex justify-center items-center bg-white-100 px-4 py-20 mb-3">
       <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold text-center  text-gray-800 mb-6">
-          {regiTitle}
+          Create an Account
         </h2>
         <form onSubmit={handleRegister} className="space-y-4">
           {/* Name Field */}
@@ -106,6 +115,32 @@ const RegistrarForm = ({ regiTitle, role }) => {
             )}
           </div>
 
+          {/* Confirm Password Field */}
+          <div className="relative">
+            <label className="block text-gray-700 font-medium mb-2">
+              Confirm Password
+            </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              value={confirmPassword}
+              onChange={(e) => {
+                setConfirmPassword(e.target.value);
+                setPasswordError("");
+              }}
+              placeholder="Enter your password"
+              className="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
+              required
+            />
+            <div
+              className="absolute right-3 top-11 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
+            {passwordError && (
+              <p className="text-red-600 text-sm mt-1">{passwordError}</p>
+            )}
+          </div>
           {/* Register Button */}
           <button
             type="submit"

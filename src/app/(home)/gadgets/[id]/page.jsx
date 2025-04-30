@@ -105,7 +105,11 @@ export default function GadgetDetails() {
     userEmail: user?.email,
     startDate,
     endDate,
+    lender: gadget?.lender?.itemAddedEmail
   };
+
+
+  console.log(gadget);
 
   const handleCartInfo = async () => {
     // Check user is loged in or not if the user not login then redirect login page

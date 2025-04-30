@@ -29,7 +29,7 @@ export default function AddCouponForm() {
   };
 
   return (
-    <div className="px-4 py-16">
+    <div className="px-2 py-16 bg-gray-100">
       <div className="grid grid-cols-12 gap-5">
         {/* Left Side: More Detailed Info */}
         <div className="p-8 bg-gradient-to-r from-green-50 to-white-100 rounded shadow-sm text-gray-800 col-span-12 lg:col-span-7">

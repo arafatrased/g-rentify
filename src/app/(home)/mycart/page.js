@@ -16,20 +16,21 @@ import { LuMinus } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
 import Swal from "sweetalert2";
 
+
 const CartPage = () => {
   const session = useSession();
   const userEmail = session?.data?.user?.email;
   const [gadgets, setGadgets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [discountPrice, setDiscountPrice] = useState(0);
   const { setTotalCart } = useOrders();
   const allGadgetsPrice = gadgets.reduce(
     (total, item) => total + item.totalRentValue,
     0
   );
-  const [couponCode, setCouponCode] = useState("");
 
   const shippingCharge = 5; // Default shipping charge 5
-  const discountPrice = 30; // Default discount charge 30
+ // Default discount charge 30
   const taxRate = 2 / 100; // Default tax charge 2%
   const taxAmount = allGadgetsPrice * taxRate;
   const amountWithTax = allGadgetsPrice + taxAmount;
@@ -79,7 +80,7 @@ const CartPage = () => {
         `${process.env.NEXT_PUBLIC_SERVER_LINK}/my-cart?email=${userEmail}`
       );
       const data = await res.json();
-      console.log(data);
+      // console.log(data);
       setGadgets(data);
 
       if (data.length === 0) {
@@ -96,8 +97,6 @@ const CartPage = () => {
     fetchMyOrder();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userEmail]);
-
-  console.log(gadgets);
 
   const handleDelete = async (id) => {
     try {
@@ -131,13 +130,19 @@ const CartPage = () => {
     const data = await res.json();
 
     // check valid couponCode
-    if (data.message === "ok") {
-      console.log("ok");
+    if (data) {
+      setDiscountPrice(data?.coupon?.discountValue);
+      localStorage.removeItem("grandTotal");
+      localStorage.setItem(
+        "grandTotal",
+        JSON.stringify(grandTotal - data?.coupon?.discountValue)
+      );
+
     } else {
       Swal.fire({
         position: "top-center",
         icon: "error",
-        title: `${data.message}`,
+        title: `${data.code}`,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -281,6 +286,7 @@ const CartPage = () => {
                           Apply Coupon
                         </button>
                       </form>
+                      <p>Available Coupon: abc</p>
                     </div>
                   </div>
 
@@ -369,7 +375,7 @@ const CartPage = () => {
                           </p>
                           <p>
                             <strong className="text-[#1c1c1c]">
-                              ${discountPrice.toFixed(2)}
+                              ${discountPrice}
                             </strong>
                           </p>
                         </div>
