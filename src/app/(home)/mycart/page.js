@@ -15,8 +15,7 @@ import CartModals from "./components/CartModals";
 import { LuMinus } from "react-icons/lu";
 import { GoPlus } from "react-icons/go";
 import Swal from "sweetalert2";
-import { to } from './../../../../.next/server/chunks/ssr/[turbopack]_browser_dev_hmr-client_hmr-client_ts_59fa4ecd._';
-import { set } from "date-fns";
+
 
 const CartPage = () => {
   const session = useSession();
@@ -29,7 +28,6 @@ const CartPage = () => {
     (total, item) => total + item.totalRentValue,
     0
   );
-  const [couponCode, setCouponCode] = useState("");
 
   const shippingCharge = 5; // Default shipping charge 5
  // Default discount charge 30
@@ -130,7 +128,6 @@ const CartPage = () => {
     );
 
     const data = await res.json();
-    console.log(data);
 
     // check valid couponCode
     if (data) {
