@@ -47,10 +47,9 @@ const ViewProfile = () => {
       } catch (error) {
         console.error("User fetch failed:", error);
       }
-    }
-    fetchUser()
+    };
+    fetchUser();
   }, [user?.email]);
-
 
   if (status === "loading")
     return <p className="text-center mt-10">Loading...</p>;
