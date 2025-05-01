@@ -6,7 +6,7 @@ import { IoNotificationsSharp } from "react-icons/io5";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
 import { CiMenuFries, CiMail } from "react-icons/ci";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { IoIosSearch } from "react-icons/io";
+import { IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
 import {
   MdDashboard,
   MdLaptopMac,
@@ -20,6 +20,7 @@ import { useOrders } from "../context/OrderContext";
 import NotificationListItem from "./NotificationListItem";
 import Logo from "./Logo";
 import { getNotificationData } from "@/app/actions/getData/notification";
+import Hamburger from "hamburger-react";
 
 const Navbar = () => {
   const session = useSession();
@@ -30,16 +31,8 @@ const Navbar = () => {
   const { loading, total } = useOrders();
   const [dbUser, setDbUser] = useState(null);
   const [notificationClicked, setNotificationClicked] = useState(false);
-  const [notiData, setNotiData] = useState([])
-
-  // if (status === "loading") {
-  //   return (
-  //     <div className="flex items-center justify-center h-screen">
-  //       <p className="text-gray-600 text-[1.2rem]">Loading...</p>
-  //     </div>
-  //   );
-  // }
-
+  const [notiData, setNotiData] = useState([]);
+  const [isOpen, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -63,16 +56,55 @@ const Navbar = () => {
     fetchUser();
   }, [userSession?.user?.email]);
 
-  const notiDatafunc = async () =>{
+  const notiDatafunc = async () => {
     const result = await getNotificationData(userSession?.user?.email);
-    setNotiData(result)
-  }
+    setNotiData(result);
+  };
   useEffect(() => {
-    notiDatafunc()
-  }, [userSession?.user?.email])
+    notiDatafunc();
+  }, [userSession?.user?.email]);
+
+  const links = (
+    <>
+      <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+        <MdLaptopMac className="text-[1.1rem]" />
+        <Link href={"/gadgets"}>Gadgets</Link>
+      </li>
+
+      <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+        <Link href="/contacts" className="flex items-center">
+          <CiMail className="text-[1.1rem]" />
+          Contacts
+        </Link>
+      </li>
+      <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+        <Link href="/about" className="flex items-center">
+          <TbListDetails className="text-[1.1rem]" />
+          About Us
+        </Link>
+      </li>
+      {dbUser?.role === "borrower" && (
+        <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+          <Link href="/my-account" className="flex items-center">
+            <MdOutlineAccountCircle className="text-[1.1rem]" />
+            My Account
+          </Link>
+        </li>
+      )}
+
+      {dbUser?.role === "admin" || dbUser?.role === "lender" ? (
+        <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
+          <Link href="/dashboard" className="flex items-center">
+            <MdDashboard className="text-[1.1rem]" />
+            Dashboard
+          </Link>
+        </li>
+      ) : null}
+    </>
+  );
 
   return (
-    <div className="border-b border-gray-300 sticky top-0 z-50 backdrop-blur-3xl">
+    <div className="border-b sticky top-0 border-gray-300 z-[9999] backdrop-blur-3xl py-1">
       <nav className="flex items-center justify-between w-full container mx-auto px-2">
         {/* Logo */}
         <div className="w-40 sm:w-52">
@@ -91,86 +123,8 @@ const Navbar = () => {
 
         <div className="flex items-center gap-6">
           {/* Nav Links */}
-          <ul className="items-center gap-[20px] text-[1rem] text-[#424242] md:flex hidden">
-            {/* Product Mega Menu */}
-            <Link href={"/gadgets"}>
-              <li
-                className={`${
-                  isProductHover ? "text-[#03b00b]" : " text-gray-600"
-                } flex items-center gap-[5px] cursor-pointer relative`}
-                onMouseEnter={() => setIsProductHover(true)}
-                onMouseLeave={() => setIsProductHover(false)}
-              >
-                <MdLaptopMac className="text-[1.1rem]" />
-                Gadgets
-                {/* <IoIosArrowUp className={`transition-all duration-300 ${isProductHover ? "rotate-0" : "rotate-180"}`} /> */}
-                {/* Mega Menu */}
-                {/* {isProductHover && (
-            <div className="bg-white rounded-md w-[300px] absolute top-[60px] left-0 p-4 transition-all duration-300 shadow-lg">
-              <h3 className="text-[1.2rem] text-gray-500 font-[500]">More Products</h3>
-              <ul className="mt-2 space-y-3">
-                <li className="flex items-center gap-2 group">
-                  <img src="https://i.ibb.co/LQBDJGD/icon-logo-container.png" alt="icon" className="w-[30px] h-[30px]" />
-                  <div>
-                    <h1 className="text-[1rem] text-gray-600 font-[500]">Gadgets</h1>
-                    <p className="text-[0.9rem] text-gray-400 font-[300]">
-                      Explore the latest gadgets and technology.
-                    </p>
-                    <button className="text-[#FF5E5E] mt-2 flex items-center gap-1 text-[0.9rem]">
-                      Call to action
-                      <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                    </button>
-                  </div>
-                </li>
-                <li className="flex items-center gap-2 group">
-                  <img src="https://i.ibb.co/Y8cRWRj/icon-logo-container-1.png" alt="icon" className="w-[30px] h-[30px]" />
-                  <div>
-                    <h1 className="text-[1rem] text-gray-600 font-[500]">CRM</h1>
-                    <p className="text-[0.9rem] text-gray-400 font-[300]">
-                      Efficient customer relationship management.
-                    </p>
-                    <button className="text-[#FE9239] mt-2 flex items-center gap-1 text-[0.9rem]">
-                      Learn More
-                      <MdOutlineArrowRightAlt className="text-[1.4rem] group-hover:ml-[5px] transition-all duration-300" />
-                    </button>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          )} */}
-              </li>
-            </Link>
-
-            {/* Other Nav Items */}
-            <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-              <Link href="/contactus" className="flex items-center">
-                <CiMail className="text-[1.1rem]" />
-                Contacts
-              </Link>
-            </li>
-            <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-              <Link href="/about" className="flex items-center">
-                <TbListDetails className="text-[1.1rem]" />
-                About Us
-              </Link>
-            </li>
-            {dbUser?.role === "borrower" && (
-              <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
-                <Link href="/my-account" className="flex items-center">
-                  <MdOutlineAccountCircle className="text-[1.1rem]" />
-                  My Account
-                </Link>
-              </li>
-            )}
-
-            {dbUser?.role === "admin" || dbUser?.role === "lender" ? (
-              <li className="flex items-center gap-2 cursor-pointer hover:text-[#03b00b]">
-                <Link href="/dashboard" className="flex items-center">
-                  <MdDashboard className="text-[1.1rem]" />
-                  Dashboard
-                </Link>
-              </li>
-            ) : null}
+          <ul className="items-center gap-[20px] text-[1rem] text-[#424242] lg:flex hidden">
+            {links}
           </ul>
 
           {/* Account Menu for navbar */}
@@ -183,11 +137,11 @@ const Navbar = () => {
                 className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative"
                 data-tip="Notifications"
               >
-                <IoNotificationsSharp
+                <IoIosNotificationsOutline
                   onClick={() => setNotificationClicked(!notificationClicked)}
                   className="w-[30px] h-[30px]"
                 />
-                <span className="bg-[#03b00b] text-white text-sm font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">
+                <span className="bg-[#03b00b] text-white text-[11px] font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">
                   {notiData?.length || 0}
                 </span>
 
@@ -196,14 +150,15 @@ const Navbar = () => {
                     notificationClicked ? "block" : "hidden"
                   } bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}
                 >
-                  {notiData?.length > 0 ? (
-                    notiData?.map((item,idx) => (<NotificationListItem key={idx}
-                      title={item.title}
-                      time={item.message}
-                    />))
-                  ) : ("")}
-                  
-                 
+                  {notiData?.length > 0
+                    ? notiData?.map((item, idx) => (
+                        <NotificationListItem
+                          key={idx}
+                          title={item.title}
+                          time={item.message}
+                        />
+                      ))
+                    : ""}
                 </div>
               </li>
               {loading ? (
@@ -219,25 +174,6 @@ const Navbar = () => {
                 </p>
               </Link>
             </div>
-
-            {status === "authenticated" ? (
-              <div className="flex flex-col items-end gap-1">
-                {/* <p className="text-gray-600 text-[0.9rem]">
-             <span className="py-1 px-2 rounded-md bg-green-500 text-white uppercase">{userSession?.user?.role}</span>
-            </p> */}
-              </div>
-            ) : (
-              <div className="flex gap-2">
-                {/* <button className="cursor-pointer hover:text-[#03b00b]">
-                  <Link href="/registrar">Sing up</Link>
-                </button> */}
-                <Link href="/login">
-                  <button className="cursor-pointer ml-4 py-1 px-6 rounded-md border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
-                    Log In
-                  </button>
-                </Link>
-              </div>
-            )}
 
             {status === "authenticated" && (
               <button
@@ -315,30 +251,34 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Menu */}
-        <button
-          onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-          className="md:hidden"
-        >
-          <CiMenuFries className="text-[2rem]" />
-        </button>
 
-        {mobileSidebarOpen && (
-          <div className="fixed top-0 left-0 bg-white w-[250px] z-[52] h-full shadow-lg p-5 transition-all duration-300">
-            <button
-              onClick={() => setMobileSidebarOpen(false)}
-              className="absolute top-2 right-2 text-gray-600"
-            >
-              ✖
-            </button>
-            <ul className="flex bg-white flex-col space-y-4 mt-6">
-              <li className="cursor-pointer hover:text-[#03b00b]">Gadgets</li>
-              <li className="cursor-pointer hover:text-[#03b00b]">Features</li>
-              <li className="cursor-pointer hover:text-[#03b00b]">Support</li>
-              <li className="cursor-pointer hover:text-[#03b00b]">Contact</li>
-              <li className="cursor-pointer hover:text-[#03b00b]">About Us</li>
-            </ul>
+        {/* Hamburger icon */}
+        <div className="block lg:hidden">
+          <Hamburger size={22} toggled={isOpen} toggle={setOpen} />
+        </div>
+
+        <div
+          className={`bg-white lg:hidden fixed lg:static top-[61px] left-0 w-full z-40
+                  transform transition-transform duration-300 ease-in-out
+                  ${isOpen ? "translate-x-0" : "-translate-x-full"}
+                  lg:translate-x-0 lg:block border-b border-gray-100
+                `}
+        >
+          <div className="flex flex-col gap-5 justify-between px-2 py-5">
+            <ul className="text-[#2c2c2c] space-y-1">{links}</ul>
+            {status === "authenticated" ? (
+              <></>
+            ) : (
+              <div className="flex gap-2">
+                <Link href="/login">
+                  <button className="cursor-pointer ml-2 py-1 px-2 rounded border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
+                    Log In
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </nav>
     </div>
   );

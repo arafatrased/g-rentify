@@ -118,7 +118,7 @@ export default function GadgetPage() {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-12 gap-10">
+        <div className="grid grid-cols-12 gap-y-10  lg:gap-10">
           {/* Sidebar */}
           <div className="col-span-12 lg:col-span-3">
             {/* Search field */}
@@ -193,14 +193,14 @@ export default function GadgetPage() {
                           alt={item?.title}
                           priority={true}
                           quality={10}
-                          className="w-full lg:w-[150px] lg:h-[130px] h-[150px] object-cover p-2 mx-auto border border-[#e3e3e3] mb-1"
+                          className="w-full lg:w-[150px] lg:h-[130px] h-[110px] p-2 mx-auto border border-[#e3e3e3] mb-1"
                         />
                       </Link>
                       <Link
                         href={`/gadgets/${item?._id}`}
                         className="text-sm hover:border-b hover:text-[#17080c] text-[#03b00b] "
                       >
-                        {item?.title}
+                        {item?.title.slice(0, 15)}
                       </Link>
                     </div>
                   ))}
