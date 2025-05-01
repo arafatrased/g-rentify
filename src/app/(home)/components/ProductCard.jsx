@@ -11,11 +11,11 @@ export default function ProductCard({ item }) {
         <Link href={`gadgets/${item?._id}`}>
           <Image
             src={item?.images[0]}
-            width={720}
-            height={720}
+            width={500}
+            height={500}
             alt={item?.title}
             quality={10}
-            className="max-w-[150px] lg:max-w-[200px] min-h-[200px] mx-auto"
+            className="max-w-[150px] lg:max-w-[200px] min-h-[200px] max-h-[200] mx-auto"
           />
         </Link>
       </div>

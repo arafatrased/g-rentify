@@ -268,7 +268,7 @@ export default function GadgetPage() {
                             height={700}
                             alt={item?.title}
                             priority={true}
-                            className="w-[300px] lg:w-full h-[240px] lg:h-fit lg:max-w-[200px] min-h-[200px] mx-auto p-1"
+                            className="w-[300px] lg:w-full h-[240px] lg:h-fit lg:max-w-[200px] min-h-[200px] max-h-[200px] mx-auto p-1"
                           />
                         </Link>
                       </div>
