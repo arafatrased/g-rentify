@@ -16,6 +16,8 @@ const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [cart, setCart] = useState([]);
+  const [dbUser, setDbUser] = useState(null);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const fetchMyOrder = async () => {
     try {
@@ -38,7 +40,39 @@ const CheckoutForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.email]);
 
-  const totalPrice = cart?.reduce((acc, item) => acc + item.totalRentValue, 0);
+  useEffect(() => {
+      const fetchUser = async () => {
+        try {
+          const res = await fetch(
+            `/api/auth/profile-update?email=${user?.email}`,
+            {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+                // Authorization: `Bearer ${session.accessToken}`,
+              },
+            }
+          );
+          const data = await res.json();
+          setDbUser(data);
+        } catch (error) {
+          console.error("User fetch failed:", error);
+        }
+      }
+      fetchUser()
+    }, [user?.email]);
+
+    useEffect(() => {
+      const getPriceFromLocalStorage = localStorage.getItem("grandTotal");
+      if (getPriceFromLocalStorage) {
+        setTotalPrice(parseFloat(getPriceFromLocalStorage));
+      }
+    }, []);
+
+  
+
+
+  // console.log('my cart:', cart);
 
 
   const fetchClientSecret = async () => {
@@ -67,6 +101,12 @@ const CheckoutForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if(!dbUser?.phone) {
+      toast.error("Please provide your address and phone to proceed with the payment.");
+      router.push('/my-account');
+      return;
+    }
 
     if (!stripe || !elements) {
       return;
@@ -121,6 +161,14 @@ const CheckoutForm = () => {
           date: new Date(), //should be in ISO format(moment.js)
           gadgetId: cart.map(item => item.gadgetId),
           status: 'pending',
+          lender: cart[0]?.lender,
+          address: dbUser?.address
+        }
+        const notification = {
+          email: user?.email,
+          transactionId: paymentIntent.id,
+          title: cart.map(item => item.productTitle).join(', '),
+          message: `Your payment of $${totalPrice} has been successfully processed. Thank you for your order!`,    
         }
         const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_LINK}/payment`, {
           method: 'POST',
@@ -133,6 +181,18 @@ const CheckoutForm = () => {
         if (data) {
           // console.log('Payment successful!', data);
           toast.success(`Payment successful! Transaction Id: ${paymentIntent.id}`);
+          console.log(notification);
+          const res = await fetch('api/notification', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(notification),
+          });
+          const data = await res.json();
+          if (data) {
+            console.log('Notification sent successfully!', data);
+          }
           setCart([])
           router.push('/my-account')
           // Here you can update the order status in your application state
@@ -157,9 +217,8 @@ const CheckoutForm = () => {
             <h1 className='font-semibold'>Shipping Address</h1>
             <h1>Name: {user?.name}</h1>
             <h1>Email: {user?.email}</h1>
-            <h1>Address: {cart[0]?.address}</h1>
-            <h1>City: {cart[0]?.city}</h1>
-            <h1>Phone: {cart[0]?.state}</h1>
+            <h1>Address: {dbUser?.address}</h1>
+            <h1>Phone: {dbUser?.phone}</h1>
           </div>
         </div>
         <div className="border w-full md:w-8/12 border-gray-300 pt-4 px-4 rounded-md shadow-sm">

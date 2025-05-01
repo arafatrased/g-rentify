@@ -8,9 +8,9 @@ export default function Logo() {
         <text
           x="60"
           y="90"
-          font-family="Arial, sans-serif"
-          font-weight="bold"
-          font-size="80"
+          fontFamily="Arial, sans-serif"
+          fontWeight="bold"
+          fontSize="80"
           fill="#029e10"
         >
           G
@@ -29,9 +29,9 @@ export default function Logo() {
         <text
           x="140"
           y="90"
-          font-family="Arial, sans-serif"
-          font-weight="bold"
-          font-size="50"
+          fontFamily="Arial, sans-serif"
+          fontWeight="bold"
+          fontSize="50"
           fill="#333333"
         >
           Rentify
@@ -40,40 +40,40 @@ export default function Logo() {
         <path
           d="M60,105 L300,105"
           stroke="#029e10"
-          stroke-width="3"
-          stroke-linecap="round"
+          strokeWidth="3"
+          strokeLinecap="round"
         />
 
         <path
           d="M60,112 L300,112"
           stroke="#029e10"
-          stroke-width="1"
-          stroke-dasharray="3,2"
+          strokeWidth="1"
+          strokeDasharray="3,2"
           opacity="0.6"
         />
 
         <path
           d="M45,40 L45,55 L60,55"
           stroke="#029e10"
-          stroke-width="2"
+          strokeWidth="2"
           fill="none"
         />
         <path
           d="M315,40 L315,55 L300,55"
           stroke="#029e10"
-          stroke-width="2"
+          strokeWidth="2"
           fill="none"
         />
         <path
           d="M45,125 L45,110 L60,110"
           stroke="#029e10"
-          stroke-width="2"
+          strokeWidth="2"
           fill="none"
         />
         <path
           d="M315,125 L315,110 L300,110"
           stroke="#029e10"
-          stroke-width="2"
+          strokeWidth="2"
           fill="none"
         />
       </svg>
