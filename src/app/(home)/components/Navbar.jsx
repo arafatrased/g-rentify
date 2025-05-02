@@ -174,6 +174,18 @@ const Navbar = () => {
                 </p>
               </Link>
             </div>
+            {status === "authenticated" ? (
+              <></>
+            ) : (
+              <div className="flex gap-2">
+                <Link href="/login">
+                  <button className="cursor-pointer ml-2 py-1 px-2 rounded border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
+                    Log In
+                  </button>
+                </Link>
+              </div>
+            )}
+
 
             {status === "authenticated" && (
               <button

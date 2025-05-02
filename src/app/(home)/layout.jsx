@@ -24,34 +24,36 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" data-theme="light">
       <body className={`${poppins.className}`}>
-        <NextAuthProviders>
-          <Toaster
-            toastOptions={{
-              duration: 3000,
-              removeDelay: 500,
-              style: {
-                background: "#03b00b",
-                color: "#fff",
-                borderRadius: "2px",
-              },
 
-              // Default options for specific types
-              success: {
+        <NextAuthProviders>
+            <Toaster
+              toastOptions={{
                 duration: 3000,
-                iconTheme: {
-                  primary: "white",
-                  secondary: "#03b00b",
+                removeDelay: 500,
+                style: {
+                  background: "#03b00b",
+                  color: "#fff",
+                  borderRadius: "2px",
                 },
-              },
-            }}
-          />
-          <ToastContainer />
-          <OrdersProvider>
-            <Navbar />
-            {children}
-          </OrdersProvider>
-          <Footer />
+
+                // Default options for specific types
+                success: {
+                  duration: 3000,
+                  iconTheme: {
+                    primary: "white",
+                    secondary: "#03b00b",
+                  },
+                },
+              }}
+            />
+            <ToastContainer />
+            <OrdersProvider>
+              <Navbar />
+              {children}
+            </OrdersProvider>
+            <Footer />
         </NextAuthProviders>
+
       </body>
     </html>
   );
