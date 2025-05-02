@@ -104,7 +104,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="border-b sticky top-0 border-gray-300 z-[9999] backdrop-blur-3xl py-1">
+    <div className="border-b sticky top-0 border-gray-300 z-[100] backdrop-blur-3xl py-1">
       <nav className="flex items-center justify-between w-full container mx-auto px-2">
         {/* Logo */}
         <div className="w-40 sm:w-52">
