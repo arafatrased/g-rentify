@@ -71,12 +71,12 @@ const Navbar = () => {
         <Link href={"/gadgets"}>Gadgets</Link>
       </li>
 
-      <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
+      {/* <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
         <Link href="/contacts" className="flex items-center">
           <CiMail className="text-[1.1rem]" />
           Contacts
         </Link>
-      </li>
+      </li> */}
       <li className="flex items-center gap-1 cursor-pointer hover:text-[#03b00b]">
         <Link href="/about" className="flex items-center">
           <TbListDetails className="text-[1.1rem]" />
