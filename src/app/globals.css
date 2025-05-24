@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+html{
+  position: relative;
+}
+
 @custom-variant dark (&:is(.dark *));
 @plugin "daisyui";
 

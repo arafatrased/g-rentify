@@ -21,6 +21,7 @@ export default function Banner() {
           }}
           modules={[Pagination]}
           className="mySwiper"
+          spaceBetween={30}
         >
           <SwiperSlide>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-1 lg:gap-10 place-items-center min-h-[700px]">
@@ -45,7 +46,7 @@ export default function Banner() {
                 <Image
                   src={img1}
                   alt="Banner Image"
-                  className="max-w-[300px] md:max-w-[550px]"
+                  className="max-w-[280px] md:max-w-[550px]"
                   priority={true}
                   quality={10}
                 />
@@ -74,7 +75,7 @@ export default function Banner() {
                 <Image
                   src={img2}
                   alt="Banner Image"
-                  className="max-w-[300px] md:max-w-[550px]"
+                  className="max-w-[280px] md:max-w-[550px]"
                   priority={true}
                   quality={10}
                 />

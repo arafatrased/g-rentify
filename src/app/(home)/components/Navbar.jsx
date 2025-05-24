@@ -2,9 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 // react icons
-import { IoNotificationsSharp } from "react-icons/io5";
 import { TbLogout2, TbListDetails } from "react-icons/tb";
-import { CiMenuFries, CiMail } from "react-icons/ci";
 import { HiOutlineShoppingBag } from "react-icons/hi";
 import { IoIosNotificationsOutline, IoIosSearch } from "react-icons/io";
 import {
@@ -26,8 +24,6 @@ const Navbar = () => {
   const session = useSession();
   const { data: userSession, status } = session;
   const [accountMenuOpen, setAccountMenuOpen] = useState(false);
-  const [isProductHover, setIsProductHover] = useState(false);
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const { loading, total } = useOrders();
   const [dbUser, setDbUser] = useState(null);
   const [notificationClicked, setNotificationClicked] = useState(false);
@@ -104,194 +100,192 @@ const Navbar = () => {
   );
 
   return (
-    <div className="border-b sticky top-0 border-gray-300 z-[100] backdrop-blur-3xl py-1">
-      <nav className="flex items-center justify-between w-full container mx-auto px-2">
-        {/* Logo */}
-        <div className="w-40 sm:w-52">
-          <Logo />
-        </div>
-        {/* Search Bar */}
-        <div className="">
-          <div className="hidden lg:flex flex-1 relative justify-center w-full items-center">
-            <input
-              className="px-4 py-2 border rounded-xl pl-[40px] w-full outline-none focus:border-[#65de87]"
-              placeholder="Search gadgets ..."
-            />
-            <IoIosSearch className=" absolute left-2 text-[1.5rem] text-[#adadad]" />
+    <div className="h-[86px]">
+      <div className="border-b fixed w-full top-0 border-gray-300 z-[100] backdrop-blur-3xl py-1">
+        <nav className="flex items-center justify-between w-full container mx-auto px-2">
+          {/* Logo */}
+          <div className="w-40 sm:w-52">
+            <Logo />
           </div>
-        </div>
-
-        <div className="flex items-center gap-6">
-          {/* Nav Links */}
-          <ul className="items-center gap-[20px] text-[1rem] text-[#424242] lg:flex hidden">
-            {links}
-          </ul>
-
-          {/* Account Menu for navbar */}
-          <div className="relative flex gap-4 items-center">
-            <div
-              className="indicator tooltip tooltip-right tooltip-success flex items-center gap-3"
-              data-tip="Shopping Cart"
-            >
-              <li
-                className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative"
-                data-tip="Notifications"
-              >
-                <IoIosNotificationsOutline
-                  onClick={() => setNotificationClicked(!notificationClicked)}
-                  className="w-[30px] h-[30px]"
-                />
-                <span className="bg-[#03b00b] text-white text-[11px] font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">
-                  {notiData?.length || 0}
-                </span>
-
-                <div
-                  className={`${
-                    notificationClicked ? "block" : "hidden"
-                  } bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}
-                >
-                  {notiData?.length > 0
-                    ? notiData?.map((item, idx) => (
-                        <NotificationListItem
-                          key={idx}
-                          title={item.title}
-                          time={item.message}
-                        />
-                      ))
-                    : ""}
-                </div>
-              </li>
-              {loading ? (
-                <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
-              ) : (
-                <span className="indicator-item w-5 h-5 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
-                  {total || 0}
-                </span>
-              )}
-              <Link href={"/mycart"}>
-                <p>
-                  <HiOutlineShoppingBag className="w-[30px] h-[30px] object-cover text-gray-600" />
-                </p>
-              </Link>
+          {/* Search Bar */}
+          <div className="">
+            <div className="hidden lg:flex flex-1 relative justify-center w-full items-center">
+              <input
+                className="px-4 py-2 border rounded-xl pl-[40px] w-full outline-none focus:border-[#65de87]"
+                placeholder="Search gadgets ..."
+              />
+              <IoIosSearch className=" absolute left-2 text-[1.5rem] text-[#adadad]" />
             </div>
-            {status === "authenticated" ? (
-              <></>
-            ) : (
-              <div className="flex gap-2">
-                <Link href="/login">
-                  <button className="cursor-pointer ml-2 py-1 px-2 rounded border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
-                    Log In
-                  </button>
+          </div>
+
+          <div className="flex items-center gap-6">
+            {/* Nav Links */}
+            <ul className="items-center gap-[20px] text-[1rem] text-[#424242] lg:flex hidden">
+              {links}
+            </ul>
+
+            {/* Account Menu for navbar */}
+            <div className="relative flex gap-4 items-center">
+              <div
+                className="indicator tooltip tooltip-right tooltip-success flex items-center gap-3"
+                data-tip="Shopping Cart"
+              >
+                <li
+                  className="flex items-center mr-3 gap-2 cursor-pointer indicator tooltip tooltip-right tooltip-success relative"
+                  data-tip="Notifications"
+                >
+                  <IoIosNotificationsOutline
+                    onClick={() => setNotificationClicked(!notificationClicked)}
+                    className="w-[30px] h-[30px]"
+                  />
+                  <span className="bg-[#03b00b] text-white text-[11px] font-bold rounded-full w-5 h-5 flex items-center justify-center indicator-item">
+                    {notiData?.length || 0}
+                  </span>
+
+                  <div
+                    className={`${
+                      notificationClicked ? "block" : "hidden"
+                    } bg-green-600 p-4 rounded-md text-white absolute border top-full right-0 w-[400px] h-[400px] overflow-auto`}
+                  >
+                    {notiData?.length > 0
+                      ? notiData?.map((item, idx) => (
+                          <NotificationListItem
+                            key={idx}
+                            title={item.title}
+                            time={item.message}
+                          />
+                        ))
+                      : ""}
+                  </div>
+                </li>
+                {loading ? (
+                  <div className="indicator-item skeleton h-4 w-4 rounded-full"></div>
+                ) : (
+                  <span className="indicator-item w-5 h-5 text-[11px] flex justify-center items-center bg-[#03b00b] text-white rounded-full">
+                    {total || 0}
+                  </span>
+                )}
+                <Link href={"/mycart"}>
+                  <p>
+                    <HiOutlineShoppingBag className="w-[30px] h-[30px] object-cover text-gray-600" />
+                  </p>
                 </Link>
               </div>
-            )}
-
-
-            {status === "authenticated" && (
-              <button
-                onClick={() => setAccountMenuOpen(!accountMenuOpen)}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                {dbUser?.photoURL ? (
-                  <>
-                    <Image
-                      src={dbUser?.photoURL}
-                      className="rounded-full ring-1 ring-[#03b00b] object-cover p-[2px]"
-                      alt="user-Image"
-                      referrerPolicy="no-referrer"
-                      width={40}
-                      height={35}
-                    />
-                  </>
-                ) : (
-                  <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" />
-                )}
-              </button>
-            )}
-
-            {/* toggle account menu */}
-
-            {accountMenuOpen && (
-              <div className="bg-white w-[200px] z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
-                {status === "authenticated" && (
-                  <p className="text-center text-green-700 my-2 text-[0.9rem]">
-                    {userSession?.user?.name}
-                  </p>
-                )}
-                {dbUser?.role == "admin" || dbUser?.role == "lender" ? (
-                  <Link href={"/dashboard/view-profile"}>
-                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                      <FiUser /> View Profile
-                    </p>
+              {status === "authenticated" ? (
+                <></>
+              ) : (
+                <div className="flex gap-2">
+                  <Link href="/login">
+                    <button className="cursor-pointer ml-2 py-1 px-2 rounded border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
+                      Log In
+                    </button>
                   </Link>
-                ) : (
-                  <Link href={"/my-account"}>
-                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                      <FiUser /> My Account
-                    </p>
-                  </Link>
-                )}
+                </div>
+              )}
 
-                {(dbUser?.role == "admin" || dbUser?.role == "lender") && (
-                  <Link href={"/dashboard/settings"}>
-                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                      <IoSettingsOutline /> Settings
-                    </p>
-                  </Link>
-                )}
-
-                {/* <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                 <IoSettingsOutline /> Settings
-                </p> */}
+              {status === "authenticated" && (
                 <button
-                  onClick={() => signOut()}
-                  className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => setAccountMenuOpen(!accountMenuOpen)}
+                  className="flex items-center gap-2 cursor-pointer"
                 >
-                  <TbLogout2 />
-                  Logout
+                  {dbUser?.photoURL ? (
+                    <>
+                      <Image
+                        src={dbUser?.photoURL}
+                        className="rounded-full ring-1 ring-[#03b00b] object-cover p-[2px]"
+                        alt="user-Image"
+                        referrerPolicy="no-referrer"
+                        width={40}
+                        height={35}
+                      />
+                    </>
+                  ) : (
+                    <FiUser className="w-[35px] h-[35px] rounded-full border-2 border-gray-200 object-cover p-1 hover:ring-2 hover:ring-green-200" />
+                  )}
                 </button>
-                {dbUser?.role == "borrower" && (
-                  <Link href={"/how-this-works"}>
-                    <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
-                      <TbListDetails /> How this works?
+              )}
+
+              {/* toggle account menu */}
+
+              {accountMenuOpen && (
+                <div className="bg-white w-[200px] z-30 rounded-md absolute top-[40px] right-0 p-3 shadow-lg transition-all duration-300">
+                  {status === "authenticated" && (
+                    <p className="text-center text-green-700 my-2 text-[0.9rem]">
+                      {userSession?.user?.name}
                     </p>
-                  </Link>
-                )}
-              </div>
-            )}
+                  )}
+                  {dbUser?.role == "admin" || dbUser?.role == "lender" ? (
+                    <Link href={"/dashboard/view-profile"}>
+                      <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                        <FiUser /> View Profile
+                      </p>
+                    </Link>
+                  ) : (
+                    <Link href={"/my-account"}>
+                      <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                        <FiUser /> My Account
+                      </p>
+                    </Link>
+                  )}
+
+                  {(dbUser?.role == "admin" || dbUser?.role == "lender") && (
+                    <Link href={"/dashboard/settings"}>
+                      <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                        <IoSettingsOutline /> Settings
+                      </p>
+                    </Link>
+                  )}
+
+                  <button
+                    onClick={() => signOut()}
+                    className="flex items-center gap-2 p-2 text-red-600 hover:bg-gray-100 cursor-pointer"
+                  >
+                    <TbLogout2 />
+                    Logout
+                  </button>
+                  {dbUser?.role == "borrower" && (
+                    <Link href={"/how-this-works"}>
+                      <p className="flex items-center gap-2 p-2 text-gray-600 hover:bg-gray-100 cursor-pointer">
+                        <TbListDetails /> How this works?
+                      </p>
+                    </Link>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Mobile Menu */}
+          {/* Mobile Menu */}
 
-        {/* Hamburger icon */}
-        <div className="block lg:hidden">
-          <Hamburger size={22} toggled={isOpen} toggle={setOpen} />
-        </div>
+          {/* Hamburger icon */}
+          <div className="block lg:hidden">
+            <Hamburger size={22} toggled={isOpen} toggle={setOpen} />
+          </div>
 
-        <div
-          className={`bg-white lg:hidden fixed lg:static top-[61px] left-0 w-full z-40
+          <div
+            className={`bg-white lg:hidden fixed lg:static top-[68px] left-0 w-full z-40
                   transform transition-transform duration-300 ease-in-out
                   ${isOpen ? "translate-x-0" : "-translate-x-full"}
                   lg:translate-x-0 lg:block border-b border-gray-100
                 `}
-        >
-          <div className="flex flex-col gap-5 justify-between px-2 py-5">
-            <ul className="text-[#2c2c2c] space-y-1">{links}</ul>
-            {status === "authenticated" ? (
-              <></>
-            ) : (
-              <div className="flex gap-2">
-                <Link href="/login">
-                  <button className="cursor-pointer ml-2 py-1 px-2 rounded border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
-                    Log In
-                  </button>
-                </Link>
-              </div>
-            )}
+          >
+            <div className="flex flex-col gap-5 justify-between px-2 py-5">
+              <ul className="text-[#2c2c2c] space-y-1">{links}</ul>
+              {status === "authenticated" ? (
+                <></>
+              ) : (
+                <div className="flex gap-2">
+                  <Link href="/login">
+                    <button className="cursor-pointer ml-2 py-1 px-2 rounded border border-[#03b00b] text-[#03b00b] hover:bg-[#03b00b] hover:text-white transition-all duration-300">
+                      Log In
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
+      </div>
     </div>
   );
 };
