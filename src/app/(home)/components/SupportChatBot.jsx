@@ -68,13 +68,21 @@ export default function SupportChatbot() {
     <>
       {/* Floating Button */}
       <button
-        className={`${
-          !open ? "" : ""
-        }fixed bottom-6 right-6 bg-[#03b00b] hover:bg-green-600 cursor-pointer text-white p-3 rounded-full shadow-lg z-50 transition-all duration-300 ease-in-out`}
+        className="fixed bottom-6 right-6 bg-[#03b00b] hover:bg-green-600 cursor-pointer text-white p-3 rounded-full shadow-lg z-50 transition-all duration-300 ease-in-out"
         onClick={() => setOpen(!open)}
       >
+        {/* Pulse rings */}
+        {!open && (
+          <>
+            <div className="absolute inset-0 rounded-full bg-[#03b00ca9] opacity-30 animate-[pulse-ring_3s_cubic-bezier(0.4,0,0.6,1)_infinite]"></div>
+            <div className="absolute inset-0 rounded-full bg-[#03b00ca9] opacity-40 animate-[pulse-ring_3s_cubic-bezier(0.4,0,0.6,1)_infinite] animation-delay-500"></div>
+            <div className="absolute inset-0 rounded-full bg-[#03b00ca9] opacity-50 animate-[pulse-ring_3s_cubic-bezier(0.4,0,0.6,1)_infinite] animation-delay-1000"></div>
+            <div className="absolute inset-0 rounded-full bg-[#03b00ca9] blur-sm opacity-60 animate-pulse"></div>
+          </>
+        )}
+
         <div
-          className={`transition-transform duration-300 ease-in-out ${
+          className={`transition-transform duration-300 ease-in-out relative z-10 ${
             open ? "rotate-180" : "rotate-0"
           }`}
         >
