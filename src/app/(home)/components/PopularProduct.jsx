@@ -10,9 +10,9 @@ export default async function PopularProduct() {
     <section className="py-14">
       <div className="container mx-auto px-3">
         {/* section title */}
-        <h1 className="text-3xl font-semibold">Popular Gadgets</h1>
+        <h1 className="text-3xl font-semibold text-gray-800">New Arrivals</h1>
         <div className="w-full h-0.5 bg-gray-200 my-[13px]"></div>
-        <div className="max-w-64 h-0.5 bg-[#03b00b] -mt-[15px] mb-10"></div>
+        <div className="max-w-48 h-0.5 bg-[#03b00b] -mt-[15px] mb-10"></div>
         {/* main content here */}
         <div className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-6 md:gap-5 gap-10">
           {gadgets.map((item) => (

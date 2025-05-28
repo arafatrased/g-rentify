@@ -1,13 +1,15 @@
 import Banner from "./components/Banner";
+import GrentifyStats from "./components/GrentifyState";
 import PopularProduct from "./components/PopularProduct";
-import Category from "./components/Category";
+import RentSafley from "./components/RentSafley";
 
 export default function Home() {
   return (
     <>
       <Banner />
-      <Category />
+      <GrentifyStats />
       <PopularProduct />
+      <RentSafley />  
     </>
   );
 }

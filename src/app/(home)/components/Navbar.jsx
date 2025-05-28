@@ -101,14 +101,14 @@ const Navbar = () => {
 
   return (
     <div className="h-[86px]">
-      <div className="border-b fixed w-full top-0 border-gray-300 z-[100] backdrop-blur-3xl py-1">
+      <div className="border-b fixed w-full top-0 border-gray-100 z-[100] backdrop-blur-3xl py-1">
         <nav className="flex items-center justify-between w-full container mx-auto px-2">
           {/* Logo */}
           <div className="w-40 sm:w-52">
             <Logo />
           </div>
           {/* Search Bar */}
-          <div className="">
+          {/* <div className="">
             <div className="hidden lg:flex flex-1 relative justify-center w-full items-center">
               <input
                 className="px-4 py-2 border rounded-xl pl-[40px] w-full outline-none focus:border-[#65de87]"
@@ -116,7 +116,7 @@ const Navbar = () => {
               />
               <IoIosSearch className=" absolute left-2 text-[1.5rem] text-[#adadad]" />
             </div>
-          </div>
+          </div> */}
 
           <div className="flex items-center gap-6">
             {/* Nav Links */}

@@ -15,7 +15,7 @@ export default function ProductCard({ item }) {
             height={500}
             alt={item?.title}
             quality={10}
-            className="max-w-[150px] lg:max-w-[200px] min-h-[200px] max-h-[200] mx-auto"
+            className="max-w-[150px] lg:max-w-[180px] min-h-[180px] max-h-[180] mx-auto"
           />
         </Link>
       </div>
