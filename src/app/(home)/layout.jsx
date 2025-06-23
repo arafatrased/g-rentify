@@ -6,6 +6,7 @@ import { Toaster } from "react-hot-toast";
 import NextAuthProviders from "@/Providers/NextAuthProviders";
 import Navbar from "./components/Navbar";
 import { OrdersProvider } from "./context/OrderContext";
+import SupportChatbot from "./components/SupportChatBot";
 
 //Poppins Front
 
@@ -50,6 +51,7 @@ export default function RootLayout({ children }) {
             <Navbar />
             {children}
           </OrdersProvider>
+          <SupportChatbot />
           <Footer />
         </NextAuthProviders>
       </body>

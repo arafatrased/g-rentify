@@ -1,7 +1,4 @@
 "use client";
-// import { RiAccountCircleLine, RiLockPasswordLine } from "react-icons/ri";
-// import { MdOutlineMail } from "react-icons/md";
-// import Button from '@/app/components/Button';
 
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -28,8 +25,8 @@ const RegistrarForm = () => {
       return;
     }
     if (password.length < 6) {
-      setPasswordError("Password must be at least 6 characters long"); 
-      return; 
+      setPasswordError("Password must be at least 6 characters long");
+      return;
     }
 
     const payload = {
@@ -38,7 +35,7 @@ const RegistrarForm = () => {
       password,
       role: "borrower",
     };
-    
+
     const registrarSingleUser = await registrarUser(payload);
     if (registrarSingleUser.insertedId) {
       toast.success("User registered successfully");
@@ -52,8 +49,8 @@ const RegistrarForm = () => {
   const handleGoogleRegister = async () => {};
 
   return (
-    <div className="w-10/12 mx-auto flex justify-center items-center bg-white-100 px-4 py-20 mb-3">
-      <div className="w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
+    <div className="w-full sm:w-10/12 mx-auto flex justify-center items-center bg-white-100 px-2 py-20 mb-3">
+      <div className="w-full max-w-lg p-6 bg-white rounded shadow-lg">
         <h2 className="text-2xl font-bold text-center  text-gray-800 mb-6">
           Create an Account
         </h2>
@@ -68,7 +65,7 @@ const RegistrarForm = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Enter your name"
-              className="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
+              className="w-full  px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-700"
               required
             />
           </div>
@@ -83,7 +80,7 @@ const RegistrarForm = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
-              className="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
+              className="w-full  px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-700"
               required
             />
           </div>
@@ -101,7 +98,7 @@ const RegistrarForm = () => {
                 setPasswordError("");
               }}
               placeholder="Enter your password"
-              className="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
+              className="w-full  px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-700"
               required
             />
             <div
@@ -128,7 +125,7 @@ const RegistrarForm = () => {
                 setPasswordError("");
               }}
               placeholder="Enter your password"
-              className="w-full  px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-700"
+              className="w-full  px-4 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-purple-700"
               required
             />
             <div
@@ -144,7 +141,7 @@ const RegistrarForm = () => {
           {/* Register Button */}
           <button
             type="submit"
-            className="w-full py-3 bg-green-500 text-white hover:bg-green-600 font-bold rounded-lg transition duration-300"
+            className="w-full py-3 bg-green-500 text-white hover:bg-green-600 font-bold rounded transition duration-300"
           >
             Register
           </button>
@@ -160,7 +157,7 @@ const RegistrarForm = () => {
         {/* Google register Button */}
         <button
           onClick={handleGoogleRegister}
-          className="w-full py-3 bg-gray-200 text-gray-600 font-bold rounded-lg hover:bg-gray-300 hover:text-gray-700 transition duration-300 flex gap-3 justify-center items-center"
+          className="w-full py-3 bg-gray-200 text-gray-600 font-bold rounded hover:bg-gray-300 hover:text-gray-700 transition duration-300 flex gap-3 justify-center items-center"
         >
           <FcGoogle className="text-xl" /> Continue with Google
         </button>

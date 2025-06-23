@@ -108,7 +108,7 @@ const ViewProfile = () => {
                   <h2 className="text-xl font-semibold">{dbUser?.name}</h2>
                   <div className="flex items-center gap-2">
                     <p className="text-sm mt-1 bg-blue-100 text-[#00B22C] px-2 py-1 rounded-xl capitalize">
-                      {user.role || "user"}
+                      {user?.role || "user"}
                     </p>
                     
                   </div>

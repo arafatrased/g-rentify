@@ -1,7 +1,4 @@
-// import { MdMarkEmailRead, MdCall } from "react-icons/md";
-// import { FaLocationDot } from "react-icons/fa6";
-// import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
-// import { FaFacebookF, FaTelegramPlane } from "react-icons/fa";
+
 import { MdOutlineCall, MdOutlineEmail } from "react-icons/md";
 import { IoLocationOutline } from "react-icons/io5";
 import { CgFacebook } from "react-icons/cg";

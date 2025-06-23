@@ -37,10 +37,8 @@ export default function MyAccount() {
   }
 
   useEffect(() => {
-     {
       fetchmyOrder();
-    }
-  }, [email]);
+  }, []);
 
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
